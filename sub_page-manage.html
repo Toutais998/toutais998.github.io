@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="images/透明背景.png" type="image/x-icon">
+    <title>Yang Lab-实验室物料管理</title>
+    <link rel="stylesheet" href="style_sub-manage.css">
+</head>
+
+<body>
+    <div class="container-sub">
+        <div class="sidebar">
+            <h2>Yang Lab<br>物料管理</h2>
+            <ul class="nav-menu">
+                <li>
+                    <a href="#consumables">耗材</a>
+                    <ul class="sub-menu">
+                        <li><a href="#optical-consumables">光学耗材</a></li>
+                        <li><a href="#electrical-consumables">电学耗材</a></li>
+                        <li><a href="#other-consumables">其他耗材</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#equipment">仪器设备</a>
+                    <ul class="sub-menu">
+                        <li><a href="#lasers">激光器</a></li>
+                        <li><a href="#daq-electrical">采集卡/电学设备</a></li>
+                        <li><a href="#mechanical-equipment">机械设备</a></li>
+                        <li><a href="#other-equipment">其他设备</a></li>
+                    </ul>
+                </li>
+                <li><a href="#others">其他</a></li>
+            </ul>
+            <button id="manageDirectoryBtn" class="manage-dir-btn">管理目录</button>
+        </div>
+        <div class="main-content-sub">
+            <!-- New Item Button -->
+            <button id="newItemBtn" class="new-item-btn">+ 新建产品名录</button>
+
+            <div id="consumables-group" class="category-group">
+                <h1 id="consumables">耗材</h1>
+                <section id="optical-consumables" class="content-section">
+                    <h2>光学耗材</h2>
+                    <div class="box-grid">
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">滤光片</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">25.4透镜</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">50.8透镜</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">二向色镜</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">物镜</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">λ/2和λ/4波片</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">平面反射镜</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">超快反射镜</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="electrical-consumables" class="content-section">
+                    <h2>电学耗材</h2>
+                    <div class="box-grid">
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">电阻</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">电容</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">导线</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="other-consumables" class="content-section">
+                    <h2>其他耗材</h2>
+                    <div class="box-grid">
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">手套</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">酒精</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="equipment-group" class="category-group">
+                <h1 id="equipment">仪器设备</h1>
+                <section id="lasers" class="content-section">
+                    <h2>激光器</h2>
+                    <div class="box-grid">
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">飞秒激光器</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">连续波激光器</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="daq-electrical" class="content-section">
+                    <h2>采集卡/电学设备</h2>
+                    <div class="box-grid">
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">数据采集卡</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">示波器</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="mechanical-equipment" class="content-section">
+                    <h2>机械设备</h2>
+                    <div class="box-grid">
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">光学平台</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">位移台</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="other-equipment" class="content-section">
+                    <h2>其他设备</h2>
+                    <div class="box-grid">
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">电源</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="others-group" class="category-group">
+                <h1 id="others">其他</h1>
+                <section class="content-section">
+                    <h2>其他物料</h2>
+                    <div class="box-grid">
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">文档</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- The Modal -->
+    <div id="newItemModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>新建产品名录</h2>
+            <form id="newItemForm">
+                <label for="itemImage">图片 URL (可选):</label>
+                <input type="text" id="itemImage" name="itemImage" placeholder="images/默认图片.png">
+
+                <label for="itemName">名称:</label>
+                <input type="text" id="itemName" name="itemName" required>
+
+                <label for="itemQuantity">数量:</label>
+                <input type="number" id="itemQuantity" name="itemQuantity" required min="0">
+
+                <label for="itemLocation">存放位置 (可选):</label>
+                <input type="text" id="itemLocation" name="itemLocation" placeholder="查看详情">
+
+                <label for="newItemParentDirectorySelect">选择目录:</label>
+                <select id="newItemParentDirectorySelect"></select>
+
+                <button type="submit">提交</button>
+                <button type="button" class="cancel-button">取消</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- The Modal for Manage Directory -->
+    <div id="manageDirectoryModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>管理目录</h2>
+            <div id="directoryList">
+                <!-- Directories will be loaded here by JavaScript -->
+            </div>
+            <div class="add-directory-section">
+                <h3>添加新目录</h3>
+                <input type="text" id="newDirectoryName" placeholder="新目录名称">
+                <select id="parentDirectorySelect">
+                    <option value="">--- 顶级目录 ---</option>
+                    <!-- Options will be loaded by JavaScript -->
+                </select>
+                <button id="addDirectoryBtn">添加目录</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal for Delete -->
+    <div id="confirmDeleteModal" class="modal">
+        <div class="modal-content">
+            <h2>确认删除</h2>
+            <p>您确定要删除此物料吗？此操作不可撤销。</p>
+            <button id="confirmDeleteBtn">确认</button>
+            <button id="cancelDeleteBtn">取消</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- Global/Shared Variables (declared here to be accessible throughout DOMContentLoaded scope) ---
+            const navLinks = document.querySelectorAll('.nav-menu a');
+
+            // --- New Item Modal Elements ---
+            const newItemModal = document.getElementById("newItemModal");
+            const newItemBtn = document.getElementById("newItemBtn");
+            const newItemCloseSpan = newItemModal.querySelector(".close-button");
+            const newItemCancelButton = newItemModal.querySelector(".cancel-button");
+            const newItemForm = document.getElementById("newItemForm");
+            const itemImageInput = document.getElementById("itemImage");
+            const itemNameInput = document.getElementById("itemName");
+            const itemQuantityInput = document.getElementById("itemQuantity");
+            const itemLocationInput = document.getElementById("itemLocation");
+            const newItemParentDirectorySelect = document.getElementById("newItemParentDirectorySelect");
+
+            // --- Manage Directory Modal Elements ---
+            const manageDirectoryModal = document.getElementById("manageDirectoryModal");
+            const manageDirectoryBtn = document.getElementById("manageDirectoryBtn");
+            const manageDirectoryCloseSpan = manageDirectoryModal.querySelector(".close-button");
+            const directoryListDiv = document.getElementById("directoryList");
+            console.log("directoryListDiv 元素:", directoryListDiv); // Debugging line
+            const newDirectoryNameInput = document.getElementById("newDirectoryName");
+            const parentDirectorySelectForManage = manageDirectoryModal.querySelector("#parentDirectorySelect");
+            const addDirectoryBtn = document.getElementById("addDirectoryBtn");
+
+            // --- Delete Item Confirmation Modal Elements ---
+            const confirmDeleteModal = document.getElementById("confirmDeleteModal");
+            const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+            const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+
+            // --- Internal State Variables ---
+            let itemToDeleteId = null;
+            let draggedItem = null;
+            const LOG_KEY_UNSAVED = 'materialManagementUnsavedLogs';
+            const LOG_KEY_SUMMARIZED = 'materialManagementSummarizedLogs';
+            const LOG_INTERVAL_MS = 2 * 60 * 60 * 1000; // 2小时
+
+            // --- Log Management Functions ---
+            function getLogs(key) {
+                try {
+                    const logs = localStorage.getItem(key);
+                    return logs ? JSON.parse(logs) : [];
+                } catch (e) {
+                    console.error("Error reading logs from localStorage:", e);
+                    return [];
+                }
+            }
+
+            function saveLogs(key, logs) {
+                try {
+                    localStorage.setItem(key, JSON.stringify(logs));
+                } catch (e) {
+                    console.error("Error saving logs to localStorage:", e);
+                }
+            }
+
+            function logAction(actionType, details) {
+                const unsavedLogs = getLogs(LOG_KEY_UNSAVED);
+                const timestamp = new Date().toLocaleString();
+                const logEntry = { timestamp, action: actionType, details };
+                unsavedLogs.push(logEntry);
+                saveLogs(LOG_KEY_UNSAVED, unsavedLogs);
+                console.log("Logged action:", logEntry);
+            }
+
+            function summarizeAndStoreLogs() {
+                const unsavedLogs = getLogs(LOG_KEY_UNSAVED);
+                if (unsavedLogs.length === 0) {
+                    console.log("No new changes to summarize.");
+                    return;
+                }
+
+                const summarizedLogs = getLogs(LOG_KEY_SUMMARIZED);
+                const summaryTimestamp = new Date().toLocaleString();
+                let summaryMessage = `【${summaryTimestamp}】日志总结：
+`;
+
+                const actionCounts = {};
+                unsavedLogs.forEach(log => {
+                    actionCounts[log.action] = (actionCounts[log.action] || 0) + 1;
+                });
+
+                if (actionCounts.item_added) summaryMessage += ` - 新增物料：${actionCounts.item_added} 个
+`;
+                if (actionCounts.item_deleted) summaryMessage += ` - 删除物料：${actionCounts.item_deleted} 个
+`;
+                if (actionCounts.directory_added) summaryMessage += ` - 新增目录：${actionCounts.directory_added} 个
+`;
+                if (actionCounts.directory_deleted) summaryMessage += ` - 删除目录：${actionCounts.directory_deleted} 个
+`;
+
+                summarizedLogs.push({ timestamp: summaryTimestamp, summary: summaryMessage.trim() });
+                saveLogs(LOG_KEY_SUMMARIZED, summarizedLogs);
+                localStorage.removeItem(LOG_KEY_UNSAVED); // Clear unsaved logs
+                console.log("Logs summarized and stored. Unsaved logs cleared.");
+                console.log("Current summarized logs:", summarizedLogs);
+            }
+
+            // Initial directory and item data, loaded from localStorage or default
+            let directories = JSON.parse(localStorage.getItem('directories')) || [
+                {
+                    id: 'consumables', name: '耗材', type: 'category', children: [
+                        {
+                            id: 'optical-consumables', name: '光学耗材', type: 'section', items: [
+                                { id: 'item-filter', imageUrl: 'images/story-2.png', name: '滤光片', quantity: '20', location: '柜子1-1' },
+                                { id: 'item-lens254', imageUrl: 'images/story-2.png', name: '25.4透镜', quantity: '15', location: '柜子1-2' },
+                                { id: 'item-lens508', imageUrl: 'images/story-2.png', name: '50.8透镜', quantity: '10', location: '柜子1-2' },
+                                { id: 'item-dichroic', imageUrl: 'images/story-2.png', name: '二向色镜', quantity: '5', location: '柜子1-3' },
+                                { id: 'item-objective', imageUrl: 'images/story-2.png', name: '物镜', quantity: '3', location: '柜子1-4' },
+                                { id: 'item-waveplate', imageUrl: 'images/story-2.png', name: 'λ/2和λ/4波片', quantity: '8', location: '柜子1-5' },
+                                { id: 'item-planemirror', imageUrl: 'images/story-2.png', name: '平面反射镜', quantity: '20', location: '柜子1-6' },
+                                { id: 'item-ultrafastmirror', imageUrl: 'images/story-2.png', name: '超快反射镜', quantity: '12', location: '柜子1-7' }
+                            ]
+                        },
+                        {
+                            id: 'electrical-consumables', name: '电学耗材', type: 'section', items: [
+                                { id: 'item-resistor', imageUrl: 'images/story-2.png', name: '电阻', quantity: '100', location: '抽屉2-1' },
+                                { id: 'item-capacitor', imageUrl: 'images/story-2.png', name: '电容', quantity: '80', location: '抽屉2-2' },
+                                { id: 'item-wire', imageUrl: 'images/story-2.png', name: '导线', quantity: '50', location: '抽屉2-3' }
+                            ]
+                        },
+                        {
+                            id: 'other-consumables', name: '其他耗材', type: 'section', items: [
+                                { id: 'item-gloves', imageUrl: 'images/story-2.png', name: '手套', quantity: '30', location: '柜子3-1' },
+                                { id: 'item-alcohol', imageUrl: 'images/story-2.png', name: '酒精', quantity: '5', location: '柜子3-2' }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 'equipment', name: '仪器设备', type: 'category', children: [
+                        {
+                            id: 'lasers', name: '激光器', type: 'section', items: [
+                                { id: 'item-fslaser', imageUrl: 'images/story-2.png', name: '飞秒激光器', quantity: '1', location: '实验室1' },
+                                { id: 'item-cwlaser', imageUrl: 'images/story-2.png', name: '连续波激光器', quantity: '2', location: '实验室2' }
+                            ]
+                        },
+                        {
+                            id: 'daq-electrical', name: '采集卡/电学设备', type: 'section', items: [
+                                { id: 'item-daq', imageUrl: 'images/story-2.png', name: '数据采集卡', quantity: '3', location: '台面A' },
+                                { id: 'item-oscilloscope', imageUrl: 'images/story-2.png', name: '示波器', quantity: '1', location: '台面B' }
+                            ]
+                        },
+                        {
+                            id: 'mechanical-equipment', name: '机械设备', type: 'section', items: [
+                                { id: 'item-opticaltable', imageUrl: 'images/story-2.png', name: '光学平台', quantity: '1', location: '实验室1' },
+                                { id: 'item-translationstage', imageUrl: 'images/story-2.png', name: '位移台', quantity: '5', location: '抽屉4-1' }
+                            ]
+                        },
+                        {
+                            id: 'other-equipment', name: '其他设备', type: 'section', items: [
+                                { id: 'item-powersupply', imageUrl: 'images/story-2.png', name: '电源', quantity: '4', location: '台面C' }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 'others', name: '其他', type: 'category', children: [
+                        {
+                            id: 'other-materials', name: '其他物料', type: 'section', items: [
+                                { id: 'item-document', imageUrl: 'images/story-2.png', name: '文档', quantity: '1', location: '文件柜' }
+                            ]
+                        }
+                    ]
+                }
+            ];
+
+            // --- Helper Functions (defined before they are called) ---
+            // Function to save directories to localStorage
+            function saveDirectories() {
+                localStorage.setItem('directories', JSON.stringify(directories));
+            }
+
+            // Function to generate unique ID (simple, for demonstration)
+            function generateUniqueId(prefix) {
+                return prefix + Date.now();
+            }
+
+            // Function to hide all content
+            function hideAllContent() {
+                document.querySelectorAll('.category-group').forEach(group => {
+                    group.style.display = 'none';
+                });
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.style.display = 'none';
+                });
+            }
+
+            // Function to show content based on hash
+            function showContent(hash) {
+                hideAllContent();
+                if (hash) {
+                    const targetElement = document.querySelector(hash);
+                    if (targetElement) {
+                        if (targetElement.classList.contains('category-group')) {
+                            // If it's a main category, show the group and its FIRST direct section
+                            targetElement.style.display = 'block';
+                            const firstSection = targetElement.querySelector('.content-section');
+                            if (firstSection) {
+                                firstSection.style.display = 'block';
+                                // Also update URL hash to the first section so that newItem select defaults correctly
+                                if (window.location.hash !== '#' + firstSection.id) {
+                                    history.pushState(null, null, '#' + firstSection.id);
+                                }
+                            }
+                        } else if (targetElement.classList.contains('content-section')) {
+                            // If it's a sub-category, show its parent group and only this section
+                            const parentGroup = targetElement.closest('.category-group');
+                            if (parentGroup) {
+                                parentGroup.style.display = 'block';
+                                parentGroup.querySelectorAll('.content-section').forEach(section => {
+                                    section.style.display = 'none';
+                                });
+                                targetElement.style.display = 'block';
+                            }
+                        }
+                    }
+                } else {
+                    // Default to showing the first category group and its first section if no hash is present or valid
+                    if (directories.length > 0) {
+                        const firstCategoryGroup = document.querySelector(`#${directories[0].id}`);
+                        if (firstCategoryGroup) {
+                            firstCategoryGroup.style.display = 'block';
+                            const firstSectionInFirstGroup = firstCategoryGroup.querySelector('.content-section');
+                            if (firstSectionInFirstGroup) {
+                                firstSectionInFirstGroup.style.display = 'block';
+                                // Set URL hash to the first section
+                                history.replaceState(null, null, '#' + firstSectionInFirstGroup.id);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Function to render the main navigation and content based on directories data
+            function renderPageContent() {
+                const navMenuUl = document.querySelector('.nav-menu');
+                navMenuUl.innerHTML = ''; // Clear existing nav
+
+                const mainContentSubDiv = document.querySelector('.main-content-sub');
+
+                // Store references to elements that should not be removed during re-render
+                const existingNewItemBtn = document.getElementById('newItemBtn');
+                const existingNewItemModal = document.getElementById('newItemModal');
+                const existingManageDirectoryModal = document.getElementById('manageDirectoryModal');
+                const existingConfirmDeleteModal = document.getElementById('confirmDeleteModal');
+
+                // Remove all child nodes of mainContentSubDiv except the modals and newItemBtn for re-rendering
+                Array.from(mainContentSubDiv.children).forEach(child => {
+                    if (child !== existingNewItemBtn &&
+                        child !== existingNewItemModal &&
+                        child !== existingManageDirectoryModal &&
+                        child !== existingConfirmDeleteModal) {
+                        child.remove();
+                    }
+                });
+
+                // Ensure newItemBtn is the first child (if it exists) after clearing other content
+                if (existingNewItemBtn && mainContentSubDiv.firstChild !== existingNewItemBtn) {
+                    mainContentSubDiv.insertBefore(existingNewItemBtn, mainContentSubDiv.firstChild);
+                }
+
+                directories.forEach(category => {
+                    // Render navigation item
+                    const navLi = document.createElement('li');
+                    const navLink = document.createElement('a');
+                    navLink.href = `#${category.id}`;
+                    navLink.textContent = category.name;
+                    navLi.appendChild(navLink);
+
+                    if (category.children && category.children.length > 0) {
+                        const subMenuUl = document.createElement('ul');
+                        subMenuUl.classList.add('sub-menu');
+                        category.children.forEach(section => {
+                            const subNavLi = document.createElement('li');
+                            const subNavLink = document.createElement('a');
+                            subNavLink.href = `#${section.id}`;
+                            subNavLink.textContent = section.name;
+                            subNavLi.appendChild(subNavLink);
+                            subMenuUl.appendChild(subNavLi);
+                        });
+                        navLi.appendChild(subMenuUl);
+                    }
+                    navMenuUl.appendChild(navLi);
+
+                    // Render content group
+                    const categoryGroupDiv = document.createElement('div');
+                    categoryGroupDiv.id = category.id;
+                    categoryGroupDiv.classList.add('category-group');
+                    categoryGroupDiv.innerHTML = `<h1>${category.name}</h1>`;
+
+                    category.children.forEach(section => {
+                        const contentSection = document.createElement('section');
+                        contentSection.id = section.id;
+                        contentSection.classList.add('content-section');
+                        const boxGridDiv = document.createElement('div');
+                        boxGridDiv.classList.add('box-grid');
+
+                        // Populate box-grid with items
+                        if (section.items && section.items.length > 0) {
+                            section.items.forEach(item => {
+                                const newItemBox = document.createElement('div');
+                                newItemBox.classList.add('item-box');
+                                newItemBox.dataset.id = item.id; // Store item ID for deletion
+                                newItemBox.innerHTML = `
+                                    <button class="delete-item-btn">&times;</button>
+                                    <img src="${item.imageUrl}">
+                                    <p class="item-title">${item.name}</p>
+                                    <div class="item-info">
+                                        <p>数量：<span class="item-quantity">${item.quantity}</span></p>
+                                        <p>存放位置：<span class="item-location">${item.location}</span></p>
+                                    </div>
+                                `;
+                                boxGridDiv.appendChild(newItemBox);
+                            });
+                        }
+
+                        contentSection.innerHTML = `<h2>${section.name}</h2>`;
+                        contentSection.appendChild(boxGridDiv);
+                        categoryGroupDiv.appendChild(contentSection);
+                    });
+                    mainContentSubDiv.appendChild(categoryGroupDiv);
+                });
+
+                // Re-attach event listeners for navigation links (after they are created)
+                document.querySelectorAll('.nav-menu a').forEach(link => {
+                    link.addEventListener('click', function (event) {
+                        event.preventDefault();
+                        const hash = this.getAttribute('href');
+                        showContent(hash);
+                    });
+                });
+
+                // Initial content display based on URL hash or default after re-rendering
+                if (window.location.hash) {
+                    showContent(window.location.hash);
+                } else {
+                    showContent(null);
+                }
+            }
+
+            // Function to populate directory select for new item modal
+            function populateDirectorySelect() {
+                newItemParentDirectorySelect.innerHTML = ''; // Clear existing options
+
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = '-- 选择目录 --';
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                newItemParentDirectorySelect.appendChild(defaultOption);
+
+                directories.forEach(group => {
+                    const groupOption = document.createElement('option');
+                    groupOption.value = `#${group.id}`;
+                    groupOption.textContent = group.name;
+                    newItemParentDirectorySelect.appendChild(groupOption);
+
+                    group.children.forEach(section => {
+                        const sectionOption = document.createElement('option');
+                        sectionOption.value = `#${section.id}`;
+                        sectionOption.textContent = `--- ${section.name}`;
+                        newItemParentDirectorySelect.appendChild(sectionOption);
+                    });
+                });
+            }
+
+            // Function to set initial directory selection in new item modal
+            function setInitialDirectorySelection() {
+                let currentHash = window.location.hash || '#optical-consumables'; // Default to first sub-section if no hash
+                // Ensure the hash corresponds to an existing content-section before setting
+                if (!document.querySelector(currentHash) || !document.querySelector(currentHash).classList.contains('content-section')) {
+                    // If current hash is a category-group or invalid, default to the first actual content-section
+                    currentHash = `#${directories[0].children[0].id}`;
+                }
+                newItemParentDirectorySelect.value = currentHash;
+                updateDirectorySelectStyle();
+            }
+
+            // Function to update directory select style based on selection
+            function updateDirectorySelectStyle() {
+                const selectedOption = newItemParentDirectorySelect.options[newItemParentDirectorySelect.selectedIndex];
+                if (selectedOption.disabled || selectedOption.value === window.location.hash || (window.location.hash === '' && selectedOption.value === '#optical-consumables')) {
+                    newItemParentDirectorySelect.style.color = '#888';
+                } else {
+                    newItemParentDirectorySelect.style.color = '#000';
+                }
+            }
+
+            // Function to render directories in the management modal
+            function renderDirectoryList() {
+                directoryListDiv.innerHTML = '';
+                const ul = document.createElement('ul');
+                ul.id = 'draggable-directory-list';
+                directoryListDiv.appendChild(ul);
+
+                function createDirectoryItem(dir) {
+                    const li = document.createElement('li');
+                    li.dataset.id = dir.id;
+                    li.textContent = dir.name;
+                    li.draggable = true;
+
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.textContent = '删除';
+                    deleteBtn.classList.add('delete-directory-btn');
+                    deleteBtn.dataset.id = dir.id;
+                    li.appendChild(deleteBtn);
+
+                    if (dir.children && dir.children.length > 0) {
+                        const subUl = document.createElement('ul');
+                        dir.children.forEach(child => {
+                            subUl.appendChild(createDirectoryItem(child));
+                        });
+                        li.appendChild(subUl);
+                    }
+                    return li;
+                }
+
+                directories.forEach(dir => {
+                    ul.appendChild(createDirectoryItem(dir));
+                });
+
+                // Populate parent directory select for adding new directory
+                parentDirectorySelectForManage.innerHTML = '';
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = '--- 顶级目录 ---';
+                parentDirectorySelectForManage.appendChild(defaultOption);
+
+                directories.forEach(dir => {
+                    const option = document.createElement('option');
+                    option.value = dir.id;
+                    option.textContent = dir.name + ' (主类别)';
+                    parentDirectorySelectForManage.appendChild(option);
+
+                    dir.children.forEach(child => {
+                        const subOption = document.createElement('option');
+                        subOption.value = child.id;
+                        subOption.textContent = `--- ${child.name} (子类别)`;
+                        parentDirectorySelectForManage.appendChild(subOption);
+                    });
+                });
+            }
+
+            // --- Initial Render and Event Listeners (called after all functions are defined) ---
+            renderPageContent(); // Initial page render
+
+            const defaultImagePath = "images/story-2.png"; // Defined here as it's used after functions
+
+            // New Item Modal setup
+            populateDirectorySelect();
+            setInitialDirectorySelection();
+
+            newItemParentDirectorySelect.addEventListener('change', updateDirectorySelectStyle);
+
+            newItemBtn.onclick = function () {
+                populateDirectorySelect();
+                setInitialDirectorySelection();
+                newItemModal.style.display = "block";
+            }
+
+            newItemCloseSpan.onclick = function () {
+                newItemModal.style.display = "none";
+                newItemForm.reset();
+            }
+
+            newItemCancelButton.onclick = function () {
+                newItemModal.style.display = "none";
+                newItemForm.reset();
+            }
+
+            window.onclick = function (event) {
+                if (event.target == newItemModal) {
+                    newItemModal.style.display = "none";
+                    newItemForm.reset();
+                }
+            }
+
+            newItemForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const imageUrl = itemImageInput.value || defaultImagePath;
+                const name = itemNameInput.value;
+                const quantity = itemQuantityInput.value;
+                const location = itemLocationInput.value || "查看详情";
+                const targetDirectoryHash = newItemParentDirectorySelect.value;
+                const newItemId = generateUniqueId('item-');
+
+                const newItem = { id: newItemId, imageUrl, name, quantity, location };
+
+                // Find the target section and add the new item
+                let found = false;
+                for (const category of directories) {
+                    for (const section of category.children) {
+                        if (`#${section.id}` === targetDirectoryHash) {
+                            if (!section.items) {
+                                section.items = [];
+                            }
+                            section.items.push(newItem);
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (found) break;
+                }
+
+                if (!found) {
+                    alert('未能找到目标目录来添加物料。');
+                    return;
+                }
+
+                saveDirectories();
+                renderPageContent(); // Re-render the entire page content with new item
+                newItemModal.style.display = "none";
+                newItemForm.reset();
+                logAction('item_added', { name: name, directory: targetDirectoryHash }); // Log item added
+            });
+
+            // Delete Item Modal Logic
+            document.addEventListener('click', function (event) {
+                if (event.target.classList.contains('delete-item-btn')) {
+                    itemToDeleteId = event.target.closest('.item-box').dataset.id;
+                    confirmDeleteModal.style.display = 'block';
+                }
+            });
+
+            confirmDeleteBtn.addEventListener('click', function () {
+                if (itemToDeleteId) {
+                    let itemNameForLog = '未知物料';
+                    // Find and delete the item from the directories data structure
+                    let found = false;
+                    for (const category of directories) {
+                        for (const section of category.children) {
+                            if (section.items) {
+                                const itemIndex = section.items.findIndex(item => item.id === itemToDeleteId);
+                                if (itemIndex !== -1) {
+                                    itemNameForLog = section.items[itemIndex].name; // Get name before deleting
+                                    section.items.splice(itemIndex, 1);
+                                    found = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (found) break;
+                    }
+
+                    if (found) {
+                        saveDirectories();
+                        renderPageContent(); // Re-render the entire page content
+                        alert('物料删除成功！');
+                        logAction('item_deleted', { id: itemToDeleteId, name: itemNameForLog }); // Log item deleted
+                    } else {
+                        alert('未能找到要删除的物料。');
+                    }
+                    itemToDeleteId = null;
+                }
+                confirmDeleteModal.style.display = "none";
+            });
+
+            cancelDeleteBtn.addEventListener('click', function () {
+                itemToDeleteId = null;
+                confirmDeleteModal.style.display = "none";
+            });
+
+            window.addEventListener('click', function (event) {
+                if (event.target == confirmDeleteModal) {
+                    confirmDeleteModal.style.display = "none";
+                    itemToDeleteId = null;
+                }
+            });
+
+            // Drag and Drop Directory Logic
+            directoryListDiv.addEventListener('dragstart', function (e) {
+                if (e.target.tagName === 'LI') {
+                    draggedItem = e.target;
+                    e.dataTransfer.effectAllowed = 'move';
+                    setTimeout(() => {
+                        e.target.classList.add('dragging');
+                    }, 0);
+                }
+            });
+
+            directoryListDiv.addEventListener('dragover', function (e) {
+                e.preventDefault();
+                const target = e.target.closest('li');
+                if (target && draggedItem !== target && target.tagName === 'LI') {
+                    const rect = target.getBoundingClientRect();
+                    const midY = rect.top + rect.height / 2;
+
+                    if (e.clientY < midY) {
+                        target.classList.add('drag-over-top');
+                        target.classList.remove('drag-over-bottom');
+                    } else {
+                        target.classList.add('drag-over-bottom');
+                        target.classList.remove('drag-over-top');
+                    }
+                }
+            });
+
+            directoryListDiv.addEventListener('dragleave', function (e) {
+                const target = e.target.closest('li');
+                if (target) {
+                    target.classList.remove('drag-over-top', 'drag-over-bottom');
+                }
+            });
+
+            directoryListDiv.addEventListener('drop', function (e) {
+                e.preventDefault();
+                const dropTarget = e.target.closest('li');
+
+                if (draggedItem && dropTarget && draggedItem !== dropTarget) {
+                    dropTarget.classList.remove('drag-over-top', 'drag-over-bottom');
+
+                    const draggedId = draggedItem.dataset.id;
+                    const dropTargetId = dropTarget.dataset.id;
+
+                    let sourceParent = null;
+                    let sourceIndex = -1;
+                    let itemToMove = null;
+
+                    function findItemAndParent(items, id, parent = null) {
+                        for (let i = 0; i < items.length; i++) {
+                            if (items[i].id === id) {
+                                sourceParent = parent;
+                                sourceIndex = i;
+                                itemToMove = items[i];
+                                return true;
+                            }
+                            if (items[i].children && items[i].children.length > 0) {
+                                if (findItemAndParent(items[i].children, id, items[i])) {
+                                    return true;
+                                }
+                            }
+                        }
+                        return false;
+                    }
+                    findItemAndParent(directories, draggedId);
+
+                    if (!itemToMove) return;
+
+                    // Check if dropping into a child of the dragged item itself (prevent invalid nesting)
+                    let isInvalidDrop = false;
+                    function isDescendant(potentialParent, childId) {
+                        if (potentialParent.id === childId) return true;
+                        if (potentialParent.children) {
+                            for (const child of potentialParent.children) {
+                                if (isDescendant(child, childId)) return true;
+                            }
+                        }
+                        return false;
+                    }
+                    if (isDescendant(itemToMove, dropTargetId)) {
+                        isInvalidDrop = true;
+                    }
+
+                    if (isInvalidDrop) {
+                        alert('不能将目录拖动到其自身的子目录中。');
+                        return;
+                    }
+
+                    // Remove the item from its original position
+                    if (sourceParent) {
+                        sourceParent.children.splice(sourceIndex, 1);
+                    } else {
+                        directories.splice(sourceIndex, 1);
+                    }
+
+                    // Find the drop target in the directories array and insert
+                    let targetParent = null;
+                    let targetIndex = -1;
+
+                    function findTarget(items, id, parent = null) {
+                        for (let i = 0; i < items.length; i++) {
+                            if (items[i].id === id) {
+                                targetParent = parent;
+                                targetIndex = i;
+                                return true;
+                            }
+                            if (items[i].children && items[i].children.length > 0) {
+                                if (findTarget(items[i].children, id, items[i])) {
+                                    return true;
+                                }
+                            }
+                        }
+                        return false;
+                    }
+                    findTarget(directories, dropTargetId);
+
+                    const insertBefore = dropTarget.classList.contains('drag-over-top');
+
+                    let targetArray = targetParent ? targetParent.children : directories;
+                    let insertPosition = targetIndex;
+
+                    if (!insertBefore) {
+                        insertPosition = targetIndex + 1;
+                    }
+
+                    // Determine if the drop target is a category or a section (for level change)
+                    const dropTargetElementInDOM = document.querySelector(`[data-id="${dropTargetId}"]`);
+                    const dropTargetIsTopLevelCategory = !dropTargetElementInDOM.closest('ul').id.includes('draggable-directory-list');
+
+                    // Logic for dropping: maintaining hierarchy or changing it (simplified for now)
+                    if (itemToMove.type === 'category' && dropTargetIsTopLevelCategory) {
+                        // Dropping a category onto a category (reorder top-level)
+                        targetArray.splice(insertPosition, 0, itemToMove);
+                    } else if (itemToMove.type === 'section' && targetParent && targetParent.type === 'category') {
+                        // Dropping a section onto a section within the same category (reorder sections)
+                        targetArray.splice(insertPosition, 0, itemToMove);
+                    } else if (itemToMove.type === 'section' && dropTargetIsTopLevelCategory) {
+                        // If a section is dropped on a top-level category, make it a child of that category.
+                        // This is a level change. Only allow if the drop target is a category, not a section.
+                        const actualDropTargetCategory = directories.find(cat => cat.id === dropTargetId);
+                        if (actualDropTargetCategory && actualDropTargetCategory.type === 'category') {
+                            itemToMove.type = 'section'; // Ensure it's a section type
+                            actualDropTargetCategory.children.splice(0, 0, itemToMove); // Add as first child
+                        } else {
+                            alert('不支持将子目录拖动到主目录的层级，或将主目录拖动到子目录的层级。');
+                            // Re-insert the item at its original position if the drop is invalid
+                            if (sourceParent) {
+                                sourceParent.children.splice(sourceIndex, 0, itemToMove);
+                            } else {
+                                directories.splice(sourceIndex, 0, itemToMove);
+                            }
+                            saveDirectories();
+                            renderDirectoryList();
+                            renderPageContent();
+                            return;
+                        }
+                    } else {
+                        // General case for dropping sections into sections or invalid drops
+                        alert('目前只支持同类型目录的拖动排序，不支持更改目录级别（除非明确定义）。');
+                        // Re-insert the item at its original position if the drop is invalid
+                        if (sourceParent) {
+                            sourceParent.children.splice(sourceIndex, 0, itemToMove);
+                        } else {
+                            directories.splice(sourceIndex, 0, itemToMove);
+                        }
+                        saveDirectories();
+                        renderDirectoryList();
+                        renderPageContent();
+                        return;
+                    }
+
+                    saveDirectories();
+                    renderDirectoryList();
+                    renderPageContent();
+                }
+            });
+
+            directoryListDiv.addEventListener('dragend', function (e) {
+                if (draggedItem) {
+                    draggedItem.classList.remove('dragging');
+                }
+                document.querySelectorAll('.drag-over-top, .drag-over-bottom').forEach(el => {
+                    el.classList.remove('drag-over-top', 'drag-over-bottom');
+                });
+                draggedItem = null;
+            });
+
+            // Manage Directory Modal Events
+            manageDirectoryBtn.onclick = function () {
+                console.log("管理目录按钮被点击！");
+                renderDirectoryList(); // Now renderDirectoryList should be defined
+                manageDirectoryModal.style.display = "block";
+            }
+
+            manageDirectoryCloseSpan.onclick = function () {
+                manageDirectoryModal.style.display = "none";
+            }
+
+            window.addEventListener('click', function (event) {
+                if (event.target == manageDirectoryModal) {
+                    manageDirectoryModal.style.display = "none";
+                }
+            });
+
+            addDirectoryBtn.onclick = function () {
+                console.log("Add Directory button clicked!"); // Debugging
+                const newDirName = newDirectoryNameInput.value.trim();
+                const parentDirId = parentDirectorySelectForManage.value;
+
+                console.log("New Directory Name:", newDirName); // Debugging
+                console.log("Parent Directory ID:", parentDirId); // Debugging
+
+                if (!newDirName) {
+                    alert('请输入目录名称！');
+                    return;
+                }
+
+                const newDirId = generateUniqueId('dir-');
+                let newDirectory = { id: newDirId, name: newDirName, type: 'section', items: [] };
+
+                if (parentDirId === '') {
+                    // Add as a new top-level category
+                    newDirectory.type = 'category';
+                    newDirectory.children = [];
+                    directories.push(newDirectory);
+                    console.log("Added new top-level category:", newDirectory); // Debugging
+                } else {
+                    // Find the target parent (either a category or a section's parent category)
+                    let foundParent = false;
+                    for (const category of directories) {
+                        // Case 1: parentDirId is a top-level category itself
+                        if (category.id === parentDirId) {
+                            if (!category.children) {
+                                category.children = [];
+                            }
+                            category.children.push(newDirectory);
+                            foundParent = true;
+                            console.log("Added new section under category:", category.name, newDirectory); // Debugging
+                            break;
+                        } else {
+                            // Case 2: parentDirId is a section (child of a category)
+                            if (category.children) {
+                                const sectionIndex = category.children.findIndex(sec => sec.id === parentDirId);
+                                if (sectionIndex !== -1) {
+                                    // Add the new directory as a sibling to the found section
+                                    // This assumes new sub-directories are always siblings of existing sections under the same parent category
+                                    category.children.push(newDirectory);
+                                    foundParent = true;
+                                    console.log("Added new sibling section under category:", category.name, newDirectory); // Debugging
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (!foundParent) {
+                        alert('未能找到父目录来添加新目录。');
+                        console.error('Parent directory not found for ID:', parentDirId); // Debugging
+                        return;
+                    }
+                }
+
+                saveDirectories();
+                renderDirectoryList(); // Update directory list in the modal
+                renderPageContent(); // Update main navigation and content
+                newDirectoryNameInput.value = ''; // Clear input
+                alert('目录添加成功！');
+                logAction('directory_added', { name: newDirName, type: newDirectory.type, parent: parentDirId || '顶级' }); // Log directory added
+                // manageDirectoryModal.style.display = "none"; // Kept commented out as per previous note
+            };
+
+            // Event listener for deleting a directory
+            directoryListDiv.addEventListener('click', function (event) {
+                if (event.target.classList.contains('delete-directory-btn')) {
+                    const dirIdToDelete = event.target.dataset.id;
+                    let dirNameForLog = '未知目录';
+
+                    // Function to recursively find and delete directory
+                    function deleteDirectoryRecursive(items, id) {
+                        for (let i = 0; i < items.length; i++) {
+                            if (items[i].id === id) {
+                                dirNameForLog = items[i].name; // Get name before deleting
+                                items.splice(i, 1);
+                                return true;
+                            }
+                            if (items[i].children && items[i].children.length > 0) {
+                                if (deleteDirectoryRecursive(items[i].children, id)) {
+                                    return true;
+                                }
+                            }
+                        }
+                        return false;
+                    }
+
+                    if (confirm('您确定要删除此目录及其所有内容吗？此操作不可撤销。')) {
+                        if (deleteDirectoryRecursive(directories, dirIdToDelete)) {
+                            saveDirectories();
+                            renderDirectoryList(); // Update directory list in modal
+                            renderPageContent(); // Update main navigation and content
+                            alert('目录删除成功！');
+                            logAction('directory_deleted', { id: dirIdToDelete, name: dirNameForLog }); // Log directory deleted
+                        } else {
+                            alert('未能找到要删除的目录。');
+                        }
+                    }
+                }
+            });
+
+            // Start the periodic log summarization
+            setInterval(summarizeAndStoreLogs, LOG_INTERVAL_MS);
+            // Optionally, run a summary on load if a long time has passed since last summary
+            // For simplicity, we just rely on setInterval now.
+        });
+    </script>
+</body>
+
+</html>
