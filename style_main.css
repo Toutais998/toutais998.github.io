@@ -1,0 +1,699 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+.header {
+    min-height: 100vh;
+    width: 100%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+        /* url(images/scenery01.jpg); */
+        url(images/san.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 7%;
+}
+
+.logo {
+    width: 99px;
+    cursor: pointer;
+}
+
+.nav-links li {
+    list-style: none;
+    display: inline-block;
+    margin: 10px 90px;
+    /* margin: 30px auto; */
+}
+
+.nav-links li a {
+    text-decoration: none;
+    font-weight: bolder;
+    font-size: 24px;
+    color: #fff;
+}
+
+.register-btn {
+    background: #fff;
+    color: #000;
+    padding: 8px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 16px;
+    /* font-weight: bold; */
+}
+
+.container {
+    padding: 0 7%;
+    margin: 10px 20px;
+}
+
+.header h1 {
+    font-size: 4vw;
+    font-weight: 500;
+    color: #fff;
+    text-align: center;
+    padding-top: 15%;
+}
+
+
+.search-bar {
+    background: #fff;
+    width: 70%;
+    margin: 30px auto;
+    padding: 6px 10px 6px 30px;
+    border-radius: 50px;
+}
+
+.search-bar form {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.search-bar form input {
+    display: block;
+    border: 0;
+    outline: none;
+    background: transparent;
+}
+
+.search-bar form button {
+    background: #ff5361;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+}
+
+.search-bar form button img {
+    width: 15px;
+    margin-top: 7px;
+}
+
+.location-input {
+    flex: 1;
+}
+
+.search-botton {
+    right: 0;
+}
+
+.introduction {
+    margin: auto;
+}
+
+.search-bar form label {
+    font-weight: 600;
+}
+
+/*-----------Master-----------*/
+.sub-title {
+    margin: 100px 0 20px;
+    font-size: 2.2vw;
+    font-weight: 500;
+    color: #333;
+}
+
+.master {
+    display: flex;
+    flex-direction: column;
+    /* 垂直堆叠两行 */
+    gap: 60px;
+    /* 行之间的间距 */
+}
+
+.master-row {
+    display: grid;
+    /* 每行最多5个占位，每个box的宽度在150px到250px之间，理想情况下是15vw */
+    grid-template-columns: repeat(5, minmax(clamp(150px, 15vw, 250px), 1fr));
+    gap: 30px;
+    /* 盒子之间的间距 */
+    justify-content: start;
+    /* 盒子从左往右排列 */
+}
+
+.master-row>div {
+    text-align: center;
+    /* 卡片内文本居中 */
+    /* box 宽度由 grid-template-columns 控制 */
+}
+
+.master-row>div img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+}
+
+.master h4 {
+    font-weight: 600;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* --------------Post-Doctoral-----------*/
+.doctor {
+    display: grid;
+    /* 确保固定5个占位列，让其内部的box控制自身宽度 */
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 30px;
+    margin-bottom: 30px;
+}
+
+.doctor>div {
+    text-align: center;
+    /* 重新添加宽度和居中样式 */
+    width: clamp(150px, 15vw, 250px);
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+.doctor>div img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+}
+
+.doctor h3 {
+    font-weight: 600;
+    margin-top: 10px;
+    text-align: center;
+}
+
+
+/* --------------Ph.D supervisor-----------*/
+.PhD {
+    display: grid;
+    /* 确保固定5个占位列，让其内部的box控制自身宽度 */
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 30px;
+    margin-bottom: 30px;
+}
+
+.PhD>div {
+    text-align: center;
+    /* 重新添加宽度和居中样式 */
+    width: clamp(150px, 15vw, 250px);
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+.PhD div img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+}
+
+.PhD h3 {
+    font-weight: 600;
+    margin-top: 10px;
+    text-align: center;
+}
+
+
+/* -------call toaction-------*/
+.cta {
+    margin: 80px 0;
+    background-image: linear-gradient(to right, #3f2321, transparent);
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    padding: 5%;
+    color: #fff;
+}
+
+.cta h3 {
+    font-size: 4vw;
+    line-height: 5.3vw;
+    font-weight: 500;
+}
+
+.cta p {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.cta-btn {
+    background: #ff5361;
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    margin-top: 20px;
+    display: inline-block;
+}
+
+/*-------Research------*/
+.research {
+    display: grid;
+    /* 每行最多4个占位，每个box的宽度在150px到250px之间，理想情况下是15vw */
+    grid-template-columns: repeat(4, minmax(clamp(150px, 15vw, 250px), 1fr));
+    grid-gap: 30px;
+    margin-bottom: 30px;
+    justify-items: start;
+    /* 盒子从左往右排列 */
+}
+
+.research div img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+}
+
+.research>div {
+    text-align: center;
+    /* 确保box内部内容居中 */
+    position: relative;
+    /* 为内部绝对定位的元素提供上下文 */
+    overflow: hidden;
+    /* 防止内容溢出 */
+}
+
+.research>div h3 {
+    position: absolute;
+    top: 10%;
+    /* 靠近顶部 */
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    /* 文字颜色 */
+    font-size: 1.8vw;
+    /* 响应式字体大小 */
+    z-index: 2;
+    /* 确保在图片上方 */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    /* 增加文字对比度 */
+    white-space: nowrap;
+    /* 防止标题换行 */
+}
+
+.research>div ul {
+    position: absolute;
+    top: 40%;
+    /* 位于标题下方 */
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    /* 文字颜色 */
+    font-size: 1.2vw;
+    z-index: 2;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    list-style-type: disc;
+    /* 圆点 */
+    list-style-position: inside;
+    /* 列表项居中 */
+    padding: 0;
+    /* 移除默认内边距 */
+    margin: 0;
+    /* 移除默认外边距 */
+    text-align: left;
+    /* 列表内容左对齐 */
+    width: 90%;
+    /* 限制列表宽度 */
+}
+
+.research>div ul li {
+    margin-bottom: 5px;
+    /* 列表项之间间距 */
+}
+
+.research p {
+    /* 移除或调整此旧P标签的样式 */
+    /* width: 80%; */
+    /* position: absolute; */
+    /* top: 50%; */
+    /* left: 50%; */
+    /* transform: translate(-50%, -50%); */
+    /* color: #fff; */
+    /* font-size: 26px; */
+}
+
+.start-btn {
+    text-decoration: none;
+    background: #ff5361;
+    color: #fff;
+    width: 80%;
+    max-width: 350px;
+    display: block;
+    text-align: center;
+    margin: 60px auto;
+    padding: 15px;
+    border-radius: 30px;
+    font-size: 20px;
+}
+
+/*----------about-msg-------*/
+.about-msg {
+    text-align: center;
+    margin: 80px 0;
+    color: #333;
+    font-size: 17px;
+}
+
+.about-msg h2 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    font-weight: 500;
+}
+
+#text_test {
+    font-size: 17px;
+    margin-top: -28px;
+    margin-right: -960px;
+    padding-right: 0px;
+}
+
+/*-------footer-----*/
+.footer {
+    margin: 80px 0 10px;
+    text-align: center;
+}
+
+.footer a {
+    text-decoration: none;
+    color: #999;
+    font-size: 22px;
+    margin: 0 10px;
+}
+
+.footer hr {
+    background: #999;
+    height: 1px;
+    width: 100%;
+    border: 0;
+    margin: 20px 0;
+}
+
+.footer p {
+    padding-bottom: 15px;
+}
+
+
+/*--------- share button ------------ */
+.share {
+    margin: 0;
+    padding: 0;
+    font-family: 'Times New Roman', Times, serif;
+    display: flex;
+    /* height: 100vh;  */
+    text-align: center;
+    justify-content: center;
+}
+
+.share-button {
+    /* margin: 0;
+    padding: 0;
+    font-family: 'Times New Roman', Times, serif;
+    display: flex;
+    height: 100vh; 
+    margin: 80px 0 10px;
+    align-items: center; */
+    width: 280px;
+    height: 80px;
+    background: #dfe6e9;
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: 0.3s linear;
+}
+
+.share-button:hover {
+    transform: scale(1.1);
+}
+
+.share-button span {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #2d3436;
+    color: #f1f1f1;
+    text-align: center;
+    line-height: 80px;
+    z-index: 999;
+    transition: .6s linear;
+    border-radius: 40px;
+}
+
+.share-button:hover span {
+    transform: translateX(-100%);
+    transition-delay: .3s;
+}
+
+.share-button a {
+    flex: 1;
+    font-size: 28px;
+    text-align: center;
+    transform: translateX(-100%);
+    opacity: 0;
+    transition: 0.3s linear;
+}
+
+.share-button:hover a {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.share-button a:nth-of-type(1) {
+    transition-delay: 1s;
+}
+
+.share-button a:nth-of-type(2) {
+    transition-delay: 0.8s;
+}
+
+.share-button a:nth-of-type(3) {
+    transition-delay: 0.6s;
+}
+
+.share-button a:nth-of-type(4) {
+    transition-delay: 0.4s;
+}
+
+/* Custom Laser Cursor */
+body {
+    cursor: none;
+    /* 隐藏默认鼠标光标 */
+}
+
+#laser-cursor {
+    position: fixed;
+    width: 11px;
+    height: 11px;
+    background-color: red;
+    border-radius: 50%;
+    pointer-events: none;
+    /* 确保不影响底层元素的点击 */
+    z-index: 9999;
+    /* 确保光标在最顶层 */
+    transition: transform 0.1s ease-out;
+    /* 平滑移动，可以调整 */
+}
+
+.trail-dot {
+    position: fixed;
+    background-color: red;
+    /* 拖尾点的颜色 */
+    border-radius: 50%;
+    pointer-events: none;
+    /* 确保不影响底层元素的点击 */
+    z-index: 9998;
+    /* 略低于主光标 */
+    opacity: 1;
+    transition: opacity 0.1s linear, transform 0.1s linear;
+    /* 平滑消失和缩小 */
+}
+
+/* --- Login Modal Styles --- */
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 10000;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    /* Could be more or less, depending on screen size */
+    max-width: 400px;
+    border-radius: 10px;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.modal-content form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+.modal-content form input[type="text"],
+.modal-content form input[type="password"] {
+    width: calc(100% - 20px);
+    /* Adjust for padding */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    /* Include padding and border in the element's total width and height */
+}
+
+.modal-content form button {
+    background-color: #ff5361;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.modal-content form button:hover {
+    background-color: #e04a57;
+}
+
+.close-button {
+    color: #aaa;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* --- User Profile Display Styles --- */
+#userProfile {
+    position: relative;
+    /* Make it a positioning context for the dropdown */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* Space between avatar/initial and username */
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    /* Indicate it's clickable */
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+}
+
+.default-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #fff;
+    /* White background */
+    color: #ff5361;
+    /* Red text for initial */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    border: 2px solid #fff;
+}
+
+/* --- Dropdown Menu Styles --- */
+.dropdown-content {
+    display: none;
+    /* Hidden by default */
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 10001;
+    /* Ensure it's above other content and modal */
+    border-radius: 5px;
+    top: 100%;
+    /* Position below the user profile */
+    left: 0;
+    margin-top: 5px;
+    /* Small space below the profile */
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    font-weight: normal;
+    /* Override bold from nav-links */
+    font-size: 16px;
+    /* Adjust font size */
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+    color: #ff5361;
+}
+
+/* Adjust nav-links to align login/profile correctly */
+nav .nav-links {
+    margin-right: auto;
+    /* Push nav-links to the left */
+    margin-left: 0;
+    /* Align left */
+}
