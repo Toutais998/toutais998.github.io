@@ -9,15 +9,78 @@
     <title>实验室物料管理</title>
     <link rel="stylesheet" href="style_sub-manage.css">
     <script src="https://kit.fontawesome.com/0500666073.js" crossorigin="anonymous"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+    <!-- Fix for container layout -->
+    <style>
+        .container-sub {
+            height: auto;
+            min-height: 100vh;
+            overflow: visible;
+        }
 
+        .sidebar {
+            height: auto;
+            min-height: 100vh;
+        }
+
+        .main-content-sub {
+            height: auto;
+            min-height: 100vh;
+        }
+
+        .header .logo {
+            max-height: 40px;
+            /* 限制高度 */
+            width: auto;
+            /* 保持宽高比 */
+            position: relative;
+            /* 确保不会绝对定位 */
+            z-index: 1;
+            /* 确保合理的层级 */
+        }
+
+        /* 添加简化标题样式 */
+        .simplified-header {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #2c3e50;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .simplified-header .logo {
+            max-height: 40px;
+            width: auto;
+            margin-right: 20px;
+        }
+
+        .simplified-header h1 {
+            font-size: 1.6em;
+            margin: 0;
+            color: #e74c3c;
+        }
+
+        /* 存放位置选择器样式 */
+        .location-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .location-selector select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            width: 100%;
+        }
+    </style>
     <script type="module">
         // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-analytics.js";
-        import { getFirestore } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js"; // Import Firestore
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics.js";
+        import { getFirestore, doc, getDoc, setDoc, collection } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
         // Your web app's Firebase configuration
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -40,10 +103,141 @@
         console.log("Firebase 应用已初始化:", app);
         console.log("Firestore 实例已获取:", db);
 
-        // 尝试从 Firestore 读取数据以验证连接
-        import { collection, getDocs } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+        // Define the default/initial data structure for directories if Firestore is empty
+        const defaultDirectories = [
+            {
+                id: 'consumables', name: '耗材', type: 'category', children: [
+                    {
+                        id: 'optical-consumables', name: '光学耗材', type: 'section', items: [
+                            { id: 'item-filter', imageUrl: 'images/story-2.png', name: '滤光片', quantity: '20', location: '柜子1-1' },
+                            { id: 'item-lens254', imageUrl: 'images/story-2.png', name: '25.4透镜', quantity: '15', location: '柜子1-2' },
+                            { id: 'item-lens508', imageUrl: 'images/story-2.png', name: '50.8透镜', quantity: '10', location: '柜子1-2' },
+                            { id: 'item-dichroic', imageUrl: 'images/story-2.png', name: '二向色镜', quantity: '5', location: '柜子1-3' },
+                            { id: 'item-objective', imageUrl: 'images/story-2.png', name: '物镜', quantity: '3', location: '柜子1-4' },
+                            { id: 'item-waveplate', imageUrl: 'images/story-2.png', name: 'λ/2和λ/4波片', quantity: '8', location: '柜子1-5' },
+                            { id: 'item-planemirror', imageUrl: 'images/story-2.png', name: '平面反射镜', quantity: '20', location: '柜子1-6' },
+                            { id: 'item-ultrafastmirror', imageUrl: 'images/story-2.png', name: '超快反射镜', quantity: '12', location: '柜子1-7' }
+                        ]
+                    },
+                    {
+                        id: 'electrical-consumables', name: '电学耗材', type: 'section', items: [
+                            { id: 'item-resistor', imageUrl: 'images/story-2.png', name: '电阻', quantity: '100', location: '抽屉2-1' },
+                            { id: 'item-capacitor', imageUrl: 'images/story-2.png', name: '电容', quantity: '80', location: '抽屉2-2' },
+                            { id: 'item-wire', imageUrl: 'images/story-2.png', name: '导线', quantity: '50', location: '抽屉2-3' }
+                        ]
+                    },
+                    {
+                        id: 'other-consumables', name: '其他耗材', type: 'section', items: [
+                            { id: 'item-gloves', imageUrl: 'images/story-2.png', name: '手套', quantity: '30', location: '柜子3-1' },
+                            { id: 'item-alcohol', imageUrl: 'images/story-2.png', name: '酒精', quantity: '5', location: '柜子3-2' }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'equipment', name: '仪器设备', type: 'category', children: [
+                    {
+                        id: 'lasers', name: '激光器', type: 'section', items: [
+                            { id: 'item-fslaser', imageUrl: 'images/story-2.png', name: '飞秒激光器', quantity: '1', location: '实验室1' },
+                            { id: 'item-cwlaser', imageUrl: 'images/story-2.png', name: '连续波激光器', quantity: '2', location: '实验室2' }
+                        ]
+                    },
+                    {
+                        id: 'daq-electrical', name: '采集卡/电学设备', type: 'section', items: [
+                            { id: 'item-daq', imageUrl: 'images/story-2.png', name: '数据采集卡', quantity: '3', location: '台面A' },
+                            { id: 'item-oscilloscope', imageUrl: 'images/story-2.png', name: '示波器', quantity: '1', location: '台面B' }
+                        ]
+                    },
+                    {
+                        id: 'mechanical-equipment', name: '机械设备', type: 'section', items: [
+                            { id: 'item-opticaltable', imageUrl: 'images/story-2.png', name: '光学平台', quantity: '1', location: '实验室1' },
+                            { id: 'item-translationstage', imageUrl: 'images/story-2.png', name: '位移台', quantity: '5', location: '抽屉4-1' }
+                        ]
+                    },
+                    {
+                        id: 'other-equipment', name: '其他设备', type: 'section', items: [
+                            { id: 'item-powersupply', imageUrl: 'images/story-2.png', name: '电源', quantity: '4', location: '台面C' }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'others', name: '其他', type: 'category', children: [
+                    {
+                        id: 'other-materials', name: '其他物料', type: 'section', items: [
+                            { id: 'item-document', imageUrl: 'images/story-2.png', name: '文档', quantity: '1', location: '文件柜' }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        let directories = []; // This will be populated by Firestore or default
+
+        // Function to save directories to Firestore
+        function saveDirectories() {
+            console.log("正在保存数据到Firebase...", directories);
+            setDoc(doc(db, "materials", "data"), { directories: directories })
+                .then(() => {
+                    console.log("Firestore更新成功，数据已同步");
+                    alert("数据已成功同步到云端!");
+                })
+                .catch(error => {
+                    console.error("Firestore更新失败:", error);
+                    alert("同步失败，请检查网络连接");
+                });
+        }
 
         document.addEventListener('DOMContentLoaded', function () {
+            // Attempt to load directories from Firestore first
+            try {
+                const materialsDocRef = doc(db, "materials", "data");
+                getDoc(materialsDocRef)
+                    .then((docSnap) => {
+                        try {
+                            // Check if the document exists AND if it contains the 'directories' field with actual data
+                            if (docSnap.exists() && docSnap.data() && docSnap.data().directories && docSnap.data().directories.length > 0) {
+                                console.log("从 Firestore 获取到数据:", docSnap.data().directories);
+                                directories = docSnap.data().directories;
+                            } else {
+                                console.log("Firestore 中没有找到目录数据或目录数据为空，使用默认数据。");
+                                directories = defaultDirectories;
+                                // Save the default data to Firestore if it was not found or was empty
+                                try {
+                                    saveDirectories();
+                                } catch (saveError) {
+                                    console.error("保存默认数据到 Firestore 失败:", saveError);
+                                }
+                            }
+                        } catch (processError) {
+                            console.error("处理 Firestore 数据时出错，使用默认数据:", processError);
+                            directories = defaultDirectories;
+                        }
+                        // Now that directories is guaranteed to be populated (either from Firestore or default), render the page
+                        renderPageContent();
+                        populateDirectorySelect();
+                        setInitialDirectorySelection();
+                    })
+                    .catch((error) => {
+                        console.error("从 Firestore 获取数据失败，使用默认数据:", error);
+                        directories = defaultDirectories;
+                        renderPageContent();
+                        populateDirectorySelect();
+                        setInitialDirectorySelection();
+                    });
+            } catch (firebaseError) {
+                console.error("Firebase 操作失败，使用默认数据:", firebaseError);
+                directories = defaultDirectories;
+                renderPageContent();
+                populateDirectorySelect();
+                setInitialDirectorySelection();
+            }
+
+            // 添加 popstate 事件监听，处理浏览器前进/后退
+            window.addEventListener('popstate', function () {
+                showContent(window.location.hash);
+            });
+
             // --- Global/Shared Variables (declared here to be accessible throughout DOMContentLoaded scope) ---
             const navLinks = document.querySelectorAll('.nav-menu a');
 
@@ -62,11 +256,11 @@
             // --- Manage Directory Modal Elements ---
             const manageDirectoryModal = document.getElementById("manageDirectoryModal");
             const manageDirectoryBtn = document.getElementById("manageDirectoryBtn");
-            const manageDirectoryCloseSpan = manageDirectoryModal.querySelector(".close-button");
+            const manageDirectoryCloseSpan = manageDirectoryModal ? manageDirectoryModal.querySelector(".close-button") : null;
             const directoryListDiv = document.getElementById("directoryList");
             console.log("directoryListDiv 元素:", directoryListDiv); // Debugging line
             const newDirectoryNameInput = document.getElementById("newDirectoryName");
-            const parentDirectorySelectForManage = manageDirectoryModal.querySelector("#parentDirectorySelect");
+            const parentDirectorySelectForManage = manageDirectoryModal ? manageDirectoryModal.querySelector("#parentDirectorySelect") : null;
             const addDirectoryBtn = document.getElementById("addDirectoryBtn");
 
             // --- Delete Item Confirmation Modal Elements ---
@@ -74,7 +268,7 @@
             const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
             const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
 
-            // --- Internal State Variables ---
+            // --- Internal State Variables --
             let itemToDeleteId = null;
             let draggedItem = null;
             const LOG_KEY_UNSAVED = 'materialManagementUnsavedLogs';
@@ -118,7 +312,7 @@
 
                 const summarizedLogs = getLogs(LOG_KEY_SUMMARIZED);
                 const summaryTimestamp = new Date().toLocaleString();
-                let summaryMessage = `【${summaryTimestamp}】日志总结:\n`;
+                let summaryMessage = `【${summaryTimestamp}】日志总结：\n`;
 
                 const actionCounts = {};
                 unsavedLogs.forEach(log => {
@@ -136,9 +330,6 @@
                 console.log("Logs summarized and stored. Unsaved logs cleared.");
                 console.log("Current summarized logs:", summarizedLogs);
             }
-
-            // Initial directory and item data, loaded from Firestore or default
-            let directories = []; // Initialize as empty, data will come from Firestore
 
             // --- Helper Functions (defined before they are called) ---
             // Function to generate unique ID (simple, for demonstration)
@@ -158,42 +349,51 @@
 
             // Function to show content based on hash
             function showContent(hash) {
-                hideAllContent();
+                hideAllContent(); // 取消注释，确保先隐藏所有内容
                 if (hash) {
                     const targetElement = document.querySelector(hash);
+                    console.log("showContent 目标元素:" + hash + ", 找到:" + (targetElement ? targetElement.id : "未找到"));
                     if (targetElement) {
                         if (targetElement.classList.contains('category-group')) {
+                            console.log("showContent: 目标是类别组:" + targetElement.id);
                             // If it's a main category, show the group and its FIRST direct section
                             targetElement.style.display = 'block';
                             const firstSection = targetElement.querySelector('.content-section');
                             if (firstSection) {
                                 firstSection.style.display = 'block';
+                                console.log("showContent: 显示第一小节:" + firstSection.id);
                                 // Also update URL hash to the first section so that newItem select defaults correctly
                                 if (window.location.hash !== '#' + firstSection.id) {
                                     history.pushState(null, null, '#' + firstSection.id);
                                 }
                             }
                         } else if (targetElement.classList.contains('content-section')) {
+                            console.log("showContent: 目标是内容小节:" + targetElement.id);
                             // If it's a sub-category, show its parent group and only this section
                             const parentGroup = targetElement.closest('.category-group');
                             if (parentGroup) {
+                                console.log("showContent: 显示父类别组:" + parentGroup.id);
                                 parentGroup.style.display = 'block';
                                 parentGroup.querySelectorAll('.content-section').forEach(section => {
                                     section.style.display = 'none';
                                 });
                                 targetElement.style.display = 'block';
+                                console.log("showContent: 显示当前小节:" + targetElement.id);
                             }
                         }
                     }
                 } else {
+                    console.log("showContent: 无 Hash，尝试显示默认内容。");
                     // Default to showing the first category group and its first section if no hash is present or valid
                     if (directories.length > 0) {
                         const firstCategoryGroup = document.querySelector(`#${directories[0].id}`);
                         if (firstCategoryGroup) {
+                            console.log("showContent: 显示默认第一类别组:" + firstCategoryGroup.id);
                             firstCategoryGroup.style.display = 'block';
                             const firstSectionInFirstGroup = firstCategoryGroup.querySelector('.content-section');
                             if (firstSectionInFirstGroup) {
                                 firstSectionInFirstGroup.style.display = 'block';
+                                console.log("showContent: 显示默认第一小节:" + firstSectionInFirstGroup.id);
                                 // Set URL hash to the first section
                                 history.replaceState(null, null, '#' + firstSectionInFirstGroup.id);
                             }
@@ -204,6 +404,7 @@
 
             // Function to render the main navigation and content based on directories data
             function renderPageContent() {
+                console.log("renderPageContent: 开始渲染页面内容。");
                 const navMenuUl = document.querySelector('.nav-menu');
                 navMenuUl.innerHTML = ''; // Clear existing nav
 
@@ -215,22 +416,25 @@
                 const existingManageDirectoryModal = document.getElementById('manageDirectoryModal');
                 const existingConfirmDeleteModal = document.getElementById('confirmDeleteModal');
 
-                // Remove all child nodes of mainContentSubDiv except the modals and newItemBtn for re-rendering
-                Array.from(mainContentSubDiv.children).forEach(child => {
-                    if (child !== existingNewItemBtn &&
-                        child !== existingNewItemModal &&
-                        child !== existingManageDirectoryModal &&
-                        child !== existingConfirmDeleteModal) {
-                        child.remove();
-                    }
-                });
+                // Clear all dynamic content from mainContentSubDiv before re-rendering
+                // Preserve newItemBtn and modals by temporarily moving them out and then back
+                const elementsToPreserve = [
+                    existingNewItemBtn,
+                    existingNewItemModal,
+                    existingManageDirectoryModal,
+                    existingConfirmDeleteModal
+                ].filter(Boolean); // Filter out any null/undefined elements
 
-                // Ensure newItemBtn is the first child (if it exists) after clearing other content
-                if (existingNewItemBtn && mainContentSubDiv.firstChild !== existingNewItemBtn) {
-                    mainContentSubDiv.insertBefore(existingNewItemBtn, mainContentSubDiv.firstChild);
-                }
+                const tempFragment = document.createDocumentFragment();
+                elementsToPreserve.forEach(el => tempFragment.appendChild(el));
 
+                mainContentSubDiv.innerHTML = ''; // Clear all other content
+
+                elementsToPreserve.forEach(el => mainContentSubDiv.appendChild(el)); // Add back preserved elements
+
+                console.log("开始渲染目录内容，目录数量:" + directories.length);
                 directories.forEach(category => {
+                    console.log("渲染类别:" + category.name + " (ID:" + category.id + ")");
                     // Render navigation item
                     const navLi = document.createElement('li');
                     const navLink = document.createElement('a');
@@ -282,14 +486,17 @@
                                     </div>
                                 `;
                                 boxGridDiv.appendChild(newItemBox);
+                                console.log("添加物料:" + item.name + "到小节:" + section.name);
                             });
                         }
 
                         contentSection.innerHTML = `<h2>${section.name}</h2>`;
                         contentSection.appendChild(boxGridDiv);
                         categoryGroupDiv.appendChild(contentSection);
+                        console.log("renderPageContent: 添加小节:" + section.name + "到类别:" + category.name);
                     });
                     mainContentSubDiv.appendChild(categoryGroupDiv);
+                    console.log("renderPageContent: 添加类别:" + category.name + "到main-content-sub。类别ID:" + category.id);
                 });
 
                 // Re-attach event listeners for navigation links (after they are created)
@@ -297,11 +504,15 @@
                     link.addEventListener('click', function (event) {
                         event.preventDefault();
                         const hash = this.getAttribute('href');
+                        // 更新浏览器URL但不刷新页面
+                        history.pushState(null, null, hash);
                         showContent(hash);
                     });
                 });
 
                 // Initial content display based on URL hash or default after re-rendering
+                console.log("调用 showContent，当前 URL Hash:" + window.location.hash);
+                // 确保在页面加载时，内容显示正确
                 if (window.location.hash) {
                     showContent(window.location.hash);
                 } else {
@@ -337,13 +548,34 @@
 
             // Function to set initial directory selection in new item modal
             function setInitialDirectorySelection() {
-                let currentHash = window.location.hash || '#optical-consumables'; // Default to first sub-section if no hash
-                // Ensure the hash corresponds to an existing content-section before setting
+                let currentHash = window.location.hash || '#optical-consumables'; // 如果没有hash，默认为光学耗材
+
+                console.log("当前位置Hash:", currentHash);
+
+                // 确保hash对应一个实际存在的content-section
                 if (!document.querySelector(currentHash) || !document.querySelector(currentHash).classList.contains('content-section')) {
-                    // If current hash is a category-group or invalid, default to the first actual content-section
-                    currentHash = `#${directories[0].children[0].id}`;
+                    // 如果当前hash是类别组或无效，默认到第一个实际的content-section
+                    if (document.querySelector(currentHash) && document.querySelector(currentHash).classList.contains('category-group')) {
+                        // 如果是类别组，查找其第一个子section
+                        const firstSection = document.querySelector(currentHash).querySelector('.content-section');
+                        if (firstSection) {
+                            currentHash = '#' + firstSection.id;
+                        } else {
+                            // 回退到默认
+                            currentHash = '#optical-consumables';
+                        }
+                    } else {
+                        // 如果完全无效，回退到默认
+                        currentHash = '#optical-consumables';
+                    }
                 }
-                newItemParentDirectorySelect.value = currentHash;
+
+                // 在选择器中设置当前位置
+                if (newItemParentDirectorySelect) {
+                    newItemParentDirectorySelect.value = currentHash;
+                    console.log("已设置新建产品目录位置:", currentHash);
+                }
+
                 updateDirectorySelectStyle();
             }
 
@@ -359,6 +591,11 @@
 
             // Function to render directories in the management modal
             function renderDirectoryList() {
+                if (!directoryListDiv) {
+                    console.error("directoryListDiv 元素不存在!");
+                    return;
+                }
+
                 directoryListDiv.innerHTML = '';
                 const ul = document.createElement('ul');
                 ul.id = 'draggable-directory-list';
@@ -391,6 +628,11 @@
                 });
 
                 // Populate parent directory select for adding new directory
+                if (!parentDirectorySelectForManage) {
+                    console.error("parentDirectorySelectForManage 元素不存在!");
+                    return;
+                }
+
                 parentDirectorySelectForManage.innerHTML = '';
                 const defaultOption = document.createElement('option');
                 defaultOption.value = '';
@@ -413,30 +655,52 @@
             }
 
             // --- Initial Render and Event Listeners (called after all functions are defined) ---
-            renderPageContent(); // Initial page render
+            // renderPageContent(); // Initial page render -- REMOVED FROM HERE
 
             const defaultImagePath = "images/story-2.png"; // Defined here as it's used after functions
 
             // New Item Modal setup
-            populateDirectorySelect();
-            setInitialDirectorySelection();
+            // populateDirectorySelect(); // Moved inside data load
+            // setInitialDirectorySelection(); // Moved inside data load
 
             newItemParentDirectorySelect.addEventListener('change', updateDirectorySelectStyle);
 
             newItemBtn.onclick = function () {
                 populateDirectorySelect();
                 setInitialDirectorySelection();
+
+                // 重置位置选择器
+                const locationSelect = document.getElementById('itemLocationSelect');
+                if (locationSelect) {
+                    locationSelect.value = '';
+                    handleLocationChange();
+                }
+
                 newItemModal.style.display = "block";
             }
 
             newItemCloseSpan.onclick = function () {
                 newItemModal.style.display = "none";
                 newItemForm.reset();
+
+                // 重置位置选择器状态
+                const locationSelect = document.getElementById('itemLocationSelect');
+                if (locationSelect) {
+                    locationSelect.value = '';
+                    handleLocationChange();
+                }
             }
 
             newItemCancelButton.onclick = function () {
                 newItemModal.style.display = "none";
                 newItemForm.reset();
+
+                // 重置位置选择器状态
+                const locationSelect = document.getElementById('itemLocationSelect');
+                if (locationSelect) {
+                    locationSelect.value = '';
+                    handleLocationChange();
+                }
             }
 
             window.onclick = function (event) {
@@ -452,7 +716,15 @@
                 const imageUrl = itemImageInput.value || defaultImagePath;
                 const name = itemNameInput.value;
                 const quantity = itemQuantityInput.value;
-                const location = itemLocationInput.value || "查看详情";
+
+                // 获取存放位置值 - 无论是从下拉菜单还是自定义输入
+                let location = itemLocationInput.value;
+                if (!location) {
+                    const locationSelect = document.getElementById('itemLocationSelect');
+                    location = locationSelect.value === 'custom' ? '' : locationSelect.value;
+                }
+                if (!location) location = "未指定位置";
+
                 const targetDirectoryHash = newItemParentDirectorySelect.value;
                 const newItemId = generateUniqueId('item-');
 
@@ -479,11 +751,7 @@
                     return;
                 }
 
-                // Update Firestore after modification
-                db.collection("materials").doc("data").set({ directories: directories })
-                    .then(() => console.log("Firestore updated after item addition."))
-                    .catch(error => console.error("Error updating Firestore after item addition:", error));
-
+                saveDirectories(); // Call new saveDirectories
                 renderPageContent(); // Re-render the entire page content with new item
                 newItemModal.style.display = "none";
                 newItemForm.reset();
@@ -519,11 +787,8 @@
                     }
 
                     if (found) {
-                        // Update Firestore after modification
-                        db.collection("materials").doc("data").set({ directories: directories })
-                            .then(() => console.log("Firestore updated after item deletion."))
-                            .catch(error => console.error("Error updating Firestore after item deletion:", error));
-
+                        saveDirectories();
+                        renderPageContent(); // Re-render the entire page content
                         alert('物料删除成功！');
                         logAction('item_deleted', { id: itemToDeleteId, name: itemNameForLog }); // Log item deleted
                     } else {
@@ -547,355 +812,402 @@
             });
 
             // Drag and Drop Directory Logic
-            directoryListDiv.addEventListener('dragstart', function (e) {
-                if (e.target.tagName === 'LI') {
-                    draggedItem = e.target;
-                    e.dataTransfer.effectAllowed = 'move';
-                    setTimeout(() => {
-                        e.target.classList.add('dragging');
-                    }, 0);
-                }
-            });
-
-            directoryListDiv.addEventListener('dragover', function (e) {
-                e.preventDefault();
-                const target = e.target.closest('li');
-                if (target && draggedItem !== target && target.tagName === 'LI') {
-                    const rect = target.getBoundingClientRect();
-                    const midY = rect.top + rect.height / 2;
-
-                    if (e.clientY < midY) {
-                        target.classList.add('drag-over-top');
-                        target.classList.remove('drag-over-bottom');
-                    } else {
-                        target.classList.add('drag-over-bottom');
-                        target.classList.remove('drag-over-top');
+            if (directoryListDiv) {
+                directoryListDiv.addEventListener('dragstart', function (e) {
+                    if (e.target.tagName === 'LI') {
+                        draggedItem = e.target;
+                        e.dataTransfer.effectAllowed = 'move';
+                        setTimeout(() => {
+                            e.target.classList.add('dragging');
+                        }, 0);
                     }
-                }
-            });
+                });
 
-            directoryListDiv.addEventListener('dragleave', function (e) {
-                const target = e.target.closest('li');
-                if (target) {
-                    target.classList.remove('drag-over-top', 'drag-over-bottom');
-                }
-            });
+                directoryListDiv.addEventListener('dragover', function (e) {
+                    e.preventDefault();
+                    const target = e.target.closest('li');
+                    if (target && draggedItem !== target && target.tagName === 'LI') {
+                        const rect = target.getBoundingClientRect();
+                        const midY = rect.top + rect.height / 2;
 
-            directoryListDiv.addEventListener('drop', function (e) {
-                e.preventDefault();
-                const dropTarget = e.target.closest('li');
-
-                if (draggedItem && dropTarget && draggedItem !== dropTarget) {
-                    dropTarget.classList.remove('drag-over-top', 'drag-over-bottom');
-
-                    const draggedId = draggedItem.dataset.id;
-                    const dropTargetId = dropTarget.dataset.id;
-
-                    let sourceParent = null;
-                    let sourceIndex = -1;
-                    let itemToMove = null;
-
-                    function findItemAndParent(items, id, parent = null) {
-                        for (let i = 0; i < items.length; i++) {
-                            if (items[i].id === id) {
-                                sourceParent = parent;
-                                sourceIndex = i;
-                                itemToMove = items[i];
-                                return true;
-                            }
-                            if (items[i].children && items[i].children.length > 0) {
-                                if (findItemAndParent(items[i].children, id, items[i])) {
-                                    return true;
-                                }
-                            }
-                        }
-                        return false;
-                    }
-                    findItemAndParent(directories, draggedId);
-
-                    if (!itemToMove) return;
-
-                    // Check if dropping into a child of the dragged item itself (prevent invalid nesting)
-                    let isInvalidDrop = false;
-                    function isDescendant(potentialParent, childId) {
-                        if (potentialParent.id === childId) return true;
-                        if (potentialParent.children) {
-                            for (const child of potentialParent.children) {
-                                if (isDescendant(child, childId)) return true;
-                            }
-                        }
-                        return false;
-                    }
-                    if (isDescendant(itemToMove, dropTargetId)) {
-                        isInvalidDrop = true;
-                    }
-
-                    if (isInvalidDrop) {
-                        alert('不能将目录拖动到其自身的子目录中。');
-                        return;
-                    }
-
-                    // Remove the item from its original position
-                    if (sourceParent) {
-                        sourceParent.children.splice(sourceIndex, 1);
-                    } else {
-                        directories.splice(sourceIndex, 1);
-                    }
-
-                    // Find the drop target in the directories array and insert
-                    let targetParent = null;
-                    let targetIndex = -1;
-
-                    function findTarget(items, id, parent = null) {
-                        for (let i = 0; i < items.length; i++) {
-                            if (items[i].id === id) {
-                                targetParent = parent;
-                                targetIndex = i;
-                                return true;
-                            }
-                            if (items[i].children && items[i].children.length > 0) {
-                                if (findTarget(items[i].children, id, items[i])) {
-                                    return true;
-                                }
-                            }
-                        }
-                        return false;
-                    }
-                    findTarget(directories, dropTargetId);
-
-                    const insertBefore = dropTarget.classList.contains('drag-over-top');
-
-                    let targetArray = targetParent ? targetParent.children : directories;
-                    let insertPosition = targetIndex;
-
-                    if (!insertBefore) {
-                        insertPosition = targetIndex + 1;
-                    }
-
-                    // Determine if the drop target is a category or a section (for level change)
-                    const dropTargetElementInDOM = document.querySelector(`[data-id="${dropTargetId}"]`);
-                    const dropTargetIsTopLevelCategory = !dropTargetElementInDOM.closest('ul').id.includes('draggable-directory-list');
-
-                    // Logic for dropping: maintaining hierarchy or changing it (simplified for now)
-                    if (itemToMove.type === 'category' && dropTargetIsTopLevelCategory) {
-                        // Dropping a category onto a category (reorder top-level)
-                        targetArray.splice(insertPosition, 0, itemToMove);
-                    } else if (itemToMove.type === 'section' && targetParent && targetParent.type === 'category') {
-                        // Dropping a section onto a section within the same category (reorder sections)
-                        targetArray.splice(insertPosition, 0, itemToMove);
-                    } else if (itemToMove.type === 'section' && dropTargetIsTopLevelCategory) {
-                        // If a section is dropped on a top-level category, make it a child of that category.
-                        // This is a level change. Only allow if the drop target is a category, not a section.
-                        const actualDropTargetCategory = directories.find(cat => cat.id === dropTargetId);
-                        if (actualDropTargetCategory && actualDropTargetCategory.type === 'category') {
-                            itemToMove.type = 'section'; // Ensure it's a section type
-                            actualDropTargetCategory.children.splice(0, 0, itemToMove); // Add as first child
+                        if (e.clientY < midY) {
+                            target.classList.add('drag-over-top');
+                            target.classList.remove('drag-over-bottom');
                         } else {
-                            alert('不支持将子目录拖动到主目录的层级，或将主目录拖动到子目录的层级。');
+                            target.classList.add('drag-over-bottom');
+                            target.classList.remove('drag-over-top');
+                        }
+                    }
+                });
+
+                directoryListDiv.addEventListener('dragleave', function (e) {
+                    const target = e.target.closest('li');
+                    if (target) {
+                        target.classList.remove('drag-over-top', 'drag-over-bottom');
+                    }
+                });
+
+                directoryListDiv.addEventListener('drop', function (e) {
+                    e.preventDefault();
+                    const dropTarget = e.target.closest('li');
+
+                    if (draggedItem && dropTarget && draggedItem !== dropTarget) {
+                        dropTarget.classList.remove('drag-over-top', 'drag-over-bottom');
+
+                        const draggedId = draggedItem.dataset.id;
+                        const dropTargetId = dropTarget.dataset.id;
+
+                        let sourceParent = null;
+                        let sourceIndex = -1;
+                        let itemToMove = null;
+
+                        function findItemAndParent(items, id, parent = null) {
+                            for (let i = 0; i < items.length; i++) {
+                                if (items[i].id === id) {
+                                    sourceParent = parent;
+                                    sourceIndex = i;
+                                    itemToMove = items[i];
+                                    return true;
+                                }
+                                if (items[i].children && items[i].children.length > 0) {
+                                    if (findItemAndParent(items[i].children, id, items[i])) {
+                                        return true;
+                                    }
+                                }
+                            }
+                            return false;
+                        }
+                        findItemAndParent(directories, draggedId);
+
+                        if (!itemToMove) return;
+
+                        // Check if dropping into a child of the dragged item itself (prevent invalid nesting)
+                        let isInvalidDrop = false;
+                        function isDescendant(potentialParent, childId) {
+                            if (potentialParent.id === childId) return true;
+                            if (potentialParent.children) {
+                                for (const child of potentialParent.children) {
+                                    if (isDescendant(child, childId)) return true;
+                                }
+                            }
+                            return false;
+                        }
+                        if (isDescendant(itemToMove, dropTargetId)) {
+                            isInvalidDrop = true;
+                        }
+
+                        if (isInvalidDrop) {
+                            alert('不能将目录拖动到其自身的子目录中。');
+                            return;
+                        }
+
+                        // Remove the item from its original position
+                        if (sourceParent) {
+                            sourceParent.children.splice(sourceIndex, 1);
+                        } else {
+                            directories.splice(sourceIndex, 1);
+                        }
+
+                        // Find the drop target in the directories array and insert
+                        let targetParent = null;
+                        let targetIndex = -1;
+
+                        function findTarget(items, id, parent = null) {
+                            for (let i = 0; i < items.length; i++) {
+                                if (items[i].id === id) {
+                                    targetParent = parent;
+                                    targetIndex = i;
+                                    return true;
+                                }
+                                if (items[i].children && items[i].children.length > 0) {
+                                    if (findTarget(items[i].children, id, items[i])) {
+                                        return true;
+                                    }
+                                }
+                            }
+                            return false;
+                        }
+                        findTarget(directories, dropTargetId);
+
+                        const insertBefore = dropTarget.classList.contains('drag-over-top');
+
+                        let targetArray = targetParent ? targetParent.children : directories;
+                        let insertPosition = targetIndex;
+
+                        if (!insertBefore) {
+                            insertPosition = targetIndex + 1;
+                        }
+
+                        // Determine if the drop target is a category or a section (for level change)
+                        const dropTargetElementInDOM = document.querySelector(`[data-id="${dropTargetId}"]`);
+                        const dropTargetIsTopLevelCategory = dropTargetElementInDOM && !dropTargetElementInDOM.closest('ul')?.id.includes('draggable-directory-list');
+
+                        // Logic for dropping: maintaining hierarchy or changing it (simplified for now)
+                        if (itemToMove.type === 'category' && dropTargetIsTopLevelCategory) {
+                            // Dropping a category onto a category (reorder top-level)
+                            targetArray.splice(insertPosition, 0, itemToMove);
+                        } else if (itemToMove.type === 'section' && targetParent && targetParent.type === 'category') {
+                            // Dropping a section onto a section within the same category (reorder sections)
+                            targetArray.splice(insertPosition, 0, itemToMove);
+                        } else if (itemToMove.type === 'section' && dropTargetIsTopLevelCategory) {
+                            // If a section is dropped on a top-level category, make it a child of that category.
+                            // This is a level change. Only allow if the drop target is a category, not a section.
+                            const actualDropTargetCategory = directories.find(cat => cat.id === dropTargetId);
+                            if (actualDropTargetCategory && actualDropTargetCategory.type === 'category') {
+                                itemToMove.type = 'section'; // Ensure it's a section type
+                                if (!actualDropTargetCategory.children) {
+                                    actualDropTargetCategory.children = [];
+                                }
+                                actualDropTargetCategory.children.splice(0, 0, itemToMove); // Add as first child
+                            } else {
+                                alert('不支持将子目录拖动到主目录的层级，或将主目录拖动到子目录的层级。');
+                                // Re-insert the item at its original position if the drop is invalid
+                                if (sourceParent) {
+                                    sourceParent.children.splice(sourceIndex, 0, itemToMove);
+                                } else {
+                                    directories.splice(sourceIndex, 0, itemToMove);
+                                }
+                                saveDirectories();
+                                renderDirectoryList();
+                                renderPageContent();
+                                return;
+                            }
+                        } else {
+                            // General case for dropping sections into sections or invalid drops
+                            alert('目前只支持同类型目录的拖动排序，不支持更改目录级别（除非明确定义）。');
                             // Re-insert the item at its original position if the drop is invalid
                             if (sourceParent) {
                                 sourceParent.children.splice(sourceIndex, 0, itemToMove);
                             } else {
                                 directories.splice(sourceIndex, 0, itemToMove);
                             }
-                            // Update Firestore after modification
-                            db.collection("materials").doc("data").set({ directories: directories })
-                                .then(() => console.log("Firestore updated after invalid drop."))
-                                .catch(error => console.error("Error updating Firestore after invalid drop:", error));
+                            saveDirectories();
+                            renderDirectoryList();
+                            renderPageContent();
                             return;
                         }
-                    } else {
-                        // General case for dropping sections into sections or invalid drops
-                        alert('目前只支持同类型目录的拖动排序，不支持更改目录级别（除非明确定义）。');
-                        // Re-insert the item at its original position if the drop is invalid
-                        if (sourceParent) {
-                            sourceParent.children.splice(sourceIndex, 0, itemToMove);
-                        } else {
-                            directories.splice(sourceIndex, 0, itemToMove);
-                        }
-                        // Update Firestore after modification
-                        db.collection("materials").doc("data").set({ directories: directories })
-                            .then(() => console.log("Firestore updated after invalid drop."))
-                            .catch(error => console.error("Error updating Firestore after invalid drop:", error));
-                        return;
+
+                        saveDirectories();
+                        renderDirectoryList();
+                        renderPageContent();
                     }
-
-                    // Update Firestore after modification
-                    db.collection("materials").doc("data").set({ directories: directories })
-                        .then(() => console.log("Firestore updated after directory modification."))
-                        .catch(error => console.error("Error updating Firestore after directory modification:", error));
-
-                }
-            });
-
-            directoryListDiv.addEventListener('dragend', function (e) {
-                if (draggedItem) {
-                    draggedItem.classList.remove('dragging');
-                }
-                document.querySelectorAll('.drag-over-top, .drag-over-bottom').forEach(el => {
-                    el.classList.remove('drag-over-top', 'drag-over-bottom');
                 });
-                draggedItem = null;
-            });
 
-            // Manage Directory Modal Events
-            manageDirectoryBtn.onclick = function () {
-                console.log("管理目录按钮被点击！");
-                renderDirectoryList(); // Now renderDirectoryList should be defined
-                manageDirectoryModal.style.display = "block";
+                directoryListDiv.addEventListener('dragend', function (e) {
+                    if (draggedItem) {
+                        draggedItem.classList.remove('dragging');
+                    }
+                    document.querySelectorAll('.drag-over-top, .drag-over-bottom').forEach(el => {
+                        el.classList.remove('drag-over-top', 'drag-over-bottom');
+                    });
+                    draggedItem = null;
+                });
             }
 
-            manageDirectoryCloseSpan.onclick = function () {
-                manageDirectoryModal.style.display = "none";
+            // Manage Directory Modal Events
+            if (manageDirectoryBtn) {
+                manageDirectoryBtn.onclick = function () {
+                    console.log("管理目录按钮被点击！");
+                    renderDirectoryList(); // Now renderDirectoryList should be defined
+                    if (manageDirectoryModal) {
+                        manageDirectoryModal.style.display = "block";
+                    }
+                }
+            }
+
+            if (manageDirectoryCloseSpan) {
+                manageDirectoryCloseSpan.onclick = function () {
+                    if (manageDirectoryModal) {
+                        manageDirectoryModal.style.display = "none";
+                    }
+                }
             }
 
             window.addEventListener('click', function (event) {
-                if (event.target == manageDirectoryModal) {
+                if (event.target == manageDirectoryModal && manageDirectoryModal) {
                     manageDirectoryModal.style.display = "none";
                 }
             });
 
-            addDirectoryBtn.onclick = function () {
-                console.log("Add Directory button clicked！"); // Debugging
-                const newDirName = newDirectoryNameInput.value.trim();
-                const parentDirId = parentDirectorySelectForManage.value;
-
-                console.log("New Directory Name:", newDirName); // Debugging
-                console.log("Parent Directory ID:", parentDirId); // Debugging
-
-                if (!newDirName) {
-                    alert('请输入目录名称！');
-                    return;
-                }
-
-                const newDirId = generateUniqueId('dir-');
-                let newDirectory = { id: newDirId, name: newDirName, type: 'section', items: [] };
-
-                if (parentDirId === '') {
-                    // Add as a new top-level category
-                    newDirectory.type = 'category';
-                    newDirectory.children = [];
-                    directories.push(newDirectory);
-                    console.log("Added new top-level category:", newDirectory); // Debugging
-                } else {
-                    // Find the target parent (either a category or a section's parent category)
-                    let foundParent = false;
-                    for (const category of directories) {
-                        // Case 1: parentDirId is a top-level category itself
-                        if (category.id === parentDirId) {
-                            if (!category.children) {
-                                category.children = [];
-                            }
-                            category.children.push(newDirectory);
-                            foundParent = true;
-                            console.log("Added new section under category:", category.name, newDirectory); // Debugging
-                            break;
-                        } else {
-                            // Case 2: parentDirId is a section (child of a category)
-                            if (category.children) {
-                                const sectionIndex = category.children.findIndex(sec => sec.id === parentDirId);
-                                if (sectionIndex !== -1) {
-                                    // Add the new directory as a sibling to the found section
-                                    // This assumes new sub-directories are always siblings of existing sections under the same parent category
-                                    category.children.push(newDirectory);
-                                    foundParent = true;
-                                    console.log("Added new sibling section under category:", category.name, newDirectory); // Debugging
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    if (!foundParent) {
-                        alert('未能找到父目录来添加新目录。');
-                        console.error('Parent directory not found for ID:', parentDirId); // Debugging
+            if (addDirectoryBtn) {
+                addDirectoryBtn.onclick = function () {
+                    if (!newDirectoryNameInput || !parentDirectorySelectForManage) {
+                        console.error("新建目录所需元素不存在!");
                         return;
                     }
-                }
+                    console.log("Add Directory button clicked!"); // Debugging
+                    const newDirName = newDirectoryNameInput.value.trim();
+                    const parentDirId = parentDirectorySelectForManage.value;
 
-                // Update Firestore after modification
-                db.collection("materials").doc("data").set({ directories: directories })
-                    .then(() => console.log("Firestore updated after directory addition."))
-                    .catch(error => console.error("Error updating Firestore after directory addition:", error));
+                    console.log("New Directory Name:", newDirName); // Debugging
+                    console.log("Parent Directory ID:", parentDirId); // Debugging
 
-                renderDirectoryList(); // Update directory list in the modal
-                renderPageContent(); // Update main navigation and content
-                newDirectoryNameInput.value = ''; // Clear input
-                alert('目录添加成功！');
-                logAction('directory_added', { name: newDirName, type: newDirectory.type, parent: parentDirId || '顶级' }); // Log directory added
-                // manageDirectoryModal.style.display = "none"; // Kept commented out as per previous note
-            };
+                    if (!newDirName) {
+                        alert('请输入目录名称！');
+                        return;
+                    }
 
-            // Event listener for deleting a directory
-            directoryListDiv.addEventListener('click', function (event) {
-                if (event.target.classList.contains('delete-directory-btn')) {
-                    const dirIdToDelete = event.target.dataset.id;
-                    let dirNameForLog = '未知目录';
+                    const newDirId = generateUniqueId('dir-');
+                    let newDirectory = { id: newDirId, name: newDirName, type: 'section', items: [] };
 
-                    // Function to recursively find and delete directory
-                    function deleteDirectoryRecursive(items, id) {
-                        for (let i = 0; i < items.length; i++) {
-                            if (items[i].id === id) {
-                                dirNameForLog = items[i].name; // Get name before deleting
-                                items.splice(i, 1);
-                                return true;
-                            }
-                            if (items[i].children && items[i].children.length > 0) {
-                                if (deleteDirectoryRecursive(items[i].children, id)) {
-                                    return true;
+                    if (parentDirId === '') {
+                        // Add as a new top-level category
+                        newDirectory.type = 'category';
+                        newDirectory.children = [];
+                        directories.push(newDirectory);
+                        console.log("Added new top-level category:", newDirectory); // Debugging
+                    } else {
+                        // Find the target parent (either a category or a section's parent category)
+                        let foundParent = false;
+                        for (const category of directories) {
+                            // Case 1: parentDirId is a top-level category itself
+                            if (category.id === parentDirId) {
+                                if (!category.children) {
+                                    category.children = [];
+                                }
+                                category.children.push(newDirectory);
+                                foundParent = true;
+                                console.log("Added new section under category:", category.name, newDirectory); // Debugging
+                                break;
+                            } else {
+                                // Case 2: parentDirId is a section (child of a category)
+                                if (category.children) {
+                                    const sectionIndex = category.children.findIndex(sec => sec.id === parentDirId);
+                                    if (sectionIndex !== -1) {
+                                        // Add the new directory as a sibling to the found section
+                                        // This assumes new sub-directories are always siblings of existing sections under the same parent category
+                                        category.children.push(newDirectory);
+                                        foundParent = true;
+                                        console.log("Added new sibling section under category:", category.name, newDirectory); // Debugging
+                                        break;
+                                    }
                                 }
                             }
                         }
-                        return false;
-                    }
-
-                    if (confirm('您确定要删除此目录及其所有内容吗？此操作不可撤销。')) {
-                        if (deleteDirectoryRecursive(directories, dirIdToDelete)) {
-                            // Update Firestore after modification
-                            db.collection("materials").doc("data").set({ directories: directories })
-                                .then(() => console.log("Firestore updated after directory deletion."))
-                                .catch(error => console.error("Error updating Firestore after directory deletion:", error));
-
-                            alert('目录删除成功！');
-                            logAction('directory_deleted', { id: dirIdToDelete, name: dirNameForLog }); // Log directory deleted
-                        } else {
-                            alert('未能找到要删除的目录。');
+                        if (!foundParent) {
+                            alert('未能找到父目录来添加新目录。');
+                            console.error('Parent directory not found for ID:', parentDirId); // Debugging
+                            return;
                         }
                     }
-                }
-            });
+
+                    saveDirectories();
+                    renderDirectoryList(); // Update directory list in the modal
+                    renderPageContent(); // Update main navigation and content
+                    newDirectoryNameInput.value = ''; // Clear input
+                    alert('目录添加成功！');
+                    logAction('directory_added', { name: newDirName, type: newDirectory.type, parent: parentDirId || '顶级' }); // Log directory added
+                    // manageDirectoryModal.style.display = "none"; // Kept commented out as per previous note
+                };
+            }
+
+            // Event listener for deleting a directory
+            if (directoryListDiv) {
+                directoryListDiv.addEventListener('click', function (event) {
+                    if (event.target.classList.contains('delete-directory-btn')) {
+                        const dirIdToDelete = event.target.dataset.id;
+                        let dirNameForLog = '未知目录';
+
+                        // Function to recursively find and delete directory
+                        function deleteDirectoryRecursive(items, id) {
+                            for (let i = 0; i < items.length; i++) {
+                                if (items[i].id === id) {
+                                    dirNameForLog = items[i].name; // Get name before deleting
+                                    items.splice(i, 1);
+                                    return true;
+                                }
+                                if (items[i].children && items[i].children.length > 0) {
+                                    if (deleteDirectoryRecursive(items[i].children, id)) {
+                                        return true;
+                                    }
+                                }
+                            }
+                            return false;
+                        }
+
+                        if (confirm('您确定要删除此目录及其所有内容吗？此操作不可撤销。')) {
+                            if (deleteDirectoryRecursive(directories, dirIdToDelete)) {
+                                saveDirectories();
+                                renderDirectoryList(); // Update directory list in modal
+                                renderPageContent(); // Update main navigation and content
+                                alert('目录删除成功！');
+                                logAction('directory_deleted', { id: dirIdToDelete, name: dirNameForLog }); // Log directory deleted
+                            } else {
+                                alert('未能找到要删除的目录。');
+                            }
+                        }
+                    }
+                });
+            }
 
             // Start the periodic log summarization
             setInterval(summarizeAndStoreLogs, LOG_INTERVAL_MS);
             // Optionally, run a summary on load if a long time has passed since last summary
             // For simplicity, we just rely on setInterval now.
+
+            // Add event listener for the logo link to prevent default navigation
+            const homeLogoLink = document.getElementById('homeLogoLink');
+            if (homeLogoLink) {
+                homeLogoLink.addEventListener('click', function (event) {
+                    event.preventDefault(); // Prevent page reload/navigation
+                    // Optionally, you can add logic here to scroll to top or perform another action
+                });
+            }
+
+            // Add event listener for the sidebar title link to prevent default navigation
+            const sidebarTitleLink = document.getElementById('sidebarTitleLink');
+            if (sidebarTitleLink) {
+                sidebarTitleLink.addEventListener('click', function (event) {
+                    event.preventDefault(); // Prevent page reload/navigation
+                    // Optionally, you can add logic here to scroll to top or perform another action
+                });
+            }
+
+            const sidebarTitleLinkNew = document.getElementById('sidebarTitleLinkNew');
+            if (sidebarTitleLinkNew) {
+                sidebarTitleLinkNew.addEventListener('click', function (event) {
+                    event.preventDefault(); // Prevent page reload/navigation
+                });
+            }
+        });
+    </script>
+    <script>
+        // 处理位置选择器变化
+        function handleLocationChange() {
+            const locationSelect = document.getElementById('itemLocationSelect');
+            const locationInput = document.getElementById('itemLocation');
+
+            if (locationSelect.value === 'custom') {
+                // 如果选择自定义，显示输入框
+                locationInput.style.display = 'block';
+                locationInput.value = '';
+                locationInput.focus();
+            } else {
+                // 如果选择预定义选项，隐藏输入框并设置其值
+                locationInput.style.display = 'none';
+                locationInput.value = locationSelect.value;
+            }
+        }
+
+        // 页面加载时执行一次，确保表单状态正确
+        document.addEventListener('DOMContentLoaded', function () {
+            // 初始化时执行一次位置选择器处理
+            if (document.getElementById('itemLocationSelect')) {
+                handleLocationChange();
+            }
         });
     </script>
 </head>
 
 <body>
-    <div class="header">
-        <nav>
-            <a href="index.html"><img src="images/透明背景-yang.png" class="logo"></a>
-            <ul class="nav-links">
-                <li><a href="sub_page-introduction.html">Introduction</a></li>
-                <li><a href="#">实验室物料管理</a></li>
-                <li><a href="#">科研讨论小组</a></li>
-            </ul>
-            <a href="#" class="register-btn">Login</a>
-        </nav>
-        <div class="container">
-            <h2 class="site-title"><a href="index.html">Yang Lab<br>物料管理</a></h2>
-            <div class="search-bar">
-                <form action="#">
-                    <input type="text" placeholder="搜索物料">
-                    <button type="submit"><i class="fas fa-search"></i></button>
-                </form>
-            </div>
-        </div>
+    <!-- 删除整个header部分，保留一个简化的标题 -->
+    <div class="simplified-header">
+        <a href="index.html"><img src="images/透明背景-yang.png" class="logo"></a>
+        <h1>实验室物料管理</h1>
     </div>
     <div class="container-sub">
         <div class="sidebar">
-            <h2 class="sidebar-title"><a href="index.html">Yang Lab<br>物料管理</a></h2>
+            <h2 class="sidebar-title"><a href="index.html" id="sidebarTitleLinkNew">Yang Lab<br>物料管理</a></h2>
             <ul class="nav-menu">
                 <li>
                     <a href="#consumables">耗材</a>
@@ -922,304 +1234,75 @@
             <!-- New Item Button -->
             <button id="newItemBtn" class="new-item-btn">+ 新建产品名录</button>
 
-            <div id="consumables-group" class="category-group">
-                <h1 id="consumables">耗材</h1>
-                <section id="optical-consumables" class="content-section">
-                    <h2>光学耗材</h2>
-                    <div class="box-grid">
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">滤光片</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
+            <!-- The Modal -->
+            <div id="newItemModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close-button">&times;</span>
+                    <h2>新建产品名录</h2>
+                    <form id="newItemForm">
+                        <label for="itemImage">图片 URL (可选):</label>
+                        <input type="text" id="itemImage" name="itemImage" placeholder="images/默认图片.png">
+
+                        <label for="itemName">名称:</label>
+                        <input type="text" id="itemName" name="itemName" required>
+
+                        <label for="itemQuantity">数量:</label>
+                        <input type="number" id="itemQuantity" name="itemQuantity" required min="0">
+
+                        <label for="itemLocation">存放位置:</label>
+                        <div class="location-selector">
+                            <select id="itemLocationSelect" onchange="handleLocationChange()">
+                                <option value="">-- 请选择或自定义位置 --</option>
+                                <option value="大光学实验室">大光学实验室</option>
+                                <option value="C101">C101</option>
+                                <option value="C102">C102</option>
+                                <option value="C103">C103</option>
+                                <option value="C104">C104</option>
+                                <option value="custom">自定义位置...</option>
+                            </select>
+                            <input type="text" id="itemLocation" name="itemLocation" placeholder="存放位置"
+                                style="display: none;">
                         </div>
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">25.4透镜</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">50.8透镜</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">二向色镜</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">物镜</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">λ/2和λ/4波片</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">平面反射镜</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">超快反射镜</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section id="electrical-consumables" class="content-section">
-                    <h2>电学耗材</h2>
-                    <div class="box-grid">
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">电阻</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">电容</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">导线</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section id="other-consumables" class="content-section">
-                    <h2>其他耗材</h2>
-                    <div class="box-grid">
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">手套</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">酒精</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+
+                        <label for="newItemParentDirectorySelect">选择目录:</label>
+                        <select id="newItemParentDirectorySelect"></select>
+
+                        <button type="submit">提交</button>
+                        <button type="button" class="cancel-button">取消</button>
+                    </form>
+                </div>
             </div>
 
-            <div id="equipment-group" class="category-group">
-                <h1 id="equipment">仪器设备</h1>
-                <section id="lasers" class="content-section">
-                    <h2>激光器</h2>
-                    <div class="box-grid">
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">飞秒激光器</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">连续波激光器</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
+            <!-- The Modal for Manage Directory -->
+            <div id="manageDirectoryModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-button">&times;</span>
+                    <h2>管理目录</h2>
+                    <div id="directoryList">
+                        <!-- Directories will be loaded here by JavaScript -->
                     </div>
-                </section>
-                <section id="daq-electrical" class="content-section">
-                    <h2>采集卡/电学设备</h2>
-                    <div class="box-grid">
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">数据采集卡</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">示波器</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
+                    <div class="add-directory-section">
+                        <h3>添加新目录</h3>
+                        <input type="text" id="newDirectoryName" placeholder="新目录名称">
+                        <select id="parentDirectorySelect">
+                            <option value="">--- 顶级目录 ---</option>
+                            <!-- Options will be loaded by JavaScript -->
+                        </select>
+                        <button id="addDirectoryBtn">添加目录</button>
                     </div>
-                </section>
-                <section id="mechanical-equipment" class="content-section">
-                    <h2>机械设备</h2>
-                    <div class="box-grid">
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">光学平台</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">位移台</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section id="other-equipment" class="content-section">
-                    <h2>其他设备</h2>
-                    <div class="box-grid">
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">电源</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                </div>
             </div>
 
-            <div id="others-group" class="category-group">
-                <h1 id="others">其他</h1>
-                <section class="content-section">
-                    <h2>其他物料</h2>
-                    <div class="box-grid">
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">文档</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+            <!-- Confirmation Modal for Delete -->
+            <div id="confirmDeleteModal" class="modal">
+                <div class="modal-content">
+                    <h2>确认删除</h2>
+                    <p>您确定要删除此物料吗？此操作不可撤销。</p>
+                    <button id="confirmDeleteBtn">确认</button>
+                    <button id="cancelDeleteBtn">取消</button>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <!-- The Modal -->
-    <div id="newItemModal" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>新建产品名录</h2>
-            <form id="newItemForm">
-                <label for="itemImage">图片 URL (可选):</label>
-                <input type="text" id="itemImage" name="itemImage" placeholder="images/默认图片.png">
-
-                <label for="itemName">名称:</label>
-                <input type="text" id="itemName" name="itemName" required>
-
-                <label for="itemQuantity">数量:</label>
-                <input type="number" id="itemQuantity" name="itemQuantity" required min="0">
-
-                <label for="itemLocation">存放位置 (可选):</label>
-                <input type="text" id="itemLocation" name="itemLocation" placeholder="查看详情">
-
-                <label for="newItemParentDirectorySelect">选择目录:</label>
-                <select id="newItemParentDirectorySelect"></select>
-
-                <button type="submit">提交</button>
-                <button type="button" class="cancel-button">取消</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- The Modal for Manage Directory -->
-    <div id="manageDirectoryModal" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>管理目录</h2>
-            <div id="directoryList">
-                <!-- Directories will be loaded here by JavaScript -->
-            </div>
-            <div class="add-directory-section">
-                <h3>添加新目录</h3>
-                <input type="text" id="newDirectoryName" placeholder="新目录名称">
-                <select id="parentDirectorySelect">
-                    <option value="">--- 顶级目录 ---</option>
-                    <!-- Options will be loaded by JavaScript -->
-                </select>
-                <button id="addDirectoryBtn">添加目录</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Confirmation Modal for Delete -->
-    <div id="confirmDeleteModal" class="modal">
-        <div class="modal-content">
-            <h2>确认删除</h2>
-            <p>您确定要删除此物料吗？此操作不可撤销。</p>
-            <button id="confirmDeleteBtn">确认</button>
-            <button id="cancelDeleteBtn">取消</button>
         </div>
     </div>
 </body>

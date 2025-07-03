@@ -13,8 +13,10 @@ body {
     width: 100%;
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    /* overflow: hidden; */
     /* 防止出现多余的滚动条，内容区域内部滚动 */
+    overflow: auto;
+    /* Temporarily set to auto for debugging */
 }
 
 .container-sub {
