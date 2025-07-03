@@ -48,6 +48,18 @@ body {
     font-size: 1.8em;
 }
 
+.sidebar-title a {
+    color: #e74c3c;
+    /* Force red color for the link */
+    text-decoration: none;
+    /* Remove underline if any */
+}
+
+.sidebar-title a:hover {
+    color: #c0392b;
+    /* Slightly darker red on hover */
+}
+
 .nav-menu {
     list-style: none;
     padding: 0;
@@ -567,4 +579,53 @@ body {
 
 #confirmDeleteModal .modal-content #cancelDeleteBtn:hover {
     background-color: #bbb;
+}
+
+.search-bar form {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 55px;
+    /* Ensure consistent height with button */
+    position: relative;
+}
+
+.search-bar form input {
+    flex-grow: 1;
+    height: 100%;
+    border: 0;
+    outline: none;
+    background: transparent;
+    padding: 0 10px;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.search-bar form button {
+    background: #ff5361;
+    /* Set button background to red */
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    background-image: none;
+    /* Ensure no image background */
+}
+
+.search-bar form button:hover {
+    background-color: #e6404d;
+    /* Darken on hover */
+}
+
+.search-bar form button i {
+    color: #fff;
+    /* Set icon color to white */
+    font-size: 15px;
+    /* Match the original image size */
 }

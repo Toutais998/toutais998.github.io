@@ -2,50 +2,50 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="images/透明背景.png" type="image/x-icon">
-    <title>YangLab</title>
-    <link rel="stylesheet" href="style_main.css">
-    <script src="https://kit.fontawesome.com/0500666073.js" crossorigin="anonymous"></script>
-    <script>
-        document.addEventListener('visibilitychange', function () {
-            if (document.visibilityState == 'hidden') {
-                normal_title = document.title;
-                document.title = '怎么走了呀～ ┭┮﹏┭┮';
-            } else document.title = normal_title;
-        });
-    </script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/透明背景.png" type="image/x-icon">
+  <title>YangLab</title>
+  <link rel="stylesheet" href="style_main.css">
+  <script src="https://kit.fontawesome.com/0500666073.js" crossorigin="anonymous"></script>
+  <script>
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState == 'hidden') {
+        normal_title = document.title;
+        document.title = '怎么走了呀～ ┭┮﹏┭┮';
+      } else document.title = normal_title;
+    });
+  </script>
 </head>
 
 <body>
-    <div class="header">
-        <nav>
-            <img src="images/透明背景-yang.png" class="logo">
-            <ul class="nav-links">
-                <li><a href="sub_page-introduction.html">Introduction</a></li>
-                <li><a href="sub_page-manage.html">实验室物料管理</a></li>
-                <li><a href="#">科研讨论小组</a></li>
-            </ul>
-            <div id="userProfile" style="display: none;">
-                <!-- User avatar and username will be displayed here -->
-                <div class="dropdown-content">
-                    <a href="#" id="logoutBtn">注销</a>
-                    <a href="#" id="switchUserBtn">切换用户</a>
-                </div>
-            </div>
-            <a href="#" class="register-btn" id="loginBtn">Login</a>
-        </nav>
+  <div class="header">
+    <nav>
+      <img src="images/透明背景-yang.png" class="logo">
+      <ul class="nav-links">
+        <li><a href="sub_page-introduction.html">Introduction</a></li>
+        <li><a href="sub_page-manage.html">实验室物料管理</a></li>
+        <li><a href="#">科研讨论小组</a></li>
+      </ul>
+      <div id="userProfile" style="display: none;">
+        <!-- User avatar and username will be displayed here -->
+        <div class="dropdown-content">
+          <a href="#" id="logoutBtn">注销</a>
+          <a href="#" id="switchUserBtn">切换用户</a>
+        </div>
+      </div>
+      <a href="#" class="register-btn" id="loginBtn">Login</a>
+    </nav>
 
-        <div class="container">
-            <h1>Yang Lab:<br />
-                <font color='#FF0000'>Infinite</font> Creative Ideas
-                <br />人无远虑，必有近忧
-            </h1>
-            <div class="search-bar">
-                <form>
-                    <!-- <div class="location-input">
+    <div class="container">
+      <h1>Yang Lab:<br />
+        <font color='#FF0000'>Infinite</font> Creative Ideas
+        <br />人无远虑，必有近忧
+      </h1>
+      <div class="search-bar">
+        <form>
+          <!-- <div class="location-input">
                         <label>Research</label>
                         <input type="text" placeholder="研究方向">
                     </div>
@@ -61,510 +61,485 @@
                         <label>Master</label>
                         <input type="text" placeholder="硕士生">
                     </div> -->
-                    <div class="search-button">
-                        <button type="submit"><img src="images/search.png"></button>
-                    </div>
-                </form>
-            </div>
-        </div>
+          <div class="search-button">
+            <button type="submit"><img src="images/search.png"></button>
+          </div>
+        </form>
+      </div>
+    </div>
 
+  </div>
+
+
+
+  <div class="container">
+    <h2 id="research" , class="sub-title"> Research<br>研究方向 </h2>
+    <div class="research">
+      <div>
+        <img src="images/story-1.png">
+        <h3>显微成像</h3>
+        <ul>
+          <li>共聚焦显微镜</li>
+          <li>多光子显微镜</li>
+          <li>转盘共聚焦显微镜</li>
+          <li>光声显微镜</li>
+        </ul>
+      </div>
+      <div>
+        <img src="images/story-2.png">
+        <h3>超快光学</h3>
+        <ul>
+          <li>空心光纤</li>
+          <li>Multi Pass Cell</li>
+          <li>MIIPS</li>
+          <li>Dual Prism</li>
+        </ul>
+      </div>
+      <div>
+        <img src="images/细胞.png">
+        <h3>超分辨成像</h3>
+        <ul>
+          <li>STED显微镜</li>
+          <li>PALM/STORM</li>
+          <li>MiniFlux显微系统</li>
+        </ul>
+      </div>
+      <div>
+        <img src="images/001.jpg">
+        <h3>光学仪器开发</h3>
+        <ul>
+          <li>Autocorrelator 脉宽检测仪</li>
+          <li>Frog 脉冲相位检测仪器</li>
+          <li>Spectrum 光谱仪</li>
+          <li>激光布拉格光栅切割</li>
+        </ul>
+      </div>
+      <div>
+        <img src="images/002.jpg">
+        <h3>医疗仪器开发</h3>
+        <ul>
+          <li>医用导丝切割机</li>
+          <li>眼科OCT成像仪</li>
+          <li>流式细胞仪</li>
+        </ul>
+      </div>
     </div>
 
 
 
-    <div class="container">
-        <h2 id="research" , class="sub-title"> Research<br>研究方向 </h2>
-        <div class="research">
-            <div>
-                <img src="images/story-1.png">
-                <h3>显微成像</h3>
-                <ul>
-                    <li>共聚焦显微镜</li>
-                    <li>多光子显微镜</li>
-                    <li>转盘共聚焦显微镜</li>
-                    <li>光声显微镜</li>
-                </ul>
-            </div>
-            <div>
-                <img src="images/story-2.png">
-                <h3>超快光学</h3>
-                <ul>
-                    <li>空心光纤</li>
-                    <li>Multi Pass Cell</li>
-                    <li>MIIPS</li>
-                    <li>Dual Prism</li>
-                </ul>
-            </div>
-            <div>
-                <img src="images/细胞.png">
-                <h3>超分辨成像</h3>
-                <ul>
-                    <li>STED显微镜</li>
-                    <li>PALM/STORM</li>
-                    <li>MiniFlux显微系统</li>
-                </ul>
-            </div>
-            <div>
-                <img src="images/001.jpg">
-                <h3>光学仪器开发</h3>
-                <ul>
-                    <li>Autocorrelator 脉宽检测仪</li>
-                    <li>Frog 脉冲相位检测仪器</li>
-                    <li>Spectrum 光谱仪</li>
-                    <li>激光布拉格光栅切割</li>
-                </ul>
-            </div>
-            <div>
-                <img src="images/002.jpg">
-                <h3>医疗仪器开发</h3>
-                <ul>
-                    <li>医用导丝切割机</li>
-                    <li>眼科OCT成像仪</li>
-                    <li>流式细胞仪</li>
-                </ul>
-            </div>
+    <h2 id="PhD Supervisor" , class="sub-title"> Ph.D. Supervisor<br>博士生导师</h2>
+    <div class="PhD">
+      <div>
+        <img src="images/小兔头.png" alt="">
+        <h3>
+          <a href="https://www.iop.cas.cn/rcjy/tpyjy/?id=5615">Xusan Yang(杨旭三)</a>
+        </h3>
+        <p>医用应用物理平台 首席科学家</p>
+        <p>中科院物理研究所 特聘研究员</p>
+      </div>
+      <div>
+        <img src="images/kitty.jpg" alt="">
+        <h3>
+          <a href="https://iop.cas.cn/rcjy/yjdwfgj/?id=6191">Hao Xie(谢浩)</a>
+        </h3>
+        <p>中科院物理研究所 特聘副研究员</p>
+      </div>
+    </div>
+
+    <h2 id="Master Supervisor" , class="sub-title"> Master Supervisor<br>硕士生导师</h2>
+    <div class="master-supervisor">
+      <!-- <div class="control-inline" style="width:33%"> -->
+      <div>
+        <img src="images/Playful Kitty.jpg" alt="">
+        <h3>Kai Liu(刘锴)</h3>
+      </div>
+    </div>
+
+    <h2 id="Administrative Assistant" , class="sub-title"> Administrative Assistant<br>行政助理</h2>
+    <div class="administrative-assistant">
+      <!-- <div class="control-inline" style="width:33%"> -->
+      <div>
+        <img src="images/春蕾.jpg" alt="">
+        <h3>Chunlei Peng(彭春蕾)</h3>
+      </div>
+    </div>
+
+    <h2 id="Post-Doctoral" , class="sub-title"> Post-Doctoral<br>博士后</h2>
+    <div class="post-doctoral">
+      <!-- <div class="control-inline" style="width:33%"> -->
+      <div>
+        <img src="images/Playful Kitty.jpg" alt="">
+        <h3>Bo Li(李博)</h3>
+      </div>
+      <div>
+        <img src="images/Playful Kitty.jpg" alt="">
+        <h3>Na Dong(董钠)</h3>
+      </div>
+    </div>
+
+
+    <h2 id="doctor" , class="sub-title"> Ph.D.<br>博士</h2>
+    <div class="doctor">
+      <!-- <div class="control-inline" style="width:33%"> -->
+      <div>
+        <img src="images/Playful Kitty.jpg" alt="">
+        <h3>Cong Wang(王聪)</h3>
+      </div>
+      <div>
+        <img src="images/爆炸头2.jpg" alt="">
+        <h3>Yunfeng Song(宋云峰)</h3>
+      </div>
+      <div>
+        <img src="images/Playful Kitty.jpg" alt="">
+        <h3>Jiaxin Liu(刘佳鑫)</h3>
+      </div>
+    </div>
+
+
+
+    <h2 id="master" , class="sub-title">Master<br>硕士研究生</h2>
+    <div class="master">
+      <div class="master-row">
+        <div>
+          <img src="images/猫猫头.png">
+          <span>
+            <h3>胡子睿</h3>
+            <p style="font-size: 15px">23届硕士研究生</p>
+          </span>
+          <h4>Zirui Hu(胡子睿)</h4>
         </div>
-
-
-
-        <h2 id="PhD Supervisor" , class="sub-title"> Ph.D. Supervisor<br>博士生导师</h2>
-        <div class="PhD">
-            <div>
-                <img src="images/小兔头.png" alt="">
-                <h3>
-                    <a href="https://www.iop.cas.cn/rcjy/tpyjy/?id=5615">Xusan Yang(杨旭三)</a>
-                </h3>
-                <p style="font-size: 15px;">医用应用物理研究平台 首席科学家</p>
-                <p style="font-size: 15px;">中科院物理研究所 特聘研究员</p>
-            </div>
-            <div>
-                <img src="images/kitty.jpg" alt="">
-                <h3>
-                    <a href="https://iop.cas.cn/rcjy/yjdwfgj/?id=6191">Hao Xie(谢浩)</a>
-                </h3>
-                <p style="font-size: 15px;">中科院物理研究所 特聘副研究员</p>
-            </div>
-            <div>
-                <img src="images/paris.png" alt="">
-                <h3>
-                    <a href="https://njc.ucas.ac.cn/info/1151/3563.htm">Li Peng(彭蠡)</a>
-                </h3>
-            </div>
-            <!-- <div>
-                    <img src="images/new-delhi.png" alt="">
-                    <h3>New Delhi</h3>
-                </div> -->
+        <div>
+          <img src="images/兔头.jpg">
+          <span>
+            <h3>刘昊儒</h3>
+            <p style="font-size: 15px">23届硕士研究生</p>
+          </span>
+          <h4>Haoru Liu(刘昊儒)</h4>
         </div>
-
-
-        <h2 id="Post-Doctoral" , class="sub-title"> Post-Doctoral<br>博士后</h2>
-        <div class="doctor">
-            <!-- <div class="control-inline" style="width:33%"> -->
-            <div>
-                <img src="images/Playful Kitty.jpg" alt="">
-                <h3>Bo Li(李博)</h3>
-            </div>
-            <div>
-                <img src="images/Playful Kitty.jpg" alt="">
-                <h3>Na Dong(董钠)</h3>
-            </div>
+        <div>
+          <img src="images/兔头.jpg">
+          <span>
+            <h3>王豪</h3>
+            <p style="font-size: 15px">23届硕士研究生</p>
+          </span>
+          <h4>Hao Wang(王豪)</h4>
         </div>
-
-
-        <h2 id="doctor" , class="sub-title"> Ph.D.<br>博士</h2>
-        <div class="doctor">
-            <!-- <div class="control-inline" style="width:33%"> -->
-            <div>
-                <img src="images/Playful Kitty.jpg" alt="">
-                <h3>Cong Wang(王聪)</h3>
-            </div>
-            <div>
-                <img src="images/Playful Kitty.jpg" alt="">
-                <h3>Yunfeng Song(宋云峰)</h3>
-            </div>
-            <div>
-                <img src="images/Playful Kitty.jpg" alt="">
-                <h3>Jiaxin Liu(刘佳鑫)</h3>
-            </div>
+        <div>
+          <img src="images/兔头.jpg">
+          <span>
+            <h3>余波浩</h3>
+            <p style="font-size: 15px">23届硕士研究生</p>
+          </span>
+          <h4>Bohao Yu(余波浩)</h4>
         </div>
-
-        <h2 id="Engineer" , class="sub-title"> Engineer<br>工程师</h2>
-        <div class="doctor">
-            <!-- <div class="control-inline" style="width:33%"> -->
-            <div>
-                <img src="images/Playful Kitty.jpg" alt="">
-                <h3>Kai Liu(刘锴)</h3>
-            </div>
-            <div>
-                <img src="images/Playful Kitty.jpg" alt="">
-                <h3>Weinan Guan(管伟楠)</h3>
-            </div>
-            <div>
-                <img src="images/Playful Kitty.jpg" alt="">
-                <h3>Jiangshan Cai(蔡江山)</h3>
-            </div>
-            <div>
-                <img src="images/Playful Kitty.jpg" alt="">
-                <h3>Fu-mei Chai(柴付美)</h3>
-            </div>
-            <div>
-                <img src="images/Playful Kitty.jpg" alt="">
-                <h3>Ning Xu(徐宁)</h3>
-            </div>
-            <div>
-                <img src="images/Playful Kitty.jpg" alt="">
-                <h3>Huan-yuan Qin(秦怀远)</h3>
-            </div>
-            <div>
-                <img src="images/Playful Kitty.jpg" alt="">
-                <h3>Lei Pan(潘磊)</h3>
-            </div>
+      </div>
+      <div class="master-row">
+        <div>
+          <img src="images/兔头.jpg">
+          <span>
+            <h3>李小凡</h3>
+            <p style="font-size: 15px">24届硕士研究生</p>
+          </span>
+          <h4>Xiaofan Li(李小凡)</h4>
         </div>
-
-
-        <h2 id="master" , class="sub-title">Master<br>硕士研究生</h2>
-        <div class="master">
-            <div class="master-row">
-                <div>
-                    <img src="images/猫猫头.png">
-                    <span>
-                        <h3>胡子睿</h3>
-                        <p style="font-size: 15px">23届硕士研究生</p>
-                    </span>
-                    <h4>Zirui Hu(胡子睿)</h4>
-                </div>
-                <div>
-                    <img src="images/兔头.jpg">
-                    <span>
-                        <h3>刘昊儒</h3>
-                        <p style="font-size: 15px">23届硕士研究生</p>
-                    </span>
-                    <h4>Haoru Liu(刘昊儒)</h4>
-                </div>
-                <div>
-                    <img src="images/兔头.jpg">
-                    <span>
-                        <h3>王豪</h3>
-                        <p style="font-size: 15px">23届硕士研究生</p>
-                    </span>
-                    <h4>Hao Wang(王豪)</h4>
-                </div>
-                <div>
-                    <img src="images/兔头.jpg">
-                    <span>
-                        <h3>余波浩</h3>
-                        <p style="font-size: 15px">23届硕士研究生</p>
-                    </span>
-                    <h4>Bohao Yu(余波浩)</h4>
-                </div>
-            </div>
-            <div class="master-row">
-                <div>
-                    <img src="images/兔头.jpg">
-                    <span>
-                        <h3>李小凡</h3>
-                        <p style="font-size: 15px">24届硕士研究生</p>
-                    </span>
-                    <h4>Xiaofan Li(李小凡)</h4>
-                </div>
-                <div>
-                    <img src="images/兔头.jpg">
-                    <span>
-                        <h3>黄增源</h3>
-                        <p style="font-size: 15px">24届硕士研究生</p>
-                    </span>
-                    <h4>Zengyuan Huang(黄增源)</h4>
-                </div>
-                <div>
-                    <img src="images/兔头.jpg">
-                    <span>
-                        <h3>邱洪标</h3>
-                        <p style="font-size: 15px">24届硕士研究生</p>
-                    </span>
-                    <h4>Hongbiao Qiu(邱洪标)</h4>
-                </div>
-                <div>
-                    <img src="images/兔头.jpg">
-                    <span>
-                        <h3>曾好</h3>
-                        <p style="font-size: 15px">24届硕士研究生</p>
-                    </span>
-                    <h4>Hao Zeng(曾好)</h4>
-                </div>
-                <div>
-                    <img src="images/兔头.jpg">
-                    <span>
-                        <h3>张晓格</h3>
-                        <p style="font-size: 15px">24届硕士研究生</p>
-                    </span>
-                    <h4>Xiaoge Zhang(张晓格)</h4>
-                </div>
-                <div>
-                    <img src="images/兔头.jpg">
-                    <span>
-                        <h3>刘池</h3>
-                        <p style="font-size: 15px">24届硕士研究生</p>
-                    </span>
-                    <h4>Chi Liu(刘池)</h4>
-                </div>
-            </div>
-            <div class="master-row">
-                <div>
-                    <img src="images/兔头.jpg">
-                    <span>
-                        <h3>田翔宇</h3>
-                        <p style="font-size: 15px">25届硕士研究生</p>
-                    </span>
-                    <h4>Xiangyu Tian(田翔宇)</h4>
-                </div>
-            </div>
+        <div>
+          <img src="images/兔头.jpg">
+          <span>
+            <h3>黄增源</h3>
+            <p style="font-size: 15px">24届硕士研究生</p>
+          </span>
+          <h4>Zengyuan Huang(黄增源)</h4>
         </div>
-
-
-
-        <div class="cta">
-            <h3>Participate in <br> Yang Lab</h3>
-            <p>Infinity Creative Ideas<br> and Endless Paper.</p>
-            <a href="#" class="cta-btn">Know More</a>
-            <!-- 这里的know more可以弄一个链接 -->
+        <div>
+          <img src="images/兔头.jpg">
+          <span>
+            <h3>邱洪标</h3>
+            <p style="font-size: 15px">24届硕士研究生</p>
+          </span>
+          <h4>Hongbiao Qiu(邱洪标)</h4>
         </div>
-
-        <!-- <a href="#" class="start-btn">Join us</a> -->
-
-
-
-        <div class="share">
-            <div class="share-button">
-                <span><i class="fas fa-share-alt"></i> Share!</span>
-                <a href="weixin://"><i class="fab fa-weixin"></i></a>
-                <a href="http://service.weibo.com/share/share.php?url=www.yanglab.top"><i class="fab fa-weibo"></i></a>
-                <a href="tencent://"><i class="fab fa-qq"></i></a>
-                <a href="//player.bilibili.com"><i class="fab fa-bilibili"></i></a>
-            </div>
+        <div>
+          <img src="images/兔头.jpg">
+          <span>
+            <h3>曾好</h3>
+            <p style="font-size: 15px">24届硕士研究生</p>
+          </span>
+          <h4>Hao Zeng(曾好)</h4>
         </div>
-
-        <div class="about-msg">
-            <h2>
-                <font size="12">联合招聘公告</font>
-            </h2>
-            <p>
-                <font size="4">联合招聘博士后研究员等各个层次的非独立和独立PI层次的人才。宇宙级Idea待领取，大Paper发到手软。</font>
-            </p>
-            <!-- <div id="text_test"><a herf="#">联合招聘博士后研究员等各个层次的非独立和独立PI层次的人才。宇宙级Idea待领取，大Paper发到手软。</a></div> -->
-            <div id="text_test">
-                <img src="images/R.jpeg" width="30px">
-            </div>
+        <div>
+          <img src="images/兔头.jpg">
+          <span>
+            <h3>张晓格</h3>
+            <p style="font-size: 15px">24届硕士研究生</p>
+          </span>
+          <h4>Xiaoge Zhang(张晓格)</h4>
         </div>
+        <div>
+          <img src="images/兔头.jpg">
+          <span>
+            <h3>刘池</h3>
+            <p style="font-size: 15px">24届硕士研究生</p>
+          </span>
+          <h4>Chi Liu(刘池)</h4>
+        </div>
+      </div>
+      <div class="master-row">
+        <div>
+          <img src="images/兔头.jpg">
+          <span>
+            <h3>田翔宇</h3>
+            <p style="font-size: 15px">25届硕士研究生</p>
+          </span>
+          <h4>Xiangyu Tian(田翔宇)</h4>
+        </div>
+      </div>
+    </div>
 
-        <div class="footer">
-            <!-- <a href="https://facebook.com/"><i class="fa-brands fa-facebook"></i></a>
+
+
+    <div class="cta">
+      <h3>Participate in <br> Yang Lab</h3>
+      <p>Infinity Creative Ideas<br> and Endless Paper.</p>
+      <a href="#" class="cta-btn">Know More</a>
+      <!-- 这里的know more可以弄一个链接 -->
+    </div>
+
+    <!-- <a href="#" class="start-btn">Join us</a> -->
+
+
+
+    <div class="share">
+      <div class="share-button">
+        <span><i class="fas fa-share-alt"></i> Share!</span>
+        <a href="weixin://"><i class="fab fa-weixin"></i></a>
+        <a href="http://service.weibo.com/share/share.php?url=www.yanglab.top"><i class="fab fa-weibo"></i></a>
+        <a href="tencent://"><i class="fab fa-qq"></i></a>
+        <a href="//player.bilibili.com"><i class="fab fa-bilibili"></i></a>
+      </div>
+    </div>
+
+    <div class="about-msg">
+      <h2>
+        <font size="12">联合招聘公告</font>
+      </h2>
+      <p>
+        <font size="4">联合招聘博士后研究员等各个层次的非独立和独立PI层次的人才。宇宙级Idea待领取，大Paper发到手软。</font>
+      </p>
+      <!-- <div id="text_test"><a herf="#">联合招聘博士后研究员等各个层次的非独立和独立PI层次的人才。宇宙级Idea待领取，大Paper发到手软。</a></div> -->
+      <div id="text_test">
+        <img src="images/R.jpeg" width="30px">
+      </div>
+    </div>
+
+    <div class="footer">
+      <!-- <a href="https://facebook.com/"><i class="fa-brands fa-facebook"></i></a>
             <a href="https://youtube.com/"><i class="fa-brands fa-youtube"></i></a>
             <a href="https://twitter.com/"><i class="fa-brands fa-twitter"></i></a>
             <a href="https://linkedin.com/"><i class="fa-brands fa-linkedin-in"></i></a>
             <a href="https://instagram.com/"><i class="fa-brands fa-instagram"></i></a>
             <p>以上社交媒体待开通</p> -->
-            <hr>
-            <p>Copyright 2025, Yang Lab</p>
-            <!-- <p>上网许可：xxxx</p> -->
-        </div>
+      <hr>
+      <p>Copyright 2025, Yang Lab</p>
+      <!-- <p>上网许可：xxxx</p> -->
     </div>
-    <div id="laser-cursor"></div>
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>用户登录</h2>
-            <form id="loginForm">
-                <label for="username">用户名:</label>
-                <input type="text" id="username" name="username" required>
+  </div>
+  <div id="laser-cursor"></div>
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h2>用户登录</h2>
+      <form id="loginForm">
+        <label for="username">用户名:</label>
+        <input type="text" id="username" name="username" required>
 
-                <label for="password">密码:</label>
-                <input type="password" id="password" name="password" required>
+        <label for="password">密码:</label>
+        <input type="password" id="password" name="password" required>
 
-                <button type="submit">登录</button>
-            </form>
-        </div>
+        <button type="submit">登录</button>
+      </form>
     </div>
-    <script>
-        document.addEventListener('mousemove', function (e) {
-            const cursor = document.getElementById('laser-cursor');
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
+  </div>
+  <script>
+    document.addEventListener('mousemove', function (e) {
+      const cursor = document.getElementById('laser-cursor');
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
 
-            // 创建拖尾效果
-            const trail = document.createElement('div');
-            trail.className = 'trail-dot';
-            document.body.appendChild(trail);
+      // 创建拖尾效果
+      const trail = document.createElement('div');
+      trail.className = 'trail-dot';
+      document.body.appendChild(trail);
 
-            trail.style.left = e.clientX + 'px';
-            trail.style.top = e.clientY + 'px';
+      trail.style.left = e.clientX + 'px';
+      trail.style.top = e.clientY + 'px';
 
-            // 动画效果：逐渐缩小和消失
-            let size = 11; // 初始大小与主光标一致，增大10%
-            let opacity = 1; // 初始不透明度
-            const interval = setInterval(() => {
-                size *= 0.9; // 逐渐缩小
-                opacity *= 0.9; // 逐渐消失
-                trail.style.width = size + 'px';
-                trail.style.height = size + 'px';
-                trail.style.opacity = opacity;
-                if (size < 1 || opacity < 0.1) {
-                    clearInterval(interval);
-                    trail.remove(); // 移除元素
-                }
-            }, 20); // 每20毫秒更新一次，提高帧率
+      // 动画效果：逐渐缩小和消失
+      let size = 11; // 初始大小与主光标一致，增大10%
+      let opacity = 1; // 初始不透明度
+      const interval = setInterval(() => {
+        size *= 0.9; // 逐渐缩小
+        opacity *= 0.9; // 逐渐消失
+        trail.style.width = size + 'px';
+        trail.style.height = size + 'px';
+        trail.style.opacity = opacity;
+        if (size < 1 || opacity < 0.1) {
+          clearInterval(interval);
+          trail.remove(); // 移除元素
+        }
+      }, 20); // 每20毫秒更新一次，提高帧率
+    });
+
+    // 将所有链接默认为在新页面打开
+    document.addEventListener('DOMContentLoaded', function () {
+      const allLinks = document.querySelectorAll('a');
+      allLinks.forEach(link => {
+        link.addEventListener('click', function (event) {
+          // 检查链接是否已经有 target="_blank"，如果已经有，则不干预
+          // 并且排除ID为'loginBtn'的链接，使其不会在新标签页打开
+          if (this.target !== '_blank' && this.id !== 'loginBtn') {
+            event.preventDefault(); // 阻止默认跳转
+            window.open(this.href, '_blank'); // 在新标签页打开
+          }
         });
+      });
 
-        // 将所有链接默认为在新页面打开
-        document.addEventListener('DOMContentLoaded', function () {
-            const allLinks = document.querySelectorAll('a');
-            allLinks.forEach(link => {
-                link.addEventListener('click', function (event) {
-                    // 检查链接是否已经有 target="_blank"，如果已经有，则不干预
-                    // 并且排除ID为'loginBtn'的链接，使其不会在新标签页打开
-                    if (this.target !== '_blank' && this.id !== 'loginBtn') {
-                        event.preventDefault(); // 阻止默认跳转
-                        window.open(this.href, '_blank'); // 在新标签页打开
-                    }
-                });
-            });
+      // --- Login Feature ---
+      const loginBtn = document.getElementById('loginBtn');
+      const loginModal = document.getElementById('loginModal');
+      const loginCloseSpan = loginModal.querySelector(".close-button");
+      const loginForm = document.getElementById('loginForm');
+      const usernameInput = document.getElementById('username');
+      const passwordInput = document.getElementById('password');
+      const userProfileDiv = document.getElementById('userProfile');
 
-            // --- Login Feature ---
-            const loginBtn = document.getElementById('loginBtn');
-            const loginModal = document.getElementById('loginModal');
-            const loginCloseSpan = loginModal.querySelector(".close-button");
-            const loginForm = document.getElementById('loginForm');
-            const usernameInput = document.getElementById('username');
-            const passwordInput = document.getElementById('password');
-            const userProfileDiv = document.getElementById('userProfile');
+      const users = {
+        "yangxusan": { password: "@yangxusan", avatar: "images/小兔头.png" },
+        "pengchunlei": { password: "@pengchunlei", avatar: "" },
+        "guanweinan": { password: "@guanweinan", avatar: "" },
+        "huzirui": { password: "@huzirui", avatar: "images/猫猫头.png" },
+        "liuchi": { password: "@liuchi", avatar: "" },
+        "liuhaoru": { password: "@liuhaoru", avatar: "" },
+        "lidongrun": { password: "@lidongrun", avatar: "" },
+        "lixiaofan": { password: "@lixiaofan", avatar: "" },
+        "huangzengyuan": { password: "@huangzengyuan", avatar: "" },
+        "liukai": { password: "@liukai", avatar: "" },
+        "wanghao": { password: "@wanghao", avatar: "" },
+        "yubohao": { password: "@yubohao", avatar: "" },
+        "zenghao": { password: "@zenghao", avatar: "" },
+        "qiuhongbiao": { password: "@qiuhongbiao", avatar: "" },
+        "libo": { password: "@libo", avatar: "" },
+        "caijiangshan": { password: "@caijiangshan", avatar: "" }
+      };
 
-            const users = {
-                "yangxusan": { password: "@yangxusan", avatar: "images/小兔头.png" },
-                "pengchunlei": { password: "@pengchunlei", avatar: "" },
-                "guanweinan": { password: "@guanweinan", avatar: "" },
-                "huzirui": { password: "@huzirui", avatar: "images/猫猫头.png" },
-                "liuchi": { password: "@liuchi", avatar: "" },
-                "liuhaoru": { password: "@liuhaoru", avatar: "" },
-                "lidongrun": { password: "@lidongrun", avatar: "" },
-                "lixiaofan": { password: "@lixiaofan", avatar: "" },
-                "huangzengyuan": { password: "@huangzengyuan", avatar: "" },
-                "liukai": { password: "@liukai", avatar: "" },
-                "wanghao": { password: "@wanghao", avatar: "" },
-                "yubohao": { password: "@yubohao", avatar: "" },
-                "zenghao": { password: "@zenghao", avatar: "" },
-                "qiuhongbiao": { password: "@qiuhongbiao", avatar: "" },
-                "libo": { password: "@libo", avatar: "" },
-                "caijiangshan": { password: "@caijiangshan", avatar: "" }
-            };
+      function getDefaultAvatarHtml(username) {
+        const initial = username.charAt(0).toUpperCase();
+        return `<div class="default-avatar">${initial}</div>`;
+      }
 
-            function getDefaultAvatarHtml(username) {
-                const initial = username.charAt(0).toUpperCase();
-                return `<div class="default-avatar">${initial}</div>`;
-            }
+      function displayUserProfile(username, avatarUrl) {
+        userProfileDiv.innerHTML = ''; // Clear previous content
 
-            function displayUserProfile(username, avatarUrl) {
-                userProfileDiv.innerHTML = ''; // Clear previous content
+        const avatarHtml = avatarUrl ? `<img src="${avatarUrl}" alt="${username}" class="user-avatar">` : getDefaultAvatarHtml(username);
+        userProfileDiv.innerHTML = `${avatarHtml}<span>${username}</span><div class="dropdown-content"><a href="#" id="logoutBtn">注销</a><a href="#" id="switchUserBtn">切换用户</a></div>`;
 
-                const avatarHtml = avatarUrl ? `<img src="${avatarUrl}" alt="${username}" class="user-avatar">` : getDefaultAvatarHtml(username);
-                userProfileDiv.innerHTML = `${avatarHtml}<span>${username}</span><div class="dropdown-content"><a href="#" id="logoutBtn">注销</a><a href="#" id="switchUserBtn">切换用户</a></div>`;
+        userProfileDiv.style.display = 'flex'; // Show the profile
+        loginBtn.style.display = 'none'; // Hide the login button
+        // Store login state in localStorage
+        localStorage.setItem('loggedInUser', username);
+        if (avatarUrl) {
+          localStorage.setItem('loggedInUserAvatar', avatarUrl);
+        } else {
+          localStorage.removeItem('loggedInUserAvatar');
+        }
 
-                userProfileDiv.style.display = 'flex'; // Show the profile
-                loginBtn.style.display = 'none'; // Hide the login button
-                // Store login state in localStorage
-                localStorage.setItem('loggedInUser', username);
-                if (avatarUrl) {
-                    localStorage.setItem('loggedInUserAvatar', avatarUrl);
-                } else {
-                    localStorage.removeItem('loggedInUserAvatar');
-                }
+        // Re-attach event listeners for logout/switch buttons
+        document.getElementById('logoutBtn').addEventListener('click', logoutUser);
+        document.getElementById('switchUserBtn').addEventListener('click', switchUser);
+      }
 
-                // Re-attach event listeners for logout/switch buttons
-                document.getElementById('logoutBtn').addEventListener('click', logoutUser);
-                document.getElementById('switchUserBtn').addEventListener('click', switchUser);
-            }
+      function hideUserProfile() {
+        userProfileDiv.style.display = 'none';
+        userProfileDiv.innerHTML = ''; // Clear content
+        loginBtn.style.display = 'block'; // Show login button
+        localStorage.removeItem('loggedInUser');
+        localStorage.removeItem('loggedInUserAvatar');
+      }
 
-            function hideUserProfile() {
-                userProfileDiv.style.display = 'none';
-                userProfileDiv.innerHTML = ''; // Clear content
-                loginBtn.style.display = 'block'; // Show login button
-                localStorage.removeItem('loggedInUser');
-                localStorage.removeItem('loggedInUserAvatar');
-            }
+      function logoutUser() {
+        if (confirm('您确定要注销吗？')) {
+          hideUserProfile();
+          alert('已注销。');
+        }
+      }
 
-            function logoutUser() {
-                if (confirm('您确定要注销吗？')) {
-                    hideUserProfile();
-                    alert('已注销。');
-                }
-            }
+      function switchUser() {
+        hideUserProfile();
+        loginModal.style.display = "block"; // Show login modal
+        loginForm.reset();
+      }
 
-            function switchUser() {
-                hideUserProfile();
-                loginModal.style.display = "block"; // Show login modal
-                loginForm.reset();
-            }
+      // Check login status on page load
+      const storedUsername = localStorage.getItem('loggedInUser');
+      const storedAvatar = localStorage.getItem('loggedInUserAvatar');
+      if (storedUsername) {
+        displayUserProfile(storedUsername, storedAvatar);
+      } else {
+        hideUserProfile(); // Ensure correct initial state if not logged in
+      }
 
-            // Check login status on page load
-            const storedUsername = localStorage.getItem('loggedInUser');
-            const storedAvatar = localStorage.getItem('loggedInUserAvatar');
-            if (storedUsername) {
-                displayUserProfile(storedUsername, storedAvatar);
-            } else {
-                hideUserProfile(); // Ensure correct initial state if not logged in
-            }
+      // Event listener for showing dropdown on userProfile click
+      userProfileDiv.addEventListener('click', function (event) {
+        // Toggle dropdown visibility
+        const dropdown = userProfileDiv.querySelector('.dropdown-content');
+        if (dropdown) {
+          dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+        event.stopPropagation(); // Prevent document click from immediately closing
+      });
 
-            // Event listener for showing dropdown on userProfile click
-            userProfileDiv.addEventListener('click', function (event) {
-                // Toggle dropdown visibility
-                const dropdown = userProfileDiv.querySelector('.dropdown-content');
-                if (dropdown) {
-                    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-                }
-                event.stopPropagation(); // Prevent document click from immediately closing
-            });
+      // Close dropdown if clicked outside
+      document.addEventListener('click', function (event) {
+        const dropdown = userProfileDiv.querySelector('.dropdown-content');
+        if (dropdown && dropdown.style.display === 'block' && !userProfileDiv.contains(event.target)) {
+          dropdown.style.display = 'none';
+        }
+      });
 
-            // Close dropdown if clicked outside
-            document.addEventListener('click', function (event) {
-                const dropdown = userProfileDiv.querySelector('.dropdown-content');
-                if (dropdown && dropdown.style.display === 'block' && !userProfileDiv.contains(event.target)) {
-                    dropdown.style.display = 'none';
-                }
-            });
+      loginBtn.onclick = function () {
+        loginModal.style.display = "block";
+      }
 
-            loginBtn.onclick = function () {
-                loginModal.style.display = "block";
-            }
+      loginCloseSpan.onclick = function () {
+        loginModal.style.display = "none";
+        loginForm.reset();
+      }
 
-            loginCloseSpan.onclick = function () {
-                loginModal.style.display = "none";
-                loginForm.reset();
-            }
+      window.onclick = function (event) {
+        if (event.target == loginModal) {
+          loginModal.style.display = "none";
+          loginForm.reset();
+        }
+      }
 
-            window.onclick = function (event) {
-                if (event.target == loginModal) {
-                    loginModal.style.display = "none";
-                    loginForm.reset();
-                }
-            }
+      loginForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value.trim();
 
-            loginForm.addEventListener('submit', function (event) {
-                event.preventDefault();
-                const username = usernameInput.value.trim();
-                const password = passwordInput.value.trim();
+        const user = users[username];
 
-                const user = users[username];
+        if (user && user.password === password) {
+          alert('登录成功！');
+          displayUserProfile(username, user.avatar);
+          loginModal.style.display = 'none';
+          loginForm.reset();
+        } else {
+          alert('用户名或密码错误，请重试！');
+        }
+      });
 
-                if (user && user.password === password) {
-                    alert('登录成功！');
-                    displayUserProfile(username, user.avatar);
-                    loginModal.style.display = 'none';
-                    loginForm.reset();
-                } else {
-                    alert('用户名或密码错误，请重试！');
-                }
-            });
-
-        });
-    </script>
+    });
+  </script>
 </body>
 
 </html>

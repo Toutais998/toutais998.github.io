@@ -6,342 +6,43 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="images/透明背景.png" type="image/x-icon">
-    <title>Yang Lab-实验室物料管理</title>
+    <title>实验室物料管理</title>
     <link rel="stylesheet" href="style_sub-manage.css">
-</head>
+    <script src="https://kit.fontawesome.com/0500666073.js" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
 
-<body>
-    <div class="container-sub">
-        <div class="sidebar">
-            <h2>Yang Lab<br>物料管理</h2>
-            <ul class="nav-menu">
-                <li>
-                    <a href="#consumables">耗材</a>
-                    <ul class="sub-menu">
-                        <li><a href="#optical-consumables">光学耗材</a></li>
-                        <li><a href="#electrical-consumables">电学耗材</a></li>
-                        <li><a href="#other-consumables">其他耗材</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#equipment">仪器设备</a>
-                    <ul class="sub-menu">
-                        <li><a href="#lasers">激光器</a></li>
-                        <li><a href="#daq-electrical">采集卡/电学设备</a></li>
-                        <li><a href="#mechanical-equipment">机械设备</a></li>
-                        <li><a href="#other-equipment">其他设备</a></li>
-                    </ul>
-                </li>
-                <li><a href="#others">其他</a></li>
-            </ul>
-            <button id="manageDirectoryBtn" class="manage-dir-btn">管理目录</button>
-        </div>
-        <div class="main-content-sub">
-            <!-- New Item Button -->
-            <button id="newItemBtn" class="new-item-btn">+ 新建产品名录</button>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-analytics.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js"; // Import Firestore
 
-            <div id="consumables-group" class="category-group">
-                <h1 id="consumables">耗材</h1>
-                <section id="optical-consumables" class="content-section">
-                    <h2>光学耗材</h2>
-                    <div class="box-grid">
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">滤光片</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">25.4透镜</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">50.8透镜</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">二向色镜</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">物镜</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">λ/2和λ/4波片</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">平面反射镜</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">超快反射镜</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section id="electrical-consumables" class="content-section">
-                    <h2>电学耗材</h2>
-                    <div class="box-grid">
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">电阻</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">电容</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">导线</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section id="other-consumables" class="content-section">
-                    <h2>其他耗材</h2>
-                    <div class="box-grid">
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">手套</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">酒精</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyAdsyT0NuoqjbWcyiCLdSiQIDdoM7RnGo4",
+            authDomain: "yanglab-e8ebe.firebaseapp.com",
+            projectId: "yanglab-e8ebe",
+            storageBucket: "yanglab-e8ebe.firebasestorage.app",
+            messagingSenderId: "746435928321",
+            appId: "1:746435928321:web:615c2a9c650c5b38953b00",
+            measurementId: "G-SE9HBFS1PW"
+        };
 
-            <div id="equipment-group" class="category-group">
-                <h1 id="equipment">仪器设备</h1>
-                <section id="lasers" class="content-section">
-                    <h2>激光器</h2>
-                    <div class="box-grid">
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">飞秒激光器</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">连续波激光器</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section id="daq-electrical" class="content-section">
-                    <h2>采集卡/电学设备</h2>
-                    <div class="box-grid">
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">数据采集卡</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">示波器</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section id="mechanical-equipment" class="content-section">
-                    <h2>机械设备</h2>
-                    <div class="box-grid">
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">光学平台</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">位移台</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section id="other-equipment" class="content-section">
-                    <h2>其他设备</h2>
-                    <div class="box-grid">
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">电源</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app); // Get Firestore instance
 
-            <div id="others-group" class="category-group">
-                <h1 id="others">其他</h1>
-                <section class="content-section">
-                    <h2>其他物料</h2>
-                    <div class="box-grid">
-                        <div class="item-box">
-                            <button class="delete-item-btn">&times;</button>
-                            <img src="images/story-2.png">
-                            <p class="item-title">文档</p>
-                            <div class="item-info">
-                                <p>数量：<span class="item-quantity"></span></p>
-                                <p>存放位置：<span class="item-location"></span></p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </div>
-    </div>
+        // 添加控制台日志以验证 Firebase 初始化
+        console.log("Firebase 应用已初始化:", app);
+        console.log("Firestore 实例已获取:", db);
 
-    <!-- The Modal -->
-    <div id="newItemModal" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>新建产品名录</h2>
-            <form id="newItemForm">
-                <label for="itemImage">图片 URL (可选):</label>
-                <input type="text" id="itemImage" name="itemImage" placeholder="images/默认图片.png">
+        // 尝试从 Firestore 读取数据以验证连接
+        import { collection, getDocs } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
-                <label for="itemName">名称:</label>
-                <input type="text" id="itemName" name="itemName" required>
-
-                <label for="itemQuantity">数量:</label>
-                <input type="number" id="itemQuantity" name="itemQuantity" required min="0">
-
-                <label for="itemLocation">存放位置 (可选):</label>
-                <input type="text" id="itemLocation" name="itemLocation" placeholder="查看详情">
-
-                <label for="newItemParentDirectorySelect">选择目录:</label>
-                <select id="newItemParentDirectorySelect"></select>
-
-                <button type="submit">提交</button>
-                <button type="button" class="cancel-button">取消</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- The Modal for Manage Directory -->
-    <div id="manageDirectoryModal" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>管理目录</h2>
-            <div id="directoryList">
-                <!-- Directories will be loaded here by JavaScript -->
-            </div>
-            <div class="add-directory-section">
-                <h3>添加新目录</h3>
-                <input type="text" id="newDirectoryName" placeholder="新目录名称">
-                <select id="parentDirectorySelect">
-                    <option value="">--- 顶级目录 ---</option>
-                    <!-- Options will be loaded by JavaScript -->
-                </select>
-                <button id="addDirectoryBtn">添加目录</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Confirmation Modal for Delete -->
-    <div id="confirmDeleteModal" class="modal">
-        <div class="modal-content">
-            <h2>确认删除</h2>
-            <p>您确定要删除此物料吗？此操作不可撤销。</p>
-            <button id="confirmDeleteBtn">确认</button>
-            <button id="cancelDeleteBtn">取消</button>
-        </div>
-    </div>
-
-    <script>
         document.addEventListener('DOMContentLoaded', function () {
             // --- Global/Shared Variables (declared here to be accessible throughout DOMContentLoaded scope) ---
             const navLinks = document.querySelectorAll('.nav-menu a');
@@ -417,22 +118,17 @@
 
                 const summarizedLogs = getLogs(LOG_KEY_SUMMARIZED);
                 const summaryTimestamp = new Date().toLocaleString();
-                let summaryMessage = `【${summaryTimestamp}】日志总结：
-`;
+                let summaryMessage = `【${summaryTimestamp}】日志总结:\n`;
 
                 const actionCounts = {};
                 unsavedLogs.forEach(log => {
                     actionCounts[log.action] = (actionCounts[log.action] || 0) + 1;
                 });
 
-                if (actionCounts.item_added) summaryMessage += ` - 新增物料：${actionCounts.item_added} 个
-`;
-                if (actionCounts.item_deleted) summaryMessage += ` - 删除物料：${actionCounts.item_deleted} 个
-`;
-                if (actionCounts.directory_added) summaryMessage += ` - 新增目录：${actionCounts.directory_added} 个
-`;
-                if (actionCounts.directory_deleted) summaryMessage += ` - 删除目录：${actionCounts.directory_deleted} 个
-`;
+                if (actionCounts.item_added) summaryMessage += ` - 新增物料：${actionCounts.item_added} 个\n`;
+                if (actionCounts.item_deleted) summaryMessage += ` - 删除物料：${actionCounts.item_deleted} 个\n`;
+                if (actionCounts.directory_added) summaryMessage += ` - 新增目录：${actionCounts.directory_added} 个\n`;
+                if (actionCounts.directory_deleted) summaryMessage += ` - 删除目录：${actionCounts.directory_deleted} 个\n`;
 
                 summarizedLogs.push({ timestamp: summaryTimestamp, summary: summaryMessage.trim() });
                 saveLogs(LOG_KEY_SUMMARIZED, summarizedLogs);
@@ -441,81 +137,10 @@
                 console.log("Current summarized logs:", summarizedLogs);
             }
 
-            // Initial directory and item data, loaded from localStorage or default
-            let directories = JSON.parse(localStorage.getItem('directories')) || [
-                {
-                    id: 'consumables', name: '耗材', type: 'category', children: [
-                        {
-                            id: 'optical-consumables', name: '光学耗材', type: 'section', items: [
-                                { id: 'item-filter', imageUrl: 'images/story-2.png', name: '滤光片', quantity: '20', location: '柜子1-1' },
-                                { id: 'item-lens254', imageUrl: 'images/story-2.png', name: '25.4透镜', quantity: '15', location: '柜子1-2' },
-                                { id: 'item-lens508', imageUrl: 'images/story-2.png', name: '50.8透镜', quantity: '10', location: '柜子1-2' },
-                                { id: 'item-dichroic', imageUrl: 'images/story-2.png', name: '二向色镜', quantity: '5', location: '柜子1-3' },
-                                { id: 'item-objective', imageUrl: 'images/story-2.png', name: '物镜', quantity: '3', location: '柜子1-4' },
-                                { id: 'item-waveplate', imageUrl: 'images/story-2.png', name: 'λ/2和λ/4波片', quantity: '8', location: '柜子1-5' },
-                                { id: 'item-planemirror', imageUrl: 'images/story-2.png', name: '平面反射镜', quantity: '20', location: '柜子1-6' },
-                                { id: 'item-ultrafastmirror', imageUrl: 'images/story-2.png', name: '超快反射镜', quantity: '12', location: '柜子1-7' }
-                            ]
-                        },
-                        {
-                            id: 'electrical-consumables', name: '电学耗材', type: 'section', items: [
-                                { id: 'item-resistor', imageUrl: 'images/story-2.png', name: '电阻', quantity: '100', location: '抽屉2-1' },
-                                { id: 'item-capacitor', imageUrl: 'images/story-2.png', name: '电容', quantity: '80', location: '抽屉2-2' },
-                                { id: 'item-wire', imageUrl: 'images/story-2.png', name: '导线', quantity: '50', location: '抽屉2-3' }
-                            ]
-                        },
-                        {
-                            id: 'other-consumables', name: '其他耗材', type: 'section', items: [
-                                { id: 'item-gloves', imageUrl: 'images/story-2.png', name: '手套', quantity: '30', location: '柜子3-1' },
-                                { id: 'item-alcohol', imageUrl: 'images/story-2.png', name: '酒精', quantity: '5', location: '柜子3-2' }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    id: 'equipment', name: '仪器设备', type: 'category', children: [
-                        {
-                            id: 'lasers', name: '激光器', type: 'section', items: [
-                                { id: 'item-fslaser', imageUrl: 'images/story-2.png', name: '飞秒激光器', quantity: '1', location: '实验室1' },
-                                { id: 'item-cwlaser', imageUrl: 'images/story-2.png', name: '连续波激光器', quantity: '2', location: '实验室2' }
-                            ]
-                        },
-                        {
-                            id: 'daq-electrical', name: '采集卡/电学设备', type: 'section', items: [
-                                { id: 'item-daq', imageUrl: 'images/story-2.png', name: '数据采集卡', quantity: '3', location: '台面A' },
-                                { id: 'item-oscilloscope', imageUrl: 'images/story-2.png', name: '示波器', quantity: '1', location: '台面B' }
-                            ]
-                        },
-                        {
-                            id: 'mechanical-equipment', name: '机械设备', type: 'section', items: [
-                                { id: 'item-opticaltable', imageUrl: 'images/story-2.png', name: '光学平台', quantity: '1', location: '实验室1' },
-                                { id: 'item-translationstage', imageUrl: 'images/story-2.png', name: '位移台', quantity: '5', location: '抽屉4-1' }
-                            ]
-                        },
-                        {
-                            id: 'other-equipment', name: '其他设备', type: 'section', items: [
-                                { id: 'item-powersupply', imageUrl: 'images/story-2.png', name: '电源', quantity: '4', location: '台面C' }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    id: 'others', name: '其他', type: 'category', children: [
-                        {
-                            id: 'other-materials', name: '其他物料', type: 'section', items: [
-                                { id: 'item-document', imageUrl: 'images/story-2.png', name: '文档', quantity: '1', location: '文件柜' }
-                            ]
-                        }
-                    ]
-                }
-            ];
+            // Initial directory and item data, loaded from Firestore or default
+            let directories = []; // Initialize as empty, data will come from Firestore
 
             // --- Helper Functions (defined before they are called) ---
-            // Function to save directories to localStorage
-            function saveDirectories() {
-                localStorage.setItem('directories', JSON.stringify(directories));
-            }
-
             // Function to generate unique ID (simple, for demonstration)
             function generateUniqueId(prefix) {
                 return prefix + Date.now();
@@ -854,7 +479,11 @@
                     return;
                 }
 
-                saveDirectories();
+                // Update Firestore after modification
+                db.collection("materials").doc("data").set({ directories: directories })
+                    .then(() => console.log("Firestore updated after item addition."))
+                    .catch(error => console.error("Error updating Firestore after item addition:", error));
+
                 renderPageContent(); // Re-render the entire page content with new item
                 newItemModal.style.display = "none";
                 newItemForm.reset();
@@ -890,8 +519,11 @@
                     }
 
                     if (found) {
-                        saveDirectories();
-                        renderPageContent(); // Re-render the entire page content
+                        // Update Firestore after modification
+                        db.collection("materials").doc("data").set({ directories: directories })
+                            .then(() => console.log("Firestore updated after item deletion."))
+                            .catch(error => console.error("Error updating Firestore after item deletion:", error));
+
                         alert('物料删除成功！');
                         logAction('item_deleted', { id: itemToDeleteId, name: itemNameForLog }); // Log item deleted
                     } else {
@@ -1066,9 +698,10 @@
                             } else {
                                 directories.splice(sourceIndex, 0, itemToMove);
                             }
-                            saveDirectories();
-                            renderDirectoryList();
-                            renderPageContent();
+                            // Update Firestore after modification
+                            db.collection("materials").doc("data").set({ directories: directories })
+                                .then(() => console.log("Firestore updated after invalid drop."))
+                                .catch(error => console.error("Error updating Firestore after invalid drop:", error));
                             return;
                         }
                     } else {
@@ -1080,15 +713,18 @@
                         } else {
                             directories.splice(sourceIndex, 0, itemToMove);
                         }
-                        saveDirectories();
-                        renderDirectoryList();
-                        renderPageContent();
+                        // Update Firestore after modification
+                        db.collection("materials").doc("data").set({ directories: directories })
+                            .then(() => console.log("Firestore updated after invalid drop."))
+                            .catch(error => console.error("Error updating Firestore after invalid drop:", error));
                         return;
                     }
 
-                    saveDirectories();
-                    renderDirectoryList();
-                    renderPageContent();
+                    // Update Firestore after modification
+                    db.collection("materials").doc("data").set({ directories: directories })
+                        .then(() => console.log("Firestore updated after directory modification."))
+                        .catch(error => console.error("Error updating Firestore after directory modification:", error));
+
                 }
             });
 
@@ -1120,7 +756,7 @@
             });
 
             addDirectoryBtn.onclick = function () {
-                console.log("Add Directory button clicked!"); // Debugging
+                console.log("Add Directory button clicked！"); // Debugging
                 const newDirName = newDirectoryNameInput.value.trim();
                 const parentDirId = parentDirectorySelectForManage.value;
 
@@ -1176,7 +812,11 @@
                     }
                 }
 
-                saveDirectories();
+                // Update Firestore after modification
+                db.collection("materials").doc("data").set({ directories: directories })
+                    .then(() => console.log("Firestore updated after directory addition."))
+                    .catch(error => console.error("Error updating Firestore after directory addition:", error));
+
                 renderDirectoryList(); // Update directory list in the modal
                 renderPageContent(); // Update main navigation and content
                 newDirectoryNameInput.value = ''; // Clear input
@@ -1210,9 +850,11 @@
 
                     if (confirm('您确定要删除此目录及其所有内容吗？此操作不可撤销。')) {
                         if (deleteDirectoryRecursive(directories, dirIdToDelete)) {
-                            saveDirectories();
-                            renderDirectoryList(); // Update directory list in modal
-                            renderPageContent(); // Update main navigation and content
+                            // Update Firestore after modification
+                            db.collection("materials").doc("data").set({ directories: directories })
+                                .then(() => console.log("Firestore updated after directory deletion."))
+                                .catch(error => console.error("Error updating Firestore after directory deletion:", error));
+
                             alert('目录删除成功！');
                             logAction('directory_deleted', { id: dirIdToDelete, name: dirNameForLog }); // Log directory deleted
                         } else {
@@ -1228,6 +870,358 @@
             // For simplicity, we just rely on setInterval now.
         });
     </script>
+</head>
+
+<body>
+    <div class="header">
+        <nav>
+            <a href="index.html"><img src="images/透明背景-yang.png" class="logo"></a>
+            <ul class="nav-links">
+                <li><a href="sub_page-introduction.html">Introduction</a></li>
+                <li><a href="#">实验室物料管理</a></li>
+                <li><a href="#">科研讨论小组</a></li>
+            </ul>
+            <a href="#" class="register-btn">Login</a>
+        </nav>
+        <div class="container">
+            <h2 class="site-title"><a href="index.html">Yang Lab<br>物料管理</a></h2>
+            <div class="search-bar">
+                <form action="#">
+                    <input type="text" placeholder="搜索物料">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="container-sub">
+        <div class="sidebar">
+            <h2 class="sidebar-title"><a href="index.html">Yang Lab<br>物料管理</a></h2>
+            <ul class="nav-menu">
+                <li>
+                    <a href="#consumables">耗材</a>
+                    <ul class="sub-menu">
+                        <li><a href="#optical-consumables">光学耗材</a></li>
+                        <li><a href="#electrical-consumables">电学耗材</a></li>
+                        <li><a href="#other-consumables">其他耗材</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#equipment">仪器设备</a>
+                    <ul class="sub-menu">
+                        <li><a href="#lasers">激光器</a></li>
+                        <li><a href="#daq-electrical">采集卡/电学设备</a></li>
+                        <li><a href="#mechanical-equipment">机械设备</a></li>
+                        <li><a href="#other-equipment">其他设备</a></li>
+                    </ul>
+                </li>
+                <li><a href="#others">其他</a></li>
+            </ul>
+            <button id="manageDirectoryBtn" class="manage-dir-btn">管理目录</button>
+        </div>
+        <div class="main-content-sub">
+            <!-- New Item Button -->
+            <button id="newItemBtn" class="new-item-btn">+ 新建产品名录</button>
+
+            <div id="consumables-group" class="category-group">
+                <h1 id="consumables">耗材</h1>
+                <section id="optical-consumables" class="content-section">
+                    <h2>光学耗材</h2>
+                    <div class="box-grid">
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">滤光片</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">25.4透镜</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">50.8透镜</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">二向色镜</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">物镜</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">λ/2和λ/4波片</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">平面反射镜</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">超快反射镜</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="electrical-consumables" class="content-section">
+                    <h2>电学耗材</h2>
+                    <div class="box-grid">
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">电阻</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">电容</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">导线</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="other-consumables" class="content-section">
+                    <h2>其他耗材</h2>
+                    <div class="box-grid">
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">手套</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">酒精</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="equipment-group" class="category-group">
+                <h1 id="equipment">仪器设备</h1>
+                <section id="lasers" class="content-section">
+                    <h2>激光器</h2>
+                    <div class="box-grid">
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">飞秒激光器</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">连续波激光器</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="daq-electrical" class="content-section">
+                    <h2>采集卡/电学设备</h2>
+                    <div class="box-grid">
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">数据采集卡</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">示波器</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="mechanical-equipment" class="content-section">
+                    <h2>机械设备</h2>
+                    <div class="box-grid">
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">光学平台</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">位移台</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="other-equipment" class="content-section">
+                    <h2>其他设备</h2>
+                    <div class="box-grid">
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">电源</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="others-group" class="category-group">
+                <h1 id="others">其他</h1>
+                <section class="content-section">
+                    <h2>其他物料</h2>
+                    <div class="box-grid">
+                        <div class="item-box">
+                            <button class="delete-item-btn">&times;</button>
+                            <img src="images/story-2.png">
+                            <p class="item-title">文档</p>
+                            <div class="item-info">
+                                <p>数量：<span class="item-quantity"></span></p>
+                                <p>存放位置：<span class="item-location"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- The Modal -->
+    <div id="newItemModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>新建产品名录</h2>
+            <form id="newItemForm">
+                <label for="itemImage">图片 URL (可选):</label>
+                <input type="text" id="itemImage" name="itemImage" placeholder="images/默认图片.png">
+
+                <label for="itemName">名称:</label>
+                <input type="text" id="itemName" name="itemName" required>
+
+                <label for="itemQuantity">数量:</label>
+                <input type="number" id="itemQuantity" name="itemQuantity" required min="0">
+
+                <label for="itemLocation">存放位置 (可选):</label>
+                <input type="text" id="itemLocation" name="itemLocation" placeholder="查看详情">
+
+                <label for="newItemParentDirectorySelect">选择目录:</label>
+                <select id="newItemParentDirectorySelect"></select>
+
+                <button type="submit">提交</button>
+                <button type="button" class="cancel-button">取消</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- The Modal for Manage Directory -->
+    <div id="manageDirectoryModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>管理目录</h2>
+            <div id="directoryList">
+                <!-- Directories will be loaded here by JavaScript -->
+            </div>
+            <div class="add-directory-section">
+                <h3>添加新目录</h3>
+                <input type="text" id="newDirectoryName" placeholder="新目录名称">
+                <select id="parentDirectorySelect">
+                    <option value="">--- 顶级目录 ---</option>
+                    <!-- Options will be loaded by JavaScript -->
+                </select>
+                <button id="addDirectoryBtn">添加目录</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal for Delete -->
+    <div id="confirmDeleteModal" class="modal">
+        <div class="modal-content">
+            <h2>确认删除</h2>
+            <p>您确定要删除此物料吗？此操作不可撤销。</p>
+            <button id="confirmDeleteBtn">确认</button>
+            <button id="cancelDeleteBtn">取消</button>
+        </div>
+    </div>
 </body>
 
 </html>

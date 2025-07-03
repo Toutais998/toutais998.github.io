@@ -70,23 +70,51 @@ nav {
     width: 70%;
     margin: 30px auto;
     padding: 6px 10px 6px 30px;
+    /* top right bottom left */
     border-radius: 50px;
+    overflow: hidden;
+    /* Crucial for clipping the button when it moves outside the initial visible area */
+    display: flex;
+    /* Flex container for the form */
+    align-items: center;
+    height: 67px;
+    /* Explicit height: 55px (button) + 6px (top padding) + 6px (bottom padding) */
 }
 
 .search-bar form {
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
+    flex-grow: 1;
+    /* Form takes all available space within search-bar's padding */
+    position: relative;
+    /* For absolute positioning of the button */
+    height: 55px;
+    /* Form's height should match the button's height for vertical centering */
+    /* No padding here, as search-bar already has padding */
 }
 
-.search-bar form input {
-    display: block;
+.search-bar form .search-input {
+    flex-grow: 1;
+    /* Input wrapper takes remaining space */
+    height: 100%;
+    display: flex;
+    align-items: center;
+    /* Vertically center input text */
+}
+
+.search-bar form .search-input input {
+    width: 100%;
+    /* Input takes full width of its container */
     border: 0;
     outline: none;
     background: transparent;
+    padding: 0;
+    /* Remove default input padding */
+    font-size: 1.2vw;
+    color: #333;
 }
 
-.search-bar form button {
+.search-bar form .search-button {
     background: #ff5361;
     width: 55px;
     height: 55px;
@@ -94,11 +122,34 @@ nav {
     border: 0;
     outline: none;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* Start at 50% from left of form */
+    transform: translate(-50%, -50%);
+    /* Adjust by half its width to truly center, and vertically center */
+    transition: left 0.4s ease, transform 0.4s ease;
+    /* Animate both */
+    z-index: 1;
 }
 
-.search-bar form button img {
-    width: 15px;
-    margin-top: 7px;
+.search-bar form .search-button i {
+    color: #fff;
+    /* Set icon color to white */
+    font-size: 15px;
+    /* Match the original image size */
+}
+
+/* New class for active state (mouse over) */
+.search-bar.active form .search-button {
+    left: calc(100% - 55px - 10px);
+    /* Move to 10px from right of form (55px is button width) */
+    transform: translateY(-50%);
+    /* Keep vertically centered, remove horizontal translate */
 }
 
 .location-input {
@@ -226,6 +277,92 @@ nav {
     text-align: center;
 }
 
+/* --------------Master Supervisor-----------*/
+.master-supervisor {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 30px;
+    margin-bottom: 30px;
+}
+
+.master-supervisor>div {
+    text-align: center;
+    width: clamp(150px, 15vw, 250px);
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+.master-supervisor>div img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+}
+
+.master-supervisor h3 {
+    font-weight: 600;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* --------------Administrative Assistant-----------*/
+.administrative-assistant {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 30px;
+    margin-bottom: 30px;
+}
+
+.administrative-assistant>div {
+    text-align: center;
+    width: clamp(150px, 15vw, 250px);
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+.administrative-assistant>div img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+}
+
+.administrative-assistant h3 {
+    font-weight: 600;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* --------------Post-Doctoral-----------*/
+.post-doctoral {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 30px;
+    margin-bottom: 30px;
+}
+
+.post-doctoral>div {
+    text-align: center;
+    width: clamp(150px, 15vw, 250px);
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+.post-doctoral>div img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+}
+
+.post-doctoral h3 {
+    font-weight: 600;
+    margin-top: 10px;
+    text-align: center;
+}
 
 /* -------call toaction-------*/
 .cta {
