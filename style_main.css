@@ -364,6 +364,40 @@ nav {
     text-align: center;
 }
 
+/* --------------Engineer-----------*/
+.Engineer {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 30px;
+    margin-bottom: 30px;
+}
+
+.Engineer>div {
+    text-align: center;
+    width: clamp(150px, 15vw, 250px);
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+.Engineer>div img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+}
+
+.Engineer h3 {
+    font-weight: 600;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.Engineer p {
+    font-size: 15px;
+    text-align: center;
+}
+
 /* -------call toaction-------*/
 .cta {
     margin: 80px 0;
