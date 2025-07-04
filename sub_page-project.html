@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <!-- 
+    =====================================================================
+    * 文件名: sub_page-project.html
+    * 版本: V1.0
+    * 创建日期: 2025-07-04
+    * 最后修改: 2025-07-05
+    * 
+    * 功能简介:
+    * - Yang Lab 项目管理系统的前端页面骨架。
+    * - 定义了页面的基本布局，与设备管理页面保持一致。
+    * - 包含了"添加新项目"和"管理项目"两个模态框（Modal）的HTML结构。
+    * - 引入了 Font Awesome, SortableJS, 以及项目自身的CSS和JS文件。
+    * - 页面内容主要由 js/project.js, js/project-data-manager.js 和 Firebase 动态填充。
+    =====================================================================
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yang Lab 项目管理</title>
+    <link rel="icon" href="images/Basic/透明背景.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style_sub-project.css">
+    <!-- SortableJS for drag-and-drop -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+</head>
+
+<body>
+    <header class="top-header">
+        <div class="header-content">
+            <button id="menu-toggle-btn" class="menu-toggle-btn" title="Toggle Sidebar">
+                <i class="fas fa-bars"></i>
+            </button>
+            <a href="index.html" class="logo-link">
+                <img src="images/Basic/透明背景-yang.png" alt="Yang Lab Logo" class="logo">
+                <h1 class="header-title">Yang Lab 项目管理</h1>
+            </a>
+        </div>
+    </header>
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+    <div class="manage-container">
+        <aside class="sidebar" id="sidebar">
+            <nav id="sidebar-nav" class="sidebar-nav">
+                <!-- 导航将由JS动态生成 -->
+            </nav>
+            <button id="manage-projects-btn" class="manage-nav-btn">
+                <i class="fas fa-tasks"></i>
+                <span>管理项目</span>
+            </button>
+        </aside>
+        <main id="main-content" class="main-content">
+            <!-- 内容将由JS动态生成 -->
+        </main>
+    </div>
+
+    <button id="add-item-fab" class="fab" title="添加新项目">
+        <i class="fas fa-plus"></i>
+    </button>
+
+    <div id="add-item-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>添加新项目</h2>
+            <form id="add-item-form">
+                <div class="form-group">
+                    <label for="item-name">项目名称:</label>
+                    <input type="text" id="item-name" name="itemName" required>
+                </div>
+                <div class="form-group">
+                    <label for="item-category-select">所属类别:</label>
+                    <select id="item-category-select" name="itemCategorySelect" required>
+                        <!-- Options will be populated by JS -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="item-image">图片 (可选):</label>
+                    <input type="file" id="item-image" name="itemImage" accept="image/*">
+                </div>
+                <button type="submit">确认添加</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Project Management Modal -->
+    <div id="manage-projects-modal" class="modal" style="display: none;">
+        <div class="modal-content large">
+            <span class="close-button">&times;</span>
+            <h2>管理项目</h2>
+            <div class="modal-body">
+                <div id="project-editor" class="category-editor">
+                    <!-- Projects will be dynamically generated here by JS -->
+                </div>
+                <div class="modal-actions">
+                    <button id="add-parent-project-btn" class="btn"><i class="fas fa-plus"></i> 添加主项目</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="save-projects-btn" class="btn-primary">保存更改</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="loader" class="loader-container" style="display: none;">
+        <div class="loader-spinner"></div>
+        <p>加载中...</p>
+    </div>
+
+    <script type="module" src="js/ui-controller.js"></script>
+    <script type="module" src="js/project.js"></script>
+</body>
+
+</html>

@@ -1,3 +1,19 @@
+# Dependencies
+/node_modules
+/bower_components
+
+# Build artifacts
+/dist
+/build
+
+# Log files
+*.log
+npm-debug.log*
+
+# System files
+.DS_Store
+Thumbs.db
+
 # Logs
 logs
 *.log
@@ -35,17 +51,11 @@ coverage
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
 
-# Bower dependency directory (https://bower.io/)
-bower_components
-
 # node-waf configuration
 .lock-wscript
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
-
-# Dependency directories
-node_modules/
 
 # Optional npm cache directory
 .npm

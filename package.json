@@ -1,0 +1,25 @@
+{
+  "name": "mark3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sync": "set https_proxy=http://127.0.0.1:7897&& set http_proxy=http://127.0.0.1:7897&& node scripts/sync-from-firebase.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Toutais998/toutais998.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Toutais998/toutais998.github.io/issues"
+  },
+  "homepage": "https://github.com/Toutais998/toutais998.github.io#readme",
+  "devDependencies": {
+    "firebase": "^10.12.2"
+  }
+}

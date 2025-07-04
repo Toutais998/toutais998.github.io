@@ -1,8 +1,30 @@
-/* =====================================================================
- * 文件名: ui-controller.js
- * 版本: V2.1 (Firebase集成版)
- * 功能简介: 实验室物料管理系统UI控制模块
- * ===================================================================== */
+/* 
+=====================================================================
+* 文件名: ui-controller.js
+* 版本: V2.2
+* 创建日期: 未知
+* 最后修改: 2025-07-05
+* 
+* 本次更新:
+* - 版本号更新 (V2.1 -> V2.2)
+* - 拆分和导出了独立的 `setupModal`, `setupSidebarToggle`, `setupSortable` 函数。
+* - 使该模块的功能可以被 `sub_page-project.html` 等其他页面灵活复用。
+* 
+* 功能简介:
+* - 通用的UI控制模块，被 `sub_page-manage.html` 和 `sub_page-project.html` 共同使用。
+* - 负责渲染和控制侧边栏、物料/项目卡片、加载动画等。
+* - 提供通用的模态框（Modal）显示/隐藏逻辑。
+* - 提供通用的侧边栏响应式开关逻辑。
+* - 提供通用的基于 SortableJS 的拖拽排序功能。
+=====================================================================
+*/
+
+/**
+ * --- 注意 ---
+ * 该文件在后续开发中被拆分为多个更专注的模块。
+ * 原始的许多函数（如 renderSidebar, displayItems 等）主要服务于 `sub_page-manage.html`。
+ * 新增的独立函数 `setupModal`, `setupSidebarToggle`, `setupSortable` 则是为了通用性而导出。
+ */
 
 const sidebarNav = document.getElementById('sidebar-nav');
 const mainContent = document.getElementById('main-content');
@@ -574,7 +596,7 @@ export function showManageCategoriesModal(directories, onSave) {
 }
 
 /**
- * 更新“添加到...”下拉菜单中的分类
+ * 更新"添加到..."下拉菜单中的分类
  * @param {Array} directories - 目录结构数据
  */
 export function updateCategoryDropdown(directories) {
@@ -583,4 +605,65 @@ export function updateCategoryDropdown(directories) {
 
     // 保存当前选中的值（如果有的话）
     // ... existing code ...
+}
+
+// --- 导出的通用UI控制器 ---
+
+/**
+ * @description 为指定的模态框设置通用的关闭逻辑。
+ * @param {HTMLElement} modalElement - 模态框的DOM元素。
+ * @param {string} closeButtonSelector - 模态框内部关闭按钮的CSS选择器。
+ */
+export function setupModal(modalElement, closeButtonSelector) {
+    if (!modalElement) return;
+
+    const closeButton = modalElement.querySelector(closeButtonSelector);
+
+    if (closeButton) {
+        closeButton.addEventListener('click', () => {
+            modalElement.style.display = 'none';
+        });
+    }
+
+    window.addEventListener('click', (event) => {
+        if (event.target === modalElement) {
+            modalElement.style.display = 'none';
+        }
+    });
+}
+
+/**
+ * @description 设置响应式的侧边栏开关逻辑。
+ */
+export function setupSidebarToggle() {
+    const toggleBtn = document.getElementById('menu-toggle-btn');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+
+    if (toggleBtn && sidebar && overlay) {
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+    }
+}
+
+/**
+ * @description 初始化 SortableJS 拖拽排序功能。
+ * @param {HTMLElement} element - 需要启用拖拽的容器元素。
+ * @param {string} handleSelector - 拖拽句柄的CSS选择器。
+ */
+export function setupSortable(element, handleSelector) {
+    if (typeof Sortable !== 'undefined' && element) {
+        new Sortable(element, {
+            animation: 150,
+            handle: handleSelector,
+            ghostClass: 'sortable-ghost',
+        });
+    }
 } 

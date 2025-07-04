@@ -1,7 +1,13 @@
 /* =====================================================================
  * 文件名: main.js
- * 版本: V2.3 (支持导航管理)
+ * 版本: V2.4
  * 创建日期: 2025-07-07
+ * 最后修改: 2025-07-05
+ * 
+ * 本次更新:
+ * - 版本号更新 (V2.3 -> V2.4)
+ * - 将通用的侧边栏开关逻辑移至 `ui-controller.js`
+ * 
  * 功能简介: 实验室物料管理系统，与Firebase实时同步数据
  * ===================================================================== */
 
@@ -15,7 +21,8 @@ import {
     removeItemCard,
     showEditModal,
     updateItemCard,
-    showManageCategoriesModal
+    showManageCategoriesModal,
+    setupSidebarToggle
 } from './ui-controller.js';
 
 /**
@@ -133,9 +140,8 @@ async function main() {
                 showManageCategoriesModal(directories, async (updatedStructure) => {
                     try {
                         await saveDirectoryStructure(updatedStructure);
-                        // 更新成功后，用新的结构重新渲染侧边栏
                         renderSidebar(updatedStructure, handleCategoryClick);
-                        // 更新全局的 directories 变量，以便下次打开时显示最新版本
+                        // 更新全局 directories 变量
                         directories.length = 0;
                         Array.prototype.push.apply(directories, updatedStructure);
                         alert('导航目录已成功更新！');
@@ -147,22 +153,8 @@ async function main() {
             });
         }
 
-        // 6. 移动端侧边栏交互
-        const menuToggleBtn = document.getElementById('menu-toggle-btn');
-        const sidebar = document.getElementById('sidebar');
-        const sidebarOverlay = document.getElementById('sidebar-overlay');
-
-        if (menuToggleBtn && sidebar && sidebarOverlay) {
-            menuToggleBtn.addEventListener('click', () => {
-                sidebar.classList.toggle('active');
-                sidebarOverlay.classList.toggle('active');
-            });
-
-            sidebarOverlay.addEventListener('click', () => {
-                sidebar.classList.remove('active');
-                sidebarOverlay.classList.remove('active');
-            });
-        }
+        // 6. 移动端侧边栏交互 (使用通用控制器)
+        setupSidebarToggle();
     } catch (error) {
         console.error("应用主程序发生严重错误: ", error);
         alert("页面加载失败，请检查网络连接或联系管理员。详情请查看控制台。");
