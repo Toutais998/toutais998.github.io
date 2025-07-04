@@ -18,7 +18,7 @@
     -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="images/透明背景.png" type="image/x-icon">
     <title>YangLab-杨旭三个人简介</title>
     <link rel="stylesheet" href="style_sub-introduction.css">
@@ -98,13 +98,48 @@
                 }
             }
         }
+
+        @media (pointer: fine) {
+            html {
+                cursor: none;
+            }
+        }
+
+        /* 鼠标拖尾特效 */
+        .trail-dot {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            animation: trail-fade-out 0.5s linear forwards;
+        }
+
+        @keyframes trail-fade-out {
+            from {
+                opacity: 1;
+                transform: scale(1.1) translate(-50%, -50%);
+            }
+
+            to {
+                opacity: 0;
+                transform: scale(0.1) translate(-50%, -50%);
+            }
+        }
     </style>
 </head>
 
 <body>
+    <a href="index.html" class="back-to-home">
+        <i class="fas fa-arrow-left"></i>
+        <span>返回主页</span>
+    </a>
     <div class="card">
         <div class="circle" style="--clr:#0000FF ;">
-            <img src="images/透明背景-白.png" class="logo">
+            <img src="images/透明背景-白.png" class="logo" alt="Yang Lab Logo">
         </div>
 
         <div class="content">
@@ -124,9 +159,33 @@
         </div>
 
 
-        <img src="images/兔子2.png" class="product_img">
+        <img src="images/兔子2.png" class="product_img" alt="杨旭三教授">
     </div>
 
+    <div id="laser-cursor"></div>
+
+    <script type="module" src="js/firebase-config.js"></script>
+    <script>
+        // 优化后的鼠标光标效果
+        if (!window.matchMedia('(pointer: coarse)').matches) {
+            const laserCursor = document.getElementById('laser-cursor');
+            document.addEventListener('mousemove', function (e) {
+                laserCursor.style.left = e.clientX + 'px';
+                laserCursor.style.top = e.clientY + 'px';
+
+                const trail = document.createElement('div');
+                trail.className = 'trail-dot';
+                document.body.appendChild(trail);
+
+                trail.style.left = e.clientX + 'px';
+                trail.style.top = e.clientY + 'px';
+
+                trail.addEventListener('animationend', () => {
+                    trail.remove();
+                });
+            });
+        }
+    </script>
 </body>
 
 </html>

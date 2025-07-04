@@ -13,8 +13,6 @@ const addItemForm = document.getElementById('add-item-form');
 const locationSelect = document.getElementById('item-location-select');
 const locationOtherGroup = document.getElementById('item-location-other-group');
 
-let allItems = []; // 在模块级别缓存所有物品
-let currentFilter = 'all'; // 当前的筛选条件
 let formSubmitHandler = null; // 用于存储当前的表单提交处理函数
 
 /**
@@ -102,7 +100,7 @@ function createItemCard(item, onEditItem, onDeleteItem) {
         <div class="item-image-container">
              <img src="${imageUrl}" alt="${item.name}" class="item-image" onerror="this.onerror=null;this.src='${defaultImage}';">
         </div>
-        <div class="item-info">
+            <div class="item-info">
             <h3 class="item-name">${item.name}</h3>
         </div>
         <div class="item-details">
@@ -135,40 +133,47 @@ function createItemCard(item, onEditItem, onDeleteItem) {
  * @param {function} onEditItem - 编辑按钮点击事件的回调
  * @param {function} onDeleteItem - 删除按钮点击事件的回调
  */
-export function displayItems(items, filter, onEditItem, onDeleteItem) {
-    if (items !== null) {
-        allItems = items;
-    }
-    if (filter !== null) {
-        currentFilter = filter;
-        console.log("Filter changed to:", currentFilter);
-    }
-
+export function displayItems(itemsToDisplay, onEditItem, onDeleteItem) {
     mainContent.innerHTML = '';
 
-    let itemsToDisplay = currentFilter === 'all'
-        ? allItems
-        : allItems.filter(item => item.category === currentFilter);
-
-    // 按物品名称排序
-    itemsToDisplay.sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'));
-
-    if (itemsToDisplay.length === 0) {
-        const message = currentFilter === 'all'
-            ? '还没有物品，点击右下角的"+"按钮添加一个吧！'
-            : '该分类下还没有物品，点击右下角的"+"按钮添加一个吧！';
-        mainContent.innerHTML = `<p class="empty-message">${message}</p>`;
+    if (!itemsToDisplay || itemsToDisplay.length === 0) {
+        mainContent.innerHTML = `<p class="empty-message">请从左侧选择一个分类查看物品，<br>或点击右下角的 '+' 按钮添加新物品。</p>`;
         return;
     }
+
+    // 按物品名称排序
+    const sortedItems = [...itemsToDisplay].sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'));
 
     const grid = document.createElement('div');
     grid.className = 'item-card-grid';
 
-    itemsToDisplay.forEach(item => {
+    sortedItems.forEach(item => {
         const itemCard = createItemCard(item, onEditItem, onDeleteItem);
         grid.appendChild(itemCard);
     });
     mainContent.appendChild(grid);
+}
+
+/**
+ * 显示加载动画
+ * @param {string} text - 要显示的加载文本
+ */
+export function showLoadingSpinner(text = '加载中...') {
+    const loader = document.getElementById('loader');
+    if (loader) {
+        loader.querySelector('p').textContent = text;
+        loader.style.display = 'flex';
+    }
+}
+
+/**
+ * 隐藏加载动画
+ */
+export function hideLoadingSpinner() {
+    const loader = document.getElementById('loader');
+    if (loader) {
+        loader.style.display = 'none';
+    }
 }
 
 /**
@@ -182,11 +187,6 @@ export function updateItemCard(itemId, newData) {
         if (newData.name) card.querySelector('.item-name').textContent = newData.name;
         if (newData.quantity) card.querySelector('.item-quantity').textContent = `数量: ${newData.quantity}`;
         if (newData.location) card.querySelector('.item-location').textContent = `位置: ${newData.location}`;
-    }
-    // 更新缓存
-    const itemInCache = allItems.find(item => item.id === itemId);
-    if (itemInCache) {
-        Object.assign(itemInCache, newData);
     }
 }
 
@@ -205,22 +205,32 @@ export function removeItemCard(itemId) {
             // 检查网格是否变空
             const grid = mainContent.querySelector('.item-card-grid');
             if (grid && grid.children.length === 0) {
-                displayItems(null, null, () => { }, () => { }); // 重新渲染以显示空消息
+                mainContent.innerHTML = `<p class="empty-message">该分类下已没有物品。</p>`;
             }
         }, 300);
     }
-    // 从缓存中也删除
-    allItems = allItems.filter(item => item.id !== itemId);
 }
 
 /**
  * 在列表中添加一个新的物品卡片
  * @param {object} item - 新添加的物品对象
+ * @param {function} onEditItem - 编辑回调
+ * @param {function} onDeleteItem - 删除回调
  */
-export function appendNewItem(item) {
-    allItems.unshift(item);
-    if (currentFilter === 'all' || item.category === currentFilter) {
-        displayItems(null, null, () => { }, () => { });
+export function appendNewItem(item, onEditItem, onDeleteItem) {
+    // 检查是否有空消息，如果有则移除
+    const emptyMessage = mainContent.querySelector('.empty-message');
+    if (emptyMessage) {
+        mainContent.innerHTML = ''; // 清空
+        const grid = document.createElement('div');
+        grid.className = 'item-card-grid';
+        mainContent.appendChild(grid);
+    }
+
+    const grid = mainContent.querySelector('.item-card-grid');
+    if (grid) {
+        const itemCard = createItemCard(item, onEditItem, onDeleteItem);
+        grid.prepend(itemCard); // 将新项目添加到顶部
     }
 }
 
@@ -276,10 +286,11 @@ export function showEditModal(item, onUpdate) {
 }
 
 /**
- * 初始化UI相关的事件监听器
- * @param {function} onAddItem - 当用户提交添加物品表单时要调用的回调函数
+ * 初始化UI界面，绑定核心事件监听器
+ * @param {function} onAddItem - 添加物品的回调函数
+ * @param {Array} directories - 目录结构数据
  */
-export function initializeUI(onAddItem) {
+export function initializeUI(onAddItem, directories) {
     addItemFab.addEventListener('click', () => {
         document.querySelector('.modal-content h2').textContent = '添加新物品';
         document.querySelector('#add-item-form button[type="submit"]').textContent = '确认添加';
@@ -287,6 +298,35 @@ export function initializeUI(onAddItem) {
         // 移除旧的事件监听器
         if (formSubmitHandler) {
             addItemForm.removeEventListener('submit', formSubmitHandler);
+        }
+
+        // === 开始填充类别归属下拉框 ===
+        const categorySelect = document.getElementById('item-category-select');
+        categorySelect.innerHTML = ''; // 清空旧选项
+
+        if (directories && directories.length > 0) {
+            directories.forEach(parentCat => {
+                const hasChildren = parentCat.children && parentCat.children.length > 0;
+                // 如果父分类下有子分类，则创建分组
+                if (hasChildren) {
+                    const parentOptgroup = document.createElement('optgroup');
+                    parentOptgroup.label = parentCat.name;
+                    parentCat.children.forEach(subCat => {
+                        const option = document.createElement('option');
+                        option.value = subCat.name;
+                        option.textContent = subCat.name;
+                        parentOptgroup.appendChild(option);
+                    });
+                    categorySelect.appendChild(parentOptgroup);
+                }
+            });
+        }
+        // === 结束填充类别归属下拉框 ===
+
+        // 设置下拉框的默认值为当前激活的分类
+        const activeCategoryLink = sidebarNav.querySelector('a.active');
+        if (activeCategoryLink && activeCategoryLink.dataset.id !== 'all') {
+            categorySelect.value = activeCategoryLink.dataset.filterName || '';
         }
 
         // 定义新的提交处理函数
@@ -299,12 +339,13 @@ export function initializeUI(onAddItem) {
                 location = document.getElementById('item-location-other').value;
             }
             const imageFile = document.getElementById('item-image').files[0];
+            const category = document.getElementById('item-category-select').value; // 从下拉框读取
 
-            if (!name || !location) {
-                alert('请填写物品名称和位置！');
+            if (!name || !location || !category) {
+                alert('请填写物品名称、位置和类别！');
                 return;
             }
-            const category = currentFilter === 'all' ? '其他' : currentFilter;
+
             onAddItem({ name, quantity, location, imageFile, category });
             addItemModal.style.display = 'none';
         };
@@ -489,30 +530,29 @@ const CategoryEditor = {
 
     getUpdatedStructure() {
         const newStructure = [];
-        const topLevelItems = Array.from(categoryEditorContainer.children[0].children);
+        const list = categoryEditorContainer.children[0];
+        if (!list) return [];
 
-        topLevelItems.forEach(wrapper => {
-            const parentId = wrapper.querySelector('.category-editor-item').dataset.id;
-            const parentData = localDirectories.find(d => d.id === parentId);
+        Array.from(list.children).forEach(wrapper => {
+            const parentElement = wrapper.querySelector('.category-editor-item');
+            if (!parentElement) return;
 
-            const newParent = { ...parentData, children: [] };
+            const newParent = {
+                id: parentElement.dataset.id,
+                name: parentElement.querySelector('.category-name').textContent,
+                children: []
+            };
 
-            const subItems = Array.from(wrapper.querySelector('.subcategory-editor-list').children);
-            subItems.forEach(subItem => {
-                const subId = subItem.dataset.id;
-                // 在所有旧的children中找到这个subData
-                let subData = null;
-                for (const dir of localDirectories) {
-                    const found = dir.children.find(s => s.id === subId);
-                    if (found) {
-                        subData = found;
-                        break;
-                    }
-                }
-                if (subData) {
-                    newParent.children.push(subData);
-                }
-            });
+            const sublistElement = wrapper.querySelector('.subcategory-editor-list');
+            if (sublistElement) {
+                Array.from(sublistElement.children).forEach(subItem => {
+                    if (!subItem.dataset.id) return;
+                    newParent.children.push({
+                        id: subItem.dataset.id,
+                        name: subItem.querySelector('.category-name').textContent
+                    });
+                });
+            }
             newStructure.push(newParent);
         });
 
@@ -531,4 +571,16 @@ export function showManageCategoriesModal(directories, onSave) {
     modal.querySelector('.close-button').onclick = () => {
         modal.style.display = 'none';
     };
+}
+
+/**
+ * 更新“添加到...”下拉菜单中的分类
+ * @param {Array} directories - 目录结构数据
+ */
+export function updateCategoryDropdown(directories) {
+    const categorySelect = document.getElementById('item-category-select');
+    if (!categorySelect) return;
+
+    // 保存当前选中的值（如果有的话）
+    // ... existing code ...
 } 

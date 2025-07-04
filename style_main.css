@@ -214,6 +214,32 @@ nav {
     text-align: center;
 }
 
+/* --- 卡片通用样式 (新增) --- */
+.PhD>div,
+.master-supervisor>div,
+.administrative-assistant>div,
+.post-doctoral>div,
+.Engineer>div,
+.doctor>div,
+.master-row>div {
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.PhD>div:hover,
+.master-supervisor>div:hover,
+.administrative-assistant>div:hover,
+.post-doctoral>div:hover,
+.Engineer>div:hover,
+.doctor>div:hover,
+.master-row>div:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
 /* --------------Post-Doctoral-----------*/
 .doctor {
     display: grid;
@@ -670,16 +696,15 @@ body {
 
 #laser-cursor {
     position: fixed;
-    width: 11px;
-    height: 11px;
+    width: 10px;
+    height: 10px;
     background-color: red;
     border-radius: 50%;
     pointer-events: none;
-    /* 确保不影响底层元素的点击 */
+    transform: translate(-50%, -50%);
     z-index: 9999;
-    /* 确保光标在最顶层 */
-    transition: transform 0.1s ease-out;
-    /* 平滑移动，可以调整 */
+    display: none;
+    /* 默认隐藏 */
 }
 
 .trail-dot {
@@ -867,4 +892,149 @@ nav .nav-links {
     /* Push nav-links to the left */
     margin-left: 0;
     /* Align left */
+}
+
+#menu-btn {
+    display: none;
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+
+/* =====================================================================
+ * 移动端响应式设计 (Mobile Responsive Design)
+ * 当屏幕宽度小于等于768px时应用这些样式
+ * ===================================================================== */
+@media only screen and (max-width: 768px) {
+    body {
+        overflow-x: hidden;
+        /* 防止横向滚动 */
+    }
+
+    .header {
+        background-size: cover;
+        /* 覆盖整个区域 */
+        background-position: center center;
+        /* 从中心裁剪 */
+        background-attachment: scroll;
+        /* 移除fixed，避免移动端兼容问题 */
+    }
+
+    nav {
+        padding: 15px 20px;
+        min-height: 100px;
+        /* 确保有足够的高度容纳控件 */
+        display: flex;
+        align-items: flex-start;
+    }
+
+    nav .logo {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        width: 80px;
+        z-index: 12;
+        /* 确保Logo在最上层 */
+    }
+
+    .nav-right {
+        margin-left: auto;
+        /* 将整个右侧控件组推到最右边 */
+        display: flex;
+        flex-direction: column;
+        /* 垂直排列 */
+        align-items: flex-end;
+        /* 右对齐 */
+        gap: 15px;
+        /* 登录按钮和菜单按钮之间的间距 */
+        position: relative;
+        z-index: 11;
+        /* 高于背景，低于logo */
+    }
+
+    #userProfile {
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+    }
+
+    #menu-btn {
+        display: block;
+    }
+
+    .nav-links {
+        position: absolute;
+        background: rgba(28, 42, 79, 0.95);
+        -webkit-backdrop-filter: blur(5px);
+        backdrop-filter: blur(5px);
+        top: 0;
+        width: 180px;
+        /* 将宽度从250px调整为更小巧的180px */
+        right: -180px;
+        /* 对应调整初始位置 */
+        height: 100vh;
+        padding: 80px 30px 20px;
+        border-radius: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        transition: right 0.4s ease-in-out;
+        z-index: 10;
+    }
+
+    .nav-links.active {
+        right: 0;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .header h1 {
+        padding-top: 40%;
+        font-size: 9vw;
+    }
+
+    .research>div {
+        padding: 10px;
+    }
+
+    .research h3 {
+        font-size: 1.5rem;
+    }
+
+    .research li {
+        font-size: 1rem;
+    }
+
+    .sub-title {
+        font-size: 1.8rem;
+        margin-top: 50px;
+    }
+
+    .PhD,
+    .master-supervisor,
+    .administrative-assistant,
+    .post-doctoral,
+    .Engineer,
+    .doctor {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .master-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+}
+
+/* 仅在支持精细指针输入的设备（如鼠标）上显示自定义光标 */
+@media (pointer: fine) {
+    html {
+        cursor: none;
+    }
+
+    #laser-cursor {
+        display: block;
+    }
 }

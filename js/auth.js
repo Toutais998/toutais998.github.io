@@ -4,21 +4,27 @@
 // 用户数据
 const users = {
     "yangxusan": { password: "@yangxusan", avatar: "images/Basic/小兔头.png" },
-    "pengchunlei": { password: "@pengchunlei", avatar: "" },
-    "guanweinan": { password: "@guanweinan", avatar: "" },
     "huzirui": { password: "@huzirui", avatar: "images/Basic/cat-head.png" },
+    "pengchunlei": { password: "@pengchunlei", avatar: "" },
+    "liukai": { password: "@liukai", avatar: "" },
+    "guanweinan": { password: "@guanweinan", avatar: "" },
     "liuchi": { password: "@liuchi", avatar: "" },
+    "caijiangshan": { password: "@caijiangshan", avatar: "" },
+    "qinhuaiyuan": { password: "@qinhuaiyuan", avatar: "" },
+    "xuning": { password: "@xuning", avatar: "" },
+    "chaifumei": { password: "@chaifumei", avatar: "" },
     "liuhaoru": { password: "@liuhaoru", avatar: "" },
     "lidongrun": { password: "@lidongrun", avatar: "" },
     "lixiaofan": { password: "@lixiaofan", avatar: "" },
     "huangzengyuan": { password: "@huangzengyuan", avatar: "" },
-    "liukai": { password: "@liukai", avatar: "" },
     "wanghao": { password: "@wanghao", avatar: "" },
     "yubohao": { password: "@yubohao", avatar: "" },
     "zenghao": { password: "@zenghao", avatar: "" },
     "qiuhongbiao": { password: "@qiuhongbiao", avatar: "" },
     "libo": { password: "@libo", avatar: "" },
-    "caijiangshan": { password: "@caijiangshan", avatar: "" }
+    "dongna": { password: "@dongna", avatar: "" },
+    "wangzeyu": { password: "@wangzeyu", avatar: "" },
+    "zhangxiaoge": { password: "@zhangxiaoge", avatar: "" }
 };
 
 // 生成默认头像HTML

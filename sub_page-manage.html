@@ -10,17 +10,55 @@
     <link rel="stylesheet" href="style_sub-manage.css">
     <!-- SortableJS 库 -->
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <style>
+        @media (pointer: fine) {
+            html {
+                cursor: none;
+            }
+        }
+
+        /* 鼠标拖尾特效 */
+        .trail-dot {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            animation: trail-fade-out 0.5s linear forwards;
+        }
+
+        @keyframes trail-fade-out {
+            from {
+                opacity: 1;
+                transform: scale(1.1) translate(-50%, -50%);
+            }
+
+            to {
+                opacity: 0;
+                transform: scale(0.1) translate(-50%, -50%);
+            }
+        }
+    </style>
 </head>
 
 <body>
     <header class="top-header">
-        <a href="index.html" class="logo-link">
-            <img src="images/Basic/透明背景-yang.png" alt="Yang Lab Logo" class="logo">
-            <h1 class="header-title">Yang Lab设备管理</h1>
-        </a>
+        <div class="header-content">
+            <button id="menu-toggle-btn" class="menu-toggle-btn" title="Toggle Sidebar">
+                <i class="fas fa-bars"></i>
+            </button>
+            <a href="index.html" class="logo-link">
+                <img src="images/Basic/透明背景-yang.png" alt="Yang Lab Logo" class="logo">
+                <h1 class="header-title">Yang Lab设备管理</h1>
+            </a>
+        </div>
     </header>
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
     <div class="manage-container">
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
             <nav id="sidebar-nav" class="sidebar-nav"></nav>
             <button id="manage-nav-btn" class="manage-nav-btn">
                 <i class="fas fa-list-alt"></i>
@@ -34,6 +72,11 @@
     <button id="add-item-fab" class="fab" title="添加新物品">
         <i class="fas fa-plus"></i>
     </button>
+
+    <div id="loader" class="loader-container">
+        <div class="loader-spinner"></div>
+        <p>加载中...</p>
+    </div>
 
     <div id="add-item-modal" class="modal" style="display: none;">
         <div class="modal-content">
@@ -66,6 +109,12 @@
                     <input type="text" id="item-location-other" name="itemLocationOther">
                 </div>
                 <div class="form-group">
+                    <label for="item-category-select">类别归属:</label>
+                    <select id="item-category-select" name="itemCategorySelect" required>
+                        <!-- Options will be populated by JS -->
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="item-image">图片 (可选):</label>
                     <input type="file" id="item-image" name="itemImage" accept="image/*">
                 </div>
@@ -74,7 +123,10 @@
         </div>
     </div>
 
-    <!-- Firebase SDK -->
+    <!-- CloudBase SDK -->
+    <script src="https://web.sdk.qcloud.com/js/v1/cloudbase.js"></script>
+
+    <!-- Firebase SDK (kept for backup) -->
     <script type="module" src="js/firebase-config.js"></script>
     <script type="module" src="js/main.js"></script>
 
@@ -96,6 +148,30 @@
             </div>
         </div>
     </div>
+
+    <div id="laser-cursor"></div>
+
+    <script>
+        // 优化后的鼠标光标效果
+        if (!window.matchMedia('(pointer: coarse)').matches) {
+            const laserCursor = document.getElementById('laser-cursor');
+            document.addEventListener('mousemove', function (e) {
+                laserCursor.style.left = e.clientX + 'px';
+                laserCursor.style.top = e.clientY + 'px';
+
+                const trail = document.createElement('div');
+                trail.className = 'trail-dot';
+                document.body.appendChild(trail);
+
+                trail.style.left = e.clientX + 'px';
+                trail.style.top = e.clientY + 'px';
+
+                trail.addEventListener('animationend', () => {
+                    trail.remove();
+                });
+            });
+        }
+    </script>
 </body>
 
 </html>

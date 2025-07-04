@@ -32,7 +32,7 @@ async function handleAddItem(itemData) {
     const newItem = await addItem(itemData);
 
     if (newItem) {
-        appendNewItem(newItem); // 在UI上添加新的物品卡片
+        appendNewItem(newItem, handleEditItem, handleDeleteItem);
         alert('物品添加成功！');
     }
 
@@ -77,57 +77,98 @@ async function handleDeleteItem(itemId) {
  * 处理侧边栏分类点击事件
  * @param {string} filter - 筛选关键字 ('all' 或 分类名称)
  */
-function handleCategoryClick(filter) {
+async function handleCategoryClick(filter) {
     setActiveCategory(filter);
-    displayItems(null, filter, handleEditItem, handleDeleteItem); // 使用缓存的items进行筛选和显示
+    const loader = document.getElementById('loader');
+    try {
+        loader.style.display = 'flex';
+        const items = await fetchItems(filter);
+        displayItems(items, filter, handleEditItem, handleDeleteItem);
+    } catch (error) {
+        console.error(`Failed to load items for category ${filter}:`, error);
+        alert('加载物品失败，请稍后重试。');
+    } finally {
+        loader.style.display = 'none';
+    }
 }
 
 /**
  * 应用主函数
  */
 async function main() {
-    // 0. (一次性) 如果数据库为空，则填充默认数据
-    const seeded = await seedDatabaseIfEmpty();
-    if (seeded) {
-        // 如果执行了填充，短暂延时后重新加载页面，以确保获取到最新数据
-        alert("首次加载，正在为您填充初始数据，页面将自动刷新。");
-        setTimeout(() => location.reload(), 1500);
-        return; // 终止当前执行，等待刷新
+    const loader = document.getElementById('loader');
+
+    try {
+        loader.style.display = 'flex'; // 显示加载动画
+
+        // 0. (一次性) 如果数据库为空，则填充默认数据
+        const seeded = await seedDatabaseIfEmpty();
+        if (seeded) {
+            // 如果执行了填充，短暂延时后重新加载页面，以确保获取到最新数据
+            alert("首次加载，正在为您填充初始数据，页面将自动刷新。");
+            setTimeout(() => location.reload(), 1500);
+            return; // 终止当前执行，等待刷新
+        }
+
+        // 1. 获取目录结构
+        const directories = await fetchDirectoryStructure();
+
+        // 2. 初始化UI，并传入处理添加物品的函数和目录结构
+        initializeUI(handleAddItem, directories);
+
+        // 3. 渲染侧边栏
+        if (directories && directories.length > 0) {
+            renderSidebar(directories, handleCategoryClick);
+        } else {
+            console.warn("未获取到目录结构，侧边栏为空。");
+        }
+
+        // 4. 显示初始空状态或欢迎信息
+        displayItems([], 'all', handleEditItem, handleDeleteItem);
+
+        // 5. 绑定"管理导航"按钮事件
+        const manageNavBtn = document.getElementById('manage-nav-btn');
+        if (manageNavBtn && directories) {
+            manageNavBtn.addEventListener('click', () => {
+                showManageCategoriesModal(directories, async (updatedStructure) => {
+                    try {
+                        await saveDirectoryStructure(updatedStructure);
+                        // 更新成功后，用新的结构重新渲染侧边栏
+                        renderSidebar(updatedStructure, handleCategoryClick);
+                        // 更新全局的 directories 变量，以便下次打开时显示最新版本
+                        directories.length = 0;
+                        Array.prototype.push.apply(directories, updatedStructure);
+                        alert('导航目录已成功更新！');
+                    } catch (error) {
+                        console.error("保存目录结构失败:", error);
+                        alert('保存失败，请查看控制台获取更多信息。');
+                    }
+                });
+            });
+        }
+
+        // 6. 移动端侧边栏交互
+        const menuToggleBtn = document.getElementById('menu-toggle-btn');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+        if (menuToggleBtn && sidebar && sidebarOverlay) {
+            menuToggleBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+                sidebarOverlay.classList.toggle('active');
+            });
+
+            sidebarOverlay.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+            });
+        }
+    } catch (error) {
+        console.error("应用主程序发生严重错误: ", error);
+        alert("页面加载失败，请检查网络连接或联系管理员。详情请查看控制台。");
+    } finally {
+        loader.style.display = 'none'; // 无论成功或失败，都隐藏加载动画
     }
-
-    // 1. 初始化UI，并传入处理添加物品的函数
-    initializeUI(handleAddItem);
-
-    // 2. 并行获取物品数据和目录结构
-    const [items, directories] = await Promise.all([
-        fetchItems(),
-        fetchDirectoryStructure()
-    ]);
-
-    // 3. 渲染侧边栏
-    renderSidebar(directories, handleCategoryClick);
-
-    // 4. 在页面上显示所有物品 (初始状态)
-    displayItems(items, 'all', handleEditItem, handleDeleteItem);
-
-    // 5. 绑定"管理导航"按钮事件
-    const manageNavBtn = document.getElementById('manage-nav-btn');
-    manageNavBtn.addEventListener('click', () => {
-        showManageCategoriesModal(directories, async (updatedStructure) => {
-            try {
-                await saveDirectoryStructure(updatedStructure);
-                // 更新成功后，用新的结构重新渲染侧边栏
-                renderSidebar(updatedStructure, handleCategoryClick);
-                // 更新全局的 directories 变量，以便下次打开时显示最新版本
-                directories.length = 0;
-                Array.prototype.push.apply(directories, updatedStructure);
-                alert('导航目录已成功更新！');
-            } catch (error) {
-                console.error("保存目录结构失败:", error);
-                alert('保存失败，请查看控制台获取更多信息。');
-            }
-        });
-    });
 }
 
 // 当DOM加载完毕后执行主函数
