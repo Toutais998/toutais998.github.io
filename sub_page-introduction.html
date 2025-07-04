@@ -164,7 +164,16 @@
 
     <div id="laser-cursor"></div>
 
-    <script type="module" src="js/firebase-config.js"></script>
+    <div id="loader" class="loader-container">
+        <div class="loader-spinner"></div>
+        <p>加载中...</p>
+    </div>
+
+    <!-- Firebase Import Map (for GitHub Pages compatibility) -->
+    <script type="module" src="js/firebase-import-map.js"></script>
+
+    <script type="module" src="js/ui-controller.js"></script>
+
     <script>
         // 优化后的鼠标光标效果
         if (!window.matchMedia('(pointer: coarse)').matches) {
