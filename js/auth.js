@@ -6,7 +6,7 @@ const users = {
     "yangxusan": { password: "@yangxusan", avatar: "images/Basic/小兔头.png" },
     "pengchunlei": { password: "@pengchunlei", avatar: "" },
     "guanweinan": { password: "@guanweinan", avatar: "" },
-    "huzirui": { password: "@huzirui", avatar: "images/Basic/猫猫头.png" },
+    "huzirui": { password: "@huzirui", avatar: "images/Basic/cat-head.png" },
     "liuchi": { password: "@liuchi", avatar: "" },
     "liuhaoru": { password: "@liuhaoru", avatar: "" },
     "lidongrun": { password: "@lidongrun", avatar: "" },
