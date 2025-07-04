@@ -18,10 +18,87 @@
     -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="shortcut icon" href="images/透明背景.png" type="image/x-icon">
     <title>YangLab-杨旭三个人简介</title>
     <link rel="stylesheet" href="style_sub-introduction.css">
+    <style>
+        /* 移动设备响应式样式 */
+        @media screen and (max-width: 767px) {
+
+            /* 卡片布局优化 */
+            .card {
+                width: 90%;
+                max-width: 400px;
+                min-height: 300px;
+                flex-direction: column;
+                padding: 20px 15px;
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+
+            /* Logo圆形区域 */
+            .circle {
+                position: relative;
+                transform: translateY(0);
+                margin: 10px auto 20px;
+                width: 80px;
+                height: 80px;
+            }
+
+            .circle .logo {
+                width: 50px;
+            }
+
+            /* 内容区域 */
+            .content {
+                transform: translateX(0);
+                padding-left: 15px;
+                padding-right: 15px;
+                text-align: center;
+            }
+
+            .content h2 {
+                font-size: 1.4em;
+                margin-bottom: 5px;
+            }
+
+            .content p {
+                font-size: 0.85em;
+                line-height: 1.5;
+            }
+
+            /* 链接按钮 */
+            .content a {
+                padding: 8px 15px;
+                margin: 10px 5px;
+                font-size: 0.85em;
+            }
+
+            /* 人物图像 */
+            .product_img {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                max-width: 200px;
+                max-height: 200px;
+                margin: 20px auto 0;
+                transform: translateY(0);
+            }
+
+            /* 针对iPhone 15 Pro的特定优化 (390 x 844) */
+            @media only screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) {
+                body {
+                    padding-top: 15px;
+                    /* 适应顶部刘海 */
+                }
+
+                .card {
+                    margin-top: 30px;
+                }
+            }
+        }
+    </style>
 </head>
 
 <body>
