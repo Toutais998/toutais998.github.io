@@ -5,8 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yang Lab设备管理</title>
+    <link rel="icon" href="images/Basic/透明背景.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="style_sub-manage.css">
+    <!-- SortableJS 库 -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 </head>
 
 <body>
@@ -48,14 +51,14 @@
                 <div class="form-group">
                     <label for="item-location-select">存放位置:</label>
                     <select id="item-location-select" name="itemLocationSelect">
-                        <option>大实验室</option>
+                        <option>大光学实验室</option>
                         <option>C101</option>
                         <option>C102</option>
                         <option>C103</option>
                         <option>C104</option>
                         <option>化学间</option>
                         <option>湖畔洁净间</option>
-                        <option value="other">其他</option>
+                        <option value="other">其他 (请在下方输入)</option>
                     </select>
                 </div>
                 <div class="form-group" id="item-location-other-group" style="display: none;">
@@ -72,11 +75,27 @@
     </div>
 
     <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
-
     <script type="module" src="js/firebase-config.js"></script>
     <script type="module" src="js/main.js"></script>
+
+    <!-- 导航管理模态框 -->
+    <div id="manage-categories-modal" class="modal" style="display: none;">
+        <div class="modal-content large">
+            <span class="close-button">&times;</span>
+            <h2>管理导航目录</h2>
+            <div class="modal-body">
+                <div id="category-editor" class="category-editor">
+                    <!-- 目录将由JS动态生成 -->
+                </div>
+                <div class="modal-actions">
+                    <button id="add-parent-category-btn" class="btn"><i class="fas fa-plus"></i> 添加主目录</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="save-categories-btn" class="btn-primary">保存更改</button>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

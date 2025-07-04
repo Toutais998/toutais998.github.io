@@ -38,6 +38,7 @@
     position: sticky;
     top: 0;
     z-index: 1000;
+    margin: 0;
 }
 
 .top-header .logo-link {
@@ -98,6 +99,8 @@ body {
     display: flex;
     height: calc(100vh - 62px);
     /* Full height minus header (62px is an estimate for header height) */
+    overflow-y: auto;
+    /* Allow content to scroll */
 }
 
 .sidebar {
@@ -117,48 +120,87 @@ body {
     padding: 40px;
     overflow-y: auto;
     /* Allow content to scroll */
+    display: block;
 }
 
-/* --- 3. 侧边栏与导航 --- */
+.main-content .category-title {
+    margin-bottom: 25px;
+    font-size: 24px;
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.main-content .empty-message {
+    text-align: center;
+    font-size: 18px;
+    color: #888;
+    margin-top: 50px;
+}
+
+/* --- 3. 侧边栏与导航 (美化后) --- */
 .sidebar-nav {
     flex-grow: 1;
     overflow-y: auto;
+    padding-right: 10px;
+    /* For scrollbar */
 }
 
-.sidebar-nav ul {
+.sidebar-nav .nav-list {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.sidebar-nav .nav-category>span {
-    font-size: 18px;
+.sidebar-nav .category-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 10px;
+    font-size: 1.1rem;
     font-weight: bold;
-    display: block;
-    padding: 10px 0;
     color: var(--light-text-color);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    margin-bottom: 10px;
+    margin-top: 15px;
 }
 
-.sidebar-nav .nav-subcategory a {
+.sidebar-nav .nav-subcategory-list {
+    list-style: none;
+    padding-left: 20px;
+}
+
+.sidebar-nav a {
     display: block;
-    color: var(--light-text-color);
+    color: #bdc3c7;
+    /* Lighter grey for inactive links */
     text-decoration: none;
-    padding: 10px 15px;
+    padding: 10px 22px;
     border-radius: 6px;
     margin-bottom: 5px;
     transition: background-color 0.2s ease, color 0.2s ease;
+    position: relative;
 }
 
-.sidebar-nav .nav-subcategory a:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+.sidebar-nav a:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #ecf0f1;
 }
 
-.sidebar-nav .nav-subcategory a.active {
+.sidebar-nav a.active {
     background-color: var(--accent-color);
     color: white;
     font-weight: bold;
+}
+
+.sidebar-nav a.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 80%;
+    width: 4px;
+    background-color: #ffffff;
+    border-radius: 0 4px 4px 0;
 }
 
 .manage-nav-btn {
@@ -184,115 +226,165 @@ body {
 }
 
 /* --- 4. 主内容与物料卡片 --- */
-.box-grid {
+/* 新的物品卡片网格布局 */
+.item-card-grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 25px;
 }
 
-.item-box {
+@media (min-width: 1600px) {
+    .item-card-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+@media (max-width: 1200px) {
+    .item-card-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* 新的物品卡片样式 */
+.item-card {
     position: relative;
     background: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px var(--shadow-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px var(--shadow-color);
     overflow: hidden;
-    cursor: pointer;
-    aspect-ratio: 1 / 1.1;
-    /* Slightly taller than wide */
-    transition: box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
 }
 
-.item-box:hover {
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+.item-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* 卡片内容 - 默认状态 */
-.item-box .item-image {
+.item-card .item-image-container {
     width: 100%;
-    height: 60%;
-    object-fit: contain;
-    padding: 10px;
-    border-radius: 8px;
+    padding-top: 75%;
+    /* 4:3 aspect ratio */
+    position: relative;
+    background-color: #f0f0f0;
+    border-radius: 12px 12px 0 0;
+    overflow: hidden;
+    /* 必须保留，用于裁剪图片 */
 }
 
-.item-box .item-title {
-    font-weight: 600;
-    font-size: 16px;
-    text-align: center;
-    padding: 10px;
-    color: var(--dark-text-color);
-}
-
-.item-box .item-details {
-    font-size: 13px;
-    color: #666;
-    padding: 0 10px 10px;
-    text-align: left;
-}
-
-.item-box .item-details p {
-    margin: 2px 0;
-}
-
-/* 卡片内容 - 悬浮状态 */
-.item-overlay {
+/* 图片上方的遮罩层，用于强制实现圆角效果 */
+.item-card .item-image-container::after {
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(44, 62, 80, 0.9);
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    padding: 15px;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.03) inset;
+    /* 细微的内边框增加质感 */
     pointer-events: none;
-    /* Let clicks go through */
+    /* 允许鼠标事件穿透 */
 }
 
-.item-box:hover .item-overlay {
-    opacity: 1;
-}
-
-.item-overlay .item-info p {
-    margin: 3px 0;
-    text-align: left;
+.item-card .item-image {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 8px;
 }
 
-.item-overlay .item-info p:first-child {
-    font-weight: bold;
+.item-card .item-info {
+    padding: 15px;
+    flex-grow: 1;
+    text-align: center;
 }
 
+.item-card .item-name {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--dark-text-color);
+    margin: 0;
+}
 
-/* 删除按钮 */
-.delete-btn {
+/* 默认隐藏的详细信息 */
+.item-card .item-details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(44, 62, 80, 0.85);
+    color: white;
+    padding: 10px 15px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    /* 穿透点击 */
+    text-align: left;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.item-card:hover .item-details {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.item-card .item-details p {
+    margin: 3px 0;
+    font-size: 0.85rem;
+}
+
+/* 编辑和删除按钮 */
+.item-card .btn-edit,
+.item-card .btn-delete {
     position: absolute;
     top: 10px;
-    right: 10px;
-    width: 30px;
-    height: 30px;
-    background: var(--danger-color);
+    background-color: rgba(52, 73, 94, 0.8);
     color: white;
     border: none;
     border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 3;
     opacity: 0;
-    transform: scale(0.5);
-    transition: opacity 0.3s, transform 0.3s;
+    transform: scale(0.8);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    font-size: 14px;
+    padding: 0;
+    z-index: 2;
 }
 
-.item-box:hover .delete-btn {
+.item-card .btn-edit {
+    left: 10px;
+}
+
+.item-card .btn-delete {
+    right: 10px;
+    background-color: rgba(231, 76, 60, 0.8);
+    /* 红色背景 */
+}
+
+.item-card:hover .btn-edit,
+.item-card:hover .btn-delete {
     opacity: 1;
     transform: scale(1);
+}
+
+.item-card .btn-edit:hover {
+    background-color: var(--accent-color);
+    transform: scale(1.1);
+}
+
+.item-card .btn-delete:hover {
+    background-color: var(--danger-color);
+    transform: scale(1.1);
 }
 
 /* --- 5. 浮动操作按钮 (FAB) --- */
@@ -313,7 +405,7 @@ body {
     justify-content: center;
     cursor: pointer;
     transition: transform 0.2s, background-color 0.2s;
-    z-index: 1010;
+    z-index: 1001;
 }
 
 .fab:hover {
@@ -331,7 +423,7 @@ body {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: var(--dark-text-color);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -365,8 +457,9 @@ body {
 
 .modal-content h2 {
     margin-top: 0;
-    margin-bottom: 25px;
+    color: var(--dark-text-color);
     text-align: center;
+    margin-bottom: 25px;
 }
 
 .form-group {
@@ -377,16 +470,39 @@ body {
     display: block;
     margin-bottom: 8px;
     font-weight: 600;
+    color: #555;
 }
 
 .form-group input[type="text"],
 .form-group input[type="number"],
-.form-group input[type="file"] {
+.form-group input[type="file"],
+.form-group select {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     border: 1px solid var(--border-color);
-    border-radius: 4px;
+    border-radius: 6px;
     font-size: 16px;
+    background-color: #f8f9fa;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="number"]:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+.form-group select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M5%208l5%205%205-5z%22%20fill%3D%22%23888%22/%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 20px;
+    padding-right: 40px;
+    /* 留出空间给箭头 */
 }
 
 .modal-content button[type="submit"] {
@@ -452,7 +568,7 @@ body {
         padding: 20px;
     }
 
-    .box-grid {
+    .item-card-grid {
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
         gap: 15px;
     }
@@ -461,4 +577,114 @@ body {
         bottom: 20px;
         right: 20px;
     }
+}
+
+.modal-content.large {
+    max-width: 800px;
+}
+
+.modal-body {
+    padding: 10px 0;
+}
+
+.modal-footer {
+    padding-top: 20px;
+    text-align: right;
+    border-top: 1px solid var(--border-color);
+}
+
+.category-editor {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px;
+    min-height: 300px;
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+.category-editor-item,
+.subcategory-editor-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 6px;
+}
+
+.category-editor-item {
+    background-color: #f0f4f8;
+    font-weight: bold;
+}
+
+.subcategory-editor-list {
+    padding-left: 30px;
+}
+
+.drag-handle {
+    cursor: grab;
+    margin-right: 15px;
+    color: #aaa;
+}
+
+.category-name {
+    flex-grow: 1;
+}
+
+.category-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #777;
+    margin-left: 10px;
+    transition: color 0.2s;
+}
+
+.category-actions button:hover {
+    color: var(--accent-color);
+}
+
+.category-actions .btn-delete:hover {
+    color: var(--danger-color);
+}
+
+.modal-actions {
+    margin-top: 15px;
+}
+
+/* 统一样式 */
+.btn,
+.btn-primary {
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.btn {
+    background-color: #f0f0f0;
+}
+
+.btn:hover {
+    background-color: #e0e0e0;
+}
+
+.btn-primary {
+    background-color: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+}
+
+/* SortableJS 的占位符样式 */
+.sortable-ghost {
+    opacity: 0.4;
+    background: #c8ebfb;
 }
