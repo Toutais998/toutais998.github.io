@@ -1,6 +1,6 @@
 /* 
 =====================================================================
-* 文件名: ui-controller.js
+ * 文件名: ui-controller.js
 * 版本: V2.2
 * 创建日期: 未知
 * 最后修改: 2025-07-05
@@ -613,8 +613,10 @@ export function updateCategoryDropdown(directories) {
  * @description 为指定的模态框设置通用的关闭逻辑。
  * @param {HTMLElement} modalElement - 模态框的DOM元素。
  * @param {string} closeButtonSelector - 模态框内部关闭按钮的CSS选择器。
+ * @param {HTMLElement} [triggerButton] - 触发打开模态框的按钮元素 (可选)。
+ * @param {Function} [setupCallback] - 打开模态框前执行的回调函数 (可选)。
  */
-export function setupModal(modalElement, closeButtonSelector) {
+export function setupModal(modalElement, closeButtonSelector, triggerButton, setupCallback) {
     if (!modalElement) return;
 
     const closeButton = modalElement.querySelector(closeButtonSelector);
@@ -630,6 +632,17 @@ export function setupModal(modalElement, closeButtonSelector) {
             modalElement.style.display = 'none';
         }
     });
+
+    // 添加触发按钮的点击事件
+    if (triggerButton) {
+        triggerButton.addEventListener('click', () => {
+            // 如果提供了设置回调函数，则在显示模态框前调用它
+            if (typeof setupCallback === 'function') {
+                setupCallback();
+            }
+            modalElement.style.display = 'flex';
+        });
+    }
 }
 
 /**
@@ -657,13 +670,21 @@ export function setupSidebarToggle() {
  * @description 初始化 SortableJS 拖拽排序功能。
  * @param {HTMLElement} element - 需要启用拖拽的容器元素。
  * @param {string} handleSelector - 拖拽句柄的CSS选择器。
+ * @param {Object} [options] - 额外的 Sortable 选项。
  */
-export function setupSortable(element, handleSelector) {
+export function setupSortable(element, handleSelector, options = {}) {
     if (typeof Sortable !== 'undefined' && element) {
-        new Sortable(element, {
+        // 默认配置
+        const defaultOptions = {
             animation: 150,
             handle: handleSelector,
             ghostClass: 'sortable-ghost',
-        });
+            dragClass: 'sortable-drag'
+        };
+
+        // 合并默认配置与自定义配置
+        const sortableOptions = { ...defaultOptions, ...options };
+
+        new Sortable(element, sortableOptions);
     }
 } 
